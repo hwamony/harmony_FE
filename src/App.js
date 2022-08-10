@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/common/Navbar';
 import GlobalStyle from './styles/GlobalStyle';
 
 const Home = React.lazy(() => import('./pages/Home'));
@@ -16,6 +17,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />

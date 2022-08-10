@@ -1,11 +1,10 @@
 import React from 'react';
-import Navbar from '../components/common/Navbar';
 
 const Home = () => {
   return (
     <div>
       <p>Home</p>
-      <Navbar />
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsam quos impedit rerum. Commodi voluptate delectus nam maiores ducimus consequuntur, molestiae sunt possimus reiciendis praesentium soluta sint expedita? Distinctio fugiat nisi ipsa facere consectetur voluptas harum obcaecati, ratione quos atque voluptatum nam eaque sint voluptates, corrupti molestias dolorum quam, sed nihil ipsam officia voluptatibus. Ratione accusantium, cumque excepturi corrupti beatae quibusdam optio facilis, ex aspernatur autem rem quos totam? Consequatur minus odit libero, voluptatem officia quisquam sequi unde repellat deserunt nostrum amet quibusdam consequuntur. Similique reprehenderit odit dolore nisi praesentium non facilis maiores minus nesciunt corrupti voluptates suscipit incidunt nam repellat, placeat omnis accusamus fugiat alias optio possimus, quaerat molestias deleniti. Molestiae ad aut dicta libero quidem quae, perspiciatis alias non esse? Non itaque corrupti, deleniti dolores dolore unde, exercitationem fugit tempore autem voluptate odit sapiente architecto eveniet repellendus numquam? At ut nobis incidunt blanditiis est saepe consectetur iusto, sed nam voluptatem impedit voluptatum facilis suscipit corrupti omnis sint ad. Impedit provident at nobis quia officia doloremque delectus numquam, deserunt optio distinctio sint asperiores quasi id labore tempore voluptatem cumque dignissimos sed voluptatum placeat fugiat ducimus? Fugit laboriosam blanditiis optio architecto? Laboriosam deleniti, asperiores ea temporibus, minus, est sed eos tempore omnis iure rem earum. Soluta consequatur, enim omnis iste praesentium nostrum excepturi quia, tenetur ipsa, aliquam distinctio eum mollitia dolor? Nihil, excepturi. Distinctio deserunt eveniet perferendis repellat dolores qui quaerat dicta temporibus repudiandae pariatur, ratione recusandae ducimus debitis vero voluptatum assumenda enim minus et. Porro est iste blanditiis inventore suscipit, ducimus pariatur iusto, quae ipsa eos quisquam? Accusamus voluptatem libero maxime quidem provident explicabo perspiciatis optio, soluta animi, adipisci quis blanditiis? Soluta repellendus amet itaque cupiditate quasi, rerum ullam tenetur porro eligendi quibusdam asperiores ducimus maiores ratione aperiam sunt laboriosam blanditiis nulla nostrum? Unde ratione cumque deleniti quam. Error!</p>
     </div>
   );
 };

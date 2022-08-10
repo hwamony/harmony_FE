@@ -1,29 +1,81 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '../../assets/icons';
 
-const MobileNavbar = () => {
+const Navbar = () => {
   return (
-    <nav>
-      <ul>
+    <Navigation>
+      <Lists>
         <li>
-          <NavLink to="/">홈</NavLink>
+          <Menu to="/">
+            <IconHome />홈
+          </Menu>
         </li>
         <li>
-          <NavLink to="/galleries">갤러리</NavLink>
+          <Menu to="/galleries">
+            <IconGallery />갤러리
+          </Menu>
         </li>
         <li>
-          <NavLink to="/voice-mails">소리샘</NavLink>
+          <Menu to="/voice-mails">
+            <IconVoice />소리샘
+          </Menu>
         </li>
         <li>
-          <NavLink to="/community">커뮤니티</NavLink>
+          <Menu to="/community">
+            <IconCommunity />커뮤니티
+          </Menu>
         </li>
         <li>
-          <NavLink to="/settings">설정</NavLink>
+          <Menu to="/settings">
+            <IconSettings />설정
+          </Menu>
         </li>
-      </ul>
-    </nav>
+      </Lists>
+    </Navigation>
   );
 };
 
-export default MobileNavbar;
+export default Navbar;
+
+const Navigation = styled.nav`
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #acacac;
+  background: #fff;
+  color: #868686;
+  font-size: 12px;
+  z-index: 100;
+`;
+
+const Lists = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  li {
+    display: flex;
+    flex: 1;
+  }
+`;
+
+const Menu = styled(NavLink)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 64px;
+  padding: 5px 10px;
+  svg {
+    margin-bottom: 2px;
+  }
+  &.active {
+    color: #2d2d2d;
+    svg path {
+      fill: #2d2d2d;
+    }
+  }
+`;
