@@ -9,7 +9,7 @@ import api from '../../api/AxiosManager';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, actions } = useAuth();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
 
@@ -55,7 +55,16 @@ const Login = () => {
         />
       </InputWrap>
       <BtnWrap>
-        <Button onClick={() => LoginApi}>LOGIN</Button>
+        <Button
+          // onClick={() => LoginApi}
+          onClick={() => {
+            localStorage.setItem('TOKEN', 'fake_value');
+            actions.onLoggedIn();
+            navigate('/');
+          }}
+        >
+          LOGIN
+        </Button>
         <ForgotLink>
           계정을 잊으셨나요? <strong onClick={() => navigate()}>ID찾기</strong>{' '}
           또는 <strong onClick={() => navigate()}>비밀번호 찾기</strong>
