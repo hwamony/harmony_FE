@@ -1,39 +1,55 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '../../assets/icons';
 
 const Navbar = () => {
+  const { pathname } = useLocation();
+  const [isShowing, setIsShowing] = useState(true);
+  const paths = ['/login', '/signup'];
+
+  useEffect(() => {
+    paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);
+  }, [pathname]);
+  
   return (
-    <Navigation>
-      <Lists>
-        <li>
-          <Menu to="/">
-            <IconHome />홈
-          </Menu>
-        </li>
-        <li>
-          <Menu to="/galleries">
-            <IconGallery />갤러리
-          </Menu>
-        </li>
-        <li>
-          <Menu to="/voice-mails">
-            <IconVoice />소리샘
-          </Menu>
-        </li>
-        <li>
-          <Menu to="/community">
-            <IconCommunity />커뮤니티
-          </Menu>
-        </li>
-        <li>
-          <Menu to="/settings">
-            <IconSettings />설정
-          </Menu>
-        </li>
-      </Lists>
-    </Navigation>
+    <>
+      {isShowing && (
+        <Navigation>
+          <Lists>
+            <li>
+              <Menu to="/">
+                <IconHome />홈
+              </Menu>
+            </li>
+            <li>
+              <Menu to="/galleries">
+                <IconGallery />
+                갤러리
+              </Menu>
+            </li>
+            <li>
+              <Menu to="/voice-mails">
+                <IconVoice />
+                소리샘
+              </Menu>
+            </li>
+            <li>
+              <Menu to="/community">
+                <IconCommunity />
+                커뮤니티
+              </Menu>
+            </li>
+            <li>
+              <Menu to="/settings">
+                <IconSettings />
+                설정
+              </Menu>
+            </li>
+          </Lists>
+        </Navigation>
+      )}
+    </>
   );
 };
 
@@ -74,6 +90,7 @@ const Menu = styled(NavLink)`
   }
   &.active {
     color: #2d2d2d;
+    font-weight: 600;
     svg path {
       fill: #2d2d2d;
     }
