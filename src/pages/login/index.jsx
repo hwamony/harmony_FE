@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import { useForm } from "react-hook-form";
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
-import { Container, InputWrap, BtnWrap, ForgotLink, SignupLink } from './style';
+import { Container, InputWrap, BtnWrap, ForgotLink, SignupLink, ErrorMsg } from './style';
 import api from '../../api/AxiosManager';
 
 const Login = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [pw, setPw] = useState('');
+  const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     isLoggedIn && navigate('/');
   }, [isLoggedIn]);
 
-  const LoginApi = async () => {
+  const onSubmit = async (data) => {
     // 로그인 API 통신
-    // try {
-    //     const response = await api.post('/api/login', {
-    //         email: email,
-    //         password: pw
-    //     })
-    //     localStorage.setItem('user', response)
-    // }
+    try {
+      const response = await api.post('/api/login', data)
+      localStorage.setItem('user', response)
+    }
+    catch(err) {
+      console.log(err)
+      document.getElementById('errMsg').innerText = '아이디와 비밀번호가 맞지 않습니다.'
+    }
   };
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div
           style={{
@@ -45,17 +46,18 @@ const Login = () => {
       </div>
       <InputWrap>
         <Input
-          placeholder="아이디를 입력해주세요."
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="아이디를 입력해주세요." name="required"
+          ref={register({ required: true })}
         />
         <Input
           type="password"
-          placeholder="비밀번호를 입력해주세요."
-          onChange={(e) => setPw(e.target.value)}
+          placeholder="비밀번호를 입력해주세요." name="required"
+          ref={register({ required: true })}
         />
+        {errors.required && <ErrorMsg id='errMsg'>아이디와 비밀번호를 입력해주세요.</ErrorMsg>}
       </InputWrap>
       <BtnWrap>
-        <Button onClick={() => LoginApi}>LOGIN</Button>
+        <Button>LOGIN</Button>
         <ForgotLink>
           계정을 잊으셨나요? <strong onClick={() => navigate()}>ID찾기</strong>{' '}
           또는 <strong onClick={() => navigate()}>비밀번호 찾기</strong>
