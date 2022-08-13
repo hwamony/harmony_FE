@@ -46,15 +46,15 @@ const Login = () => {
       </div>
       <InputWrap>
         <Input
-          placeholder="아이디를 입력해주세요." name="reqired"
+          placeholder="아이디를 입력해주세요." name="required"
           ref={register({ required: true })}
         />
         <Input
           type="password"
-          placeholder="비밀번호를 입력해주세요." name="reqired"
+          placeholder="비밀번호를 입력해주세요." name="required"
           ref={register({ required: true })}
         />
-        {errors.reqired && <ErrorMsg id='errMsg'>아이디와 비밀번호를 입력해주세요.</ErrorMsg>}
+        {errors.required && <ErrorMsg id='errMsg'>아이디와 비밀번호를 입력해주세요.</ErrorMsg>}
       </InputWrap>
       <BtnWrap>
         <Button>LOGIN</Button>

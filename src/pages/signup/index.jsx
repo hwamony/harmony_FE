@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import api from '../../api/AxiosManager';
-import { useState } from 'react';
 import { useNavigate } from '../../../node_modules/react-router-dom/index';
 
 import { Input, Checkinput, RadioInput } from '../../components/Input';
 import { Button, InlineButton, BackButton } from '../../components/Button';
 import { Label, RadioLabel } from '../../components/Label';
 import { Container, Title, InputWrap, PolicyWrap, PolicyDesc, PolicyLink, PolicyCheck, ButtonWrap, ErrorMsg } from './style';
-import { useRef } from 'react';
 
 const Signup = () => {
     const navigate = useNavigate()
