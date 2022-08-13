@@ -10,7 +10,7 @@ import { Container, Title, InputWrap, PolicyWrap, PolicyDesc, PolicyLink, Policy
 
 const Signup = () => {
     const navigate = useNavigate()
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, watch, getValues, errors } = useForm();
     const password = useRef();
     password.current = watch("password");
 
@@ -19,42 +19,43 @@ const Signup = () => {
         nickname: false
     }) 
     
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         try {
-            const response = await api.post('api/signup', data )
+            const response = await api.post('/signup', data )
             console.log("response >>", response)
-            setIsOverlap((prev) => {return {...prev, email: true}})
+            navigate('/login')
           }
         catch(err) {
-            console.log("Error >>", err);
+            console.log("Error >>", err.response.data);
           }
     };
 
     const idOverlapCheck = async (e) => {
+        const email = getValues('email')
         try {
-            const response = await api.post('api/email-check', {
-                email: watch('email')
+            const response = await api.post('/email-check', {
+                email: email
             })
             console.log("response >>", response)
             setIsOverlap((prev) => {return {...prev, email: true}})
           }
         catch(err) {
-            console.log("Error >>", err);
+            console.log("Error >>", err.response.data);
           }
         e.preventDefault()
     }
 
     const nicknameOverlapCheck = async (e) => {
-
+        const nickname = getValues('nickname')
         try {
-            const response = await api.post('api/nickname-check', {
-                nickname: watch('nickname')
+            const response = await api.post('/nickname-check', {
+                nickname: nickname
             })
             console.log("response >>", response)
             setIsOverlap((prev) => {return {...prev, nickname: true}})
           }
         catch(err) {
-            console.log("Error >>", err);
+            console.log("Error >>", err.response.data);
           }
         e.preventDefault()
     }
