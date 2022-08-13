@@ -20,6 +20,7 @@ export const Checkinput = styled.input`
 
     :checked {
         background: #7D7D7D;
+        border: none;
     }
 `
 
