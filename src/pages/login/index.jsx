@@ -10,7 +10,7 @@ import api from '../../api/AxiosManager';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { actions, isLoggedIn } = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
@@ -20,11 +20,13 @@ const Login = () => {
   const onSubmit = async (data) => {
     // 로그인 API 통신
     try {
-      const response = await api.post('/api/login', data)
-      localStorage.setItem('user', response)
+      const response = await api.post('/login', data)
+      localStorage.setItem('TOKEN', response.headers.authorization)
+      actions.onLoggedIn();
+      navigate('/');
     }
     catch(err) {
-      console.log(err)
+      console.log(err.response.data)
       document.getElementById('errMsg').innerText = '아이디와 비밀번호가 맞지 않습니다.'
     }
   };
@@ -46,15 +48,15 @@ const Login = () => {
       </div>
       <InputWrap>
         <Input
-          placeholder="아이디를 입력해주세요." name="required"
+          placeholder="아이디를 입력해주세요." name="email"
           ref={register({ required: true })}
         />
         <Input
           type="password"
-          placeholder="비밀번호를 입력해주세요." name="required"
+          placeholder="비밀번호를 입력해주세요." name="password"
           ref={register({ required: true })}
         />
-        {errors.required && <ErrorMsg id='errMsg'>아이디와 비밀번호를 입력해주세요.</ErrorMsg>}
+        <ErrorMsg id='errMsg'></ErrorMsg>
       </InputWrap>
       <BtnWrap>
         <Button>LOGIN</Button>
