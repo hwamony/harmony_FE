@@ -1,4 +1,5 @@
 import React from 'react';
+import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuth from '../../hooks/useAuth';
@@ -9,37 +10,40 @@ const Setting = () => {
   const { actions } = useAuth();
 
   return (
-    <div>
-      <BtnAuth
-        variant="contained"
-        onClick={() => {
-          localStorage.setItem('TOKEN', 'fake_value');
-          actions.onLoggedIn();
-          navigate('/');
-        }}
-      >
-        토큰추가하기(로그인)
-      </BtnAuth>
+    <>
+      <PageTitle title="설정" />
+      <div>
+        <BtnAuth
+          variant="contained"
+          onClick={() => {
+            localStorage.setItem('TOKEN', 'fake_value');
+            actions.onLoggedIn();
+            navigate('/');
+          }}
+        >
+          토큰추가하기(로그인)
+        </BtnAuth>
 
-      <BtnAuth
-        variant="contained"
-        onClick={() => {
-          localStorage.removeItem('TOKEN');
-          actions.onLoggedOut();
-          navigate('/login');
-        }}
-      >
-        토큰없애기(로그아웃)
-      </BtnAuth>
+        <BtnAuth
+          variant="contained"
+          onClick={() => {
+            localStorage.removeItem('TOKEN');
+            actions.onLoggedOut();
+            navigate('/login');
+          }}
+        >
+          토큰없애기(로그아웃)
+        </BtnAuth>
 
-      <BtnAuth variant="outlined" onClick={() => navigate('/login')}>
-        <p>로그인페이지로 가기</p>
-      </BtnAuth>
+        <BtnAuth variant="outlined" onClick={() => navigate('/login')}>
+          <p>로그인페이지로 가기</p>
+        </BtnAuth>
 
-      <BtnAuth variant="outlined" onClick={() => navigate('/signup')}>
-        <p>회원가입페이지로 가기</p>
-      </BtnAuth>
-    </div>
+        <BtnAuth variant="outlined" onClick={() => navigate('/signup')}>
+          <p>회원가입페이지로 가기</p>
+        </BtnAuth>
+      </div>
+    </>
   );
 };
 

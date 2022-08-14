@@ -12,7 +12,6 @@ export const Title = styled.div`
     font-size: 15px;
     font-weight: 600;
     text-align: center;
-
 `
 
 export const InputWrap = styled.div`
@@ -43,4 +42,11 @@ export const PolicyCheck = styled.div`
 
 export const ButtonWrap = styled.div`
     margin-top: 40px;
+`
+
+export const ErrorMsg = styled.p`
+    font-size: 13px;
+    font-weight: 500;
+    color: #C53737;
+    margin-top: 8px;
 `

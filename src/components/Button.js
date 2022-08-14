@@ -5,7 +5,6 @@ export const Button = styled.button`
     width: 100%;
     height: 52px;
     padding-left: 18px;
-    border: 1px solid #DDDDDD;
     background: #7D7D7D;
     font-size: 15px;
     font-weight: 700;
@@ -14,7 +13,7 @@ export const Button = styled.button`
 
 export const InlineButton = styled(Button)`
     position: absolute;
-    bottom: 0;
+    top: 25px;
     right: 0;
     width: 80px;
     padding: 18px;

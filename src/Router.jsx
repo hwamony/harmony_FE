@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/login'));
 const Signup = React.lazy(() => import('./pages/signup'));
-const Calendar = React.lazy(() => import('./pages/calendar'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
 const Voicemail = React.lazy(() => import('./pages/voicemail'));
 const Community = React.lazy(() => import('./pages/community'));
@@ -13,7 +13,7 @@ const Ranking = React.lazy(() => import('./pages/ranking'));
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Calendar />} />
+      <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/galleries" element={<Gallery />} />
