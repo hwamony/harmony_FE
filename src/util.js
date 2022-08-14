@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
 
 export const getMonth = (month = dayjs().month()) => {
   const year = dayjs().year();
