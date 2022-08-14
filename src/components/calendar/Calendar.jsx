@@ -21,9 +21,15 @@ const Calendar = () => {
 export default Calendar;
 
 const CalendarContainer = styled.article`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   height: 356px;
+  padding: 15px 10px 30px 10px;
+  background: #f3f3f3;
   text-align: center;
   h2 {
     margin: 1em 0;
