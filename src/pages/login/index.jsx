@@ -8,6 +8,7 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import {
   Container,
+  LogoWrap,
   InputWrap,
   BtnWrap,
   ForgotLink,
@@ -45,35 +46,27 @@ const Login = () => {
         <>
           <PageTitle title="로그인" />
           <Container onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <div
-                style={{
-                  width: '160px',
-                  height: '74px',
-                  margin: 'auto',
-                  marginTop: '160px',
-                  background: '#D9D9D9',
-                }}
-              >
-                LOGO
-              </div>
-            </div>
+            <LogoWrap>
+              <img src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="로고" />
+            </LogoWrap>
             <InputWrap>
               <Input
                 placeholder="아이디를 입력해주세요."
                 name="email"
+                style={{ background: '#F2F2F2' }}
                 ref={register({ required: true })}
               />
               <Input
                 type="password"
                 placeholder="비밀번호를 입력해주세요."
                 name="password"
+                style={{ background: '#F2F2F2' }}
                 ref={register({ required: true })}
               />
               <ErrorMsg id="errMsg"></ErrorMsg>
             </InputWrap>
             <BtnWrap>
-              <Button>LOGIN</Button>
+              <Button style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.1)' }}>로그인</Button>
               <ForgotLink>
                 계정을 잊으셨나요?{' '}
                 <strong onClick={() => navigate()}>ID찾기</strong> 또는{' '}

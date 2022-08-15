@@ -10,6 +10,7 @@ import { Button, InlineButton, BackButton } from '../../components/Button';
 import { Label, RadioLabel } from '../../components/Label';
 import {
   Container,
+  Top,
   Title,
   InputWrap,
   PolicyWrap,
@@ -19,6 +20,7 @@ import {
   ButtonWrap,
   ErrorMsg,
 } from './style';
+import SignupComplete from '../signupcomplete/index';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ const Signup = () => {
     try {
       const response = await api.post('/signup', data);
       console.log('response >>', response);
-      navigate('/login');
+      navigate('/signupcomplete')
     } catch (err) {
       console.log('Error >>', err.response.data);
     }
@@ -85,14 +87,11 @@ const Signup = () => {
         <>
           <PageTitle title="회원가입" />
           <Container onSubmit={handleSubmit(onSubmit)}>
-            <BackButton
-              type="button"
-              style={{ background: '#DDDDDD' }}
-              onClick={() => navigate('/login')}
-            ></BackButton>
-            <Title>회원가입</Title>
-
-            <InputWrap>
+            <Top>
+              <BackButton src={`${process.env.PUBLIC_URL}/images/back.png`} alt="뒤로가기" onClick={() => navigate('/login')} />
+              <Title>회원가입</Title>
+            </Top>
+            <InputWrap style={{ marginTop: '63px' }}>
               <Label>이메일</Label>
               <Input
                 style={{ width: '246px' }}

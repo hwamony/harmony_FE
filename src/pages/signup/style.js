@@ -6,6 +6,17 @@ export const Container = styled.form`
     border: 1px solid #DDDDDD;
     margin: auto;
     position: relative;
+    background: #F2F2F2;
+`
+
+export const Top = styled.div`
+    width: 100%;
+    height: 50px;
+    padding: 15px 0;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0;
 `
 
 export const Title = styled.div`
