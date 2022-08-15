@@ -16,31 +16,20 @@ const Setting = () => {
         <BtnAuth
           variant="contained"
           onClick={() => {
-            localStorage.setItem('TOKEN', 'fake_value');
-            actions.onLoggedIn();
-            navigate('/');
-          }}
-        >
-          토큰추가하기(로그인)
-        </BtnAuth>
-
-        <BtnAuth
-          variant="contained"
-          onClick={() => {
             localStorage.removeItem('TOKEN');
             actions.onLoggedOut();
             navigate('/login');
           }}
         >
-          토큰없애기(로그아웃)
+          로그아웃 (토큰 삭제)
         </BtnAuth>
-
+        
         <BtnAuth variant="outlined" onClick={() => navigate('/login')}>
-          <p>로그인페이지로 가기</p>
+          <p>로그인 링크 (로그인 시 진입 X)</p>
         </BtnAuth>
 
         <BtnAuth variant="outlined" onClick={() => navigate('/signup')}>
-          <p>회원가입페이지로 가기</p>
+          <p>회원가입 링크 (로그인 시 진입 X)</p>
         </BtnAuth>
       </div>
     </>

@@ -1,4 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
+import { createTheme } from '@mui/material/styles';
+import { koKR } from '@mui/material/locale';
+
+export const theme = createTheme(
+  {
+    palette: {
+      // FIXME: 추후 메인 색상으로 수정
+      primary: { main: '#77b256' },
+    },
+  },
+  koKR,
+);
 
 const GlobalStyle = createGlobalStyle`
   /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
@@ -29,9 +41,10 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
-  img, video {
+  img, svg, video {
     height: auto;
     max-width: 100%;
+    vertical-align: middle;
   }
   iframe {
     border: 0;
@@ -46,6 +59,34 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  * {
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+    &::-webkit-scrollbar-thumb {
+      width: 5px;
+      height: 80px;
+      border: 4px solid transparent;
+      border-radius: 10px;
+      background: #ccc;
+      background-clip: padding-box;
+    }
+    &::-webkit-scrollbar-trac {
+      background: none;
+    }
+  }
+  .hidden {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    z-index: -1;
   }
 `;
 

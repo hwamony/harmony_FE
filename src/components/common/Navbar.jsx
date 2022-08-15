@@ -6,7 +6,7 @@ import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '.
 const Navbar = () => {
   const { pathname } = useLocation();
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/login', '/signup'];
+  const paths = ['/login', '/signup', '/schedules'];
 
   useEffect(() => {
     paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);
