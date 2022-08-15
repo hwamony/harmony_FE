@@ -42,6 +42,7 @@ const BtnAdd = styled(Link)`
   bottom: 80px;
   right: 20px;
   padding: 15px;
-  background: #7d7d7d;
+  background: ${({ theme }) => theme.palette.primary.main};
   border-radius: 50%;
+  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
 `;

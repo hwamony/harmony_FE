@@ -5,8 +5,7 @@ import { koKR } from '@mui/material/locale';
 export const theme = createTheme(
   {
     palette: {
-      // FIXME: 추후 메인 색상으로 수정
-      primary: { main: '#77b256' },
+      primary: { main: '#3ec192' },
     },
   },
   koKR,

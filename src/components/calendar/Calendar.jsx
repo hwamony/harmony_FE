@@ -23,6 +23,7 @@ const Calendar = () => {
   return (
     <CalendarContainer>
       <header>
+        {/* FIXME: 버튼 아이콘 수정 */}
         <button onClick={() => dispatch(handlePrevMonth())}>
           <IconBack />
         </button>
@@ -49,15 +50,15 @@ const CalendarContainer = styled.article`
   flex-direction: column;
   height: 356px;
   padding: 15px 10px 30px 10px;
-  background: #f3f3f3;
+  background: #fafafa;
   text-align: center;
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 11px 0 27px;
     h2 {
-      margin: 1em 0;
-      font-size: 1.2em;
+      font-size: 1em;
       font-weight: 700;
     }
     button {
