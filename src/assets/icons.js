@@ -38,6 +38,20 @@ export const IconBack = () => (
   </svg>
 );
 
+// Widget
+export const IconDetail = () => (
+  <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.88756 5.5L0.256282 1.3413C-0.0854271 1.03446 -0.0854271 0.536971 0.256282 0.23013C0.59799 -0.0767102 1.15201 -0.0767102 1.49372 0.23013L6.74372 4.94442C7.08543 5.25126 7.08543 5.74874 6.74372 6.05558L1.49372 10.7699C1.15201 11.0767 0.59799 11.0767 0.256282 10.7699C-0.0854271 10.463 -0.0854271 9.96554 0.256282 9.6587L4.88756 5.5Z" fill="#262626"/>
+  </svg>
+);
+
+export const IconAlert = () => (
+  <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 7.95021C16 4.59508 13.3137 1.87521 10 1.87521C6.68629 1.87521 4 4.59508 4 7.95021C4 15.0377 1 17.0627 1 17.0627H19C19 17.0627 16 15.0377 16 7.95021" stroke="#7D7D7D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M11.7298 21.1127C11.372 21.7372 10.7128 22.1216 9.99978 22.1216C9.28671 22.1216 8.62757 21.7372 8.26978 21.1127" stroke="#7D7D7D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 // Calendar
 export const IconPlus = () => (
   <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
