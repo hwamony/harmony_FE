@@ -135,7 +135,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-1"
-                value="외식"
+                value="EAT_OUT"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
@@ -144,7 +144,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-2"
-                value="여행"
+                value="TRIP"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
@@ -153,7 +153,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-3"
-                value="요리"
+                value="COOK"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
@@ -162,7 +162,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-4"
-                value="청소"
+                value="CLEAN"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
@@ -171,7 +171,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-5"
-                value="기타"
+                value="ETC"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
@@ -180,7 +180,7 @@ const Schedule = () => {
                 type="radio"
                 name="category"
                 id="cat-6"
-                value="개인"
+                value="PERSONAL"
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
