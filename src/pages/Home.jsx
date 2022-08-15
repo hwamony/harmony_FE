@@ -12,6 +12,8 @@ const Home = () => {
       <PageTitle title="캘린더 홈" />
       <Main>
         <h1 className="hidden">캘린더 홈</h1>
+        {/* TODO: 선택된 날짜 state로 관리하기 (기본값: 오늘) */}
+        {/* TODO: 일정 추가 시 날짜 넘겨주기 */}
         {IconPlus && (
           <BtnAdd to="/schedules">
             <p className="hidden">일정 추가</p>
