@@ -4,7 +4,8 @@ const api = axios.create({
   baseURL: 'http://43.200.174.197/api',
   withCredentials: true,
   headers: {
-    Authorization: '',
+    'content-type': 'application/json;charset=UTF-8',
+    accept: 'application/json,',
   },
 });
 
