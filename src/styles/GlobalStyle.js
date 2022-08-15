@@ -1,4 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
+import { createTheme } from '@mui/material/styles';
+import { koKR } from '@mui/material/locale';
+
+export const theme = createTheme(
+  {
+    palette: {
+      // FIXME: 추후 메인 색상으로 수정
+      primary: { main: '#77b256' },
+    },
+  },
+  koKR,
+);
 
 const GlobalStyle = createGlobalStyle`
   /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
