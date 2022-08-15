@@ -10,6 +10,9 @@ const Voicemail = React.lazy(() => import('./pages/voicemail'));
 const Community = React.lazy(() => import('./pages/community'));
 const Setting = React.lazy(() => import('./pages/setting'));
 const Ranking = React.lazy(() => import('./pages/ranking'));
+const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
+
+
 
 const Router = () => {
   return (
@@ -23,6 +26,7 @@ const Router = () => {
       <Route path="/community" element={<Community />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/rankings" element={<Ranking />} />
+      <Route path="/signupcomplete" element={<SignupComplete />} />
     </Routes>
   );
 };
