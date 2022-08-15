@@ -25,8 +25,8 @@ const shortCard = () => {
             <H1>
               <h1>제목입니다</h1>
               <H3>
-                <FaRegThumbsUp /> <p> {like}</p>
-                <FaRegComment /> <p> 322</p>
+                <p> <FaRegThumbsUp /> {like}</p>
+                <p> <FaRegComment /> 322</p>
               </H3>
             </H1>
             <H1>
@@ -43,11 +43,6 @@ const shortCard = () => {
               <h3>#아무말</h3>
               <h3>#이거왜검색할때마다달라</h3>
             </Tag>
-            {/* <GoodCount>
-              <p>좋아요 3개</p>
-              <p>﹒</p>
-              <p>댓글 1개</p>
-            </GoodCount> */}
           </CardContent>
           <CardGood>
             <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요</h5>
@@ -60,7 +55,7 @@ const shortCard = () => {
 }
 export default shortCard;
 
-const CardContainer = styled.div`
+export const CardContainer = styled.div`
   padding-top: 3vh;
   margin: 0 auto;
   display: flex;
@@ -70,7 +65,7 @@ const CardContainer = styled.div`
   text-align: center;
 `;
 
-const Inventory = styled.div`
+export const Inventory = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,9 +75,9 @@ const Inventory = styled.div`
   text-align: center;
   background-color: white;
 `
-// 아이콘 없는 걸로 할 거면 위의 height 45vh로!
 
-const CardTitle = styled.div`
+export const CardTitle = styled.div`
+  border-bottom: 0.01px solid #D9D9D9;
   padding-right: 20px;
   display: flex;
   flex-direction: row;
@@ -100,26 +95,25 @@ const CardTitle = styled.div`
   }
 `
 
-const Profile = styled.div`
+export const Profile = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
   align-items: center;
 `
 
-const Photo = styled.p`
+export const Photo = styled.p`
 margin: 0 15px;
 padding: 15px 13px;
 background-color: #D9D9D9;
 border-radius: 100%;
 `
 
-const Info = styled.div`
+export const Info = styled.div`
   flex-direction: column;
 `
 
-const CardContent = styled.div`
-  border-top: 0.01px solid #D9D9D9;
+export const CardContent = styled.div`
   width: 660px;
   height: 200px;
   display: flex;
@@ -137,14 +131,15 @@ const CardContent = styled.div`
     }
   };
 `
-const H1 = styled.div`
+export const H1 = styled.div`
   width: 690px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   h1 {
-    margin: 0.7em 20px;
+    margin: 0.7em 0;
+    padding-left: 20px;
     font-size: 1.2em;
     font-weight: 700;
     text-align: left;
@@ -154,7 +149,7 @@ const H1 = styled.div`
   }
 `
 
-const H3 = styled.div`
+export const H3 = styled.div`
   width: 180px;
   display: flex;
   flex-direction: row;
@@ -162,10 +157,11 @@ const H3 = styled.div`
   align-items: center;
   p{
     padding-right: 50px;
+    // color: #3EC192;
   }
 `
 
-const Image = styled.div`
+export const Image = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
@@ -179,7 +175,7 @@ const Image = styled.div`
   }
 `
 
-const Tag = styled.div`
+export const Tag = styled.div`
   width: 690px;
   height: 20px;
   padding-left: 10px;
@@ -199,7 +195,7 @@ const Tag = styled.div`
   }
 `
 
-const GoodCount = styled.div`
+export const GoodCount = styled.div`
   width: 100vw;
   height: 3vh;
   padding-left: 20px;
@@ -214,7 +210,7 @@ const GoodCount = styled.div`
   }
 `
 
-const CardGood = styled.div`
+export const CardGood = styled.div`
   border-top: 0.01px solid #D9D9D9;
   display: flex;
   flex-direction: row;
