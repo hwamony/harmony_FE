@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import PageTitle from '../components/common/PageTitle';
+import Widget from '../components/family/Widget';
+import Summary from '../components/calendar/Summary';
 import Calendar from '../components/calendar/Calendar';
 import { IconPlus } from '../assets/icons';
 import LoremText from '../components/common/LoremText';
@@ -10,6 +13,7 @@ const Home = () => {
   return (
     <>
       <PageTitle title="캘린더 홈" />
+      <Widget />
       <Main>
         <h1 className="hidden">캘린더 홈</h1>
         {/* TODO: 선택된 날짜 state로 관리하기 (기본값: 오늘) */}
@@ -20,6 +24,7 @@ const Home = () => {
             <IconPlus />
           </BtnAdd>
         )}
+        <Summary />
         <Calendar />
         <LoremText />
       </Main>
@@ -32,8 +37,8 @@ export default Home;
 const Main = styled.main`
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 356px - 65px);
-  margin-top: 356px;
+  height: calc(100vh - 110px - 356px - 65px);
+  margin-top: 465px;
   padding: 20px 20px 20px 20px;
 `;
 

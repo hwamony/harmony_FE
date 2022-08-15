@@ -34,7 +34,7 @@ const Calendar = () => {
           <IconBack />
         </button>
       </header>
-      <Month monthMatrix={curMonth} monthIdx={monthIdx} />
+      <Month monthMatrix={curMonth} />
     </CalendarContainer>
   );
 };
@@ -43,7 +43,7 @@ export default Calendar;
 
 const CalendarContainer = styled.article`
   position: fixed;
-  top: 0;
+  top: 127px;
   left: 0;
   right: 0;
   display: flex;
