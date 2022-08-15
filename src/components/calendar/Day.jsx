@@ -9,7 +9,7 @@ const Day = ({ day, weekIdx }) => {
   return (
     <>
       <DayBox>
-        <h3 className={cn(`${monthIdx !== day.month() ? 'other' : 'this'}`)}>
+        <h3 className={cn(`${monthIdx % 12 !== day.month() ? 'other' : 'this'}`)}>
           {day.format('D')}
         </h3>
       </DayBox>

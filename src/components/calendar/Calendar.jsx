@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import { getMonth } from '../../util';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMonthIdx } from '../../redux/modules/calendarSlice';
+import {
+  setMonthIdx,
+  handlePrevMonth,
+  handleNextMonth,
+} from '../../redux/modules/calendarSlice';
 import Month from './Month';
+import { IconBack } from '../../assets/icons';
 
 const Calendar = () => {
   const dispatch = useDispatch();
   const { monthIdx } = useSelector((state) => state.calendar);
   const [curMonth, setCurMonth] = useState(getMonth());
 
+  useEffect(() => {
+    setCurMonth(getMonth(monthIdx));
+  }, [monthIdx]);
+
   return (
     <CalendarContainer>
-      <h2>{monthIdx + 1}월</h2>
+      <header>
+        <button onClick={() => dispatch(handlePrevMonth())}>
+          <IconBack />
+        </button>
+        <h2>
+          {dayjs(new Date(dayjs().year(), monthIdx)).format('YYYY년 M월')}
+        </h2>
+        <button onClick={() => dispatch(handleNextMonth())} className="next">
+          <IconBack />
+        </button>
+      </header>
       <Month monthMatrix={curMonth} monthIdx={monthIdx} />
     </CalendarContainer>
   );
@@ -31,9 +51,22 @@ const CalendarContainer = styled.article`
   padding: 15px 10px 30px 10px;
   background: #f3f3f3;
   text-align: center;
-  h2 {
-    margin: 1em 0;
-    font-size: 1.2em;
-    font-weight: 700;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin: 1em 0;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+    button {
+      height: 30px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      &.next svg {
+        transform: rotate(180deg);
+      }
+    }
   }
 `;
