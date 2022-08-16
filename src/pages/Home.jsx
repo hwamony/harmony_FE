@@ -1,15 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
 import PageTitle from '../components/common/PageTitle';
 import Widget from '../components/family/Widget';
 import Summary from '../components/calendar/Summary';
 import Calendar from '../components/calendar/Calendar';
+import ScheduleList from '../components/calendar/ScheduleList';
+import api from '../api/AxiosManager';
+
 import { IconPlus } from '../assets/icons';
 import LoremText from '../components/common/LoremText';
 
 const Home = () => {
+  const { selectedDate, monthIdx } = useSelector((state) => state.calendar);
+
+  const getMonthSchedule = async () => {
+    try {
+      const res = await api.get(
+        `/schedules?year=${selectedDate.format(
+          'YYYY',
+        )}&month=${selectedDate.format('M')}`,
+      );
+      return res.data.data;
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const { data: monthSchedule, refetch } = useQuery(
+    ['schedule'],
+    getMonthSchedule,
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [monthIdx]);
+
+  // FIXME: 개발 끝나면 지우기
+  useEffect(() => {
+    console.log(
+      `/schedules?year=${selectedDate.format(
+        'YYYY',
+      )}&month=${selectedDate.format('M')}`,
+    );
+    console.log(monthSchedule);
+  }, [monthSchedule]);
+
   return (
     <>
       <PageTitle title="캘린더 홈" />
@@ -26,7 +65,15 @@ const Home = () => {
         )}
         <Summary />
         <Calendar />
-        <LoremText />
+        {monthSchedule.schedules.length > 0 ? (
+          <ul>
+            {monthSchedule.schedules.map((schedule, i) => (
+              <ScheduleList key={i} schedule={schedule} />
+            ))}
+          </ul>
+        ) : (
+          <p>{selectedDate.format('YYYY년 M월')} 일정이 없습니다.</p>
+        )}
       </Main>
     </>
   );
