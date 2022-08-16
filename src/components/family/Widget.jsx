@@ -19,8 +19,6 @@ const Widget = () => {
     refetchOnWindowFocus: false,
   });
 
-  console.log(familyInfo);
-
   return (
     <FamilyWidget>
       <LeftWrapper>

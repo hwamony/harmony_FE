@@ -63,7 +63,7 @@ const Schedule = () => {
 
   return (
     <>
-      <PageTitle title="캘린더 일정기록" />
+      <PageTitle title="일정기록 - 캘린더" />
       <Header text="일정기록" />
       <ScheduleSection>
         <ScheduleForm onSubmit={(e) => onSubmitSchedule(e)}>

@@ -15,18 +15,13 @@ const calendarSlice = createSlice({
       state.selectedDate = dayjs(new Date(dayjs().year(), action.payload));
     },
     setDay: (state, action) => {
-      state.selectedDate = dayjs(new Date(dayjs().year(), state.monthIdx, action.payload));
-    },
-    handlePrevMonth: (state) => {
-      state.monthIdx -= 1;
-    },
-    handleNextMonth: (state) => {
-      state.monthIdx += 1;
+      state.selectedDate = dayjs(
+        new Date(dayjs().year(), state.monthIdx, action.payload),
+      );
     },
   },
 });
 
-export const { setMonthIdx, setDay, handlePrevMonth, handleNextMonth } =
-  calendarSlice.actions;
+export const { setMonthIdx, setDay } = calendarSlice.actions;
 
 export default calendarSlice.reducer;

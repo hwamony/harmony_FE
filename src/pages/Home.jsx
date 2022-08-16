@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import api from '../api/AxiosManager';
 
 import PageTitle from '../components/common/PageTitle';
 import Widget from '../components/family/Widget';
 import Summary from '../components/calendar/Summary';
 import Calendar from '../components/calendar/Calendar';
 import ScheduleList from '../components/calendar/ScheduleList';
-import api from '../api/AxiosManager';
-
 import { IconPlus } from '../assets/icons';
-import LoremText from '../components/common/LoremText';
 
 const Home = () => {
   const { selectedDate, monthIdx } = useSelector((state) => state.calendar);
@@ -51,7 +49,7 @@ const Home = () => {
 
   return (
     <>
-      <PageTitle title="캘린더 홈" />
+      <PageTitle title="홈 - 캘린더" />
       <Widget />
       <Main>
         <h1 className="hidden">캘린더 홈</h1>
