@@ -5,6 +5,8 @@ export const store = configureStore({
   reducer: {
     calendar: calendarReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export default store;

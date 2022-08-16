@@ -7,8 +7,13 @@ export const Container = styled.form`
     margin: auto;
 `
 
+export const LogoWrap = styled.div`
+    margin-top: 140px;
+    text-align: center;
+`
+
 export const InputWrap = styled.div`
-    margin-top: 42px;
+    margin-top: 38px;
 `
 
 export const BtnWrap = styled.div`
@@ -23,6 +28,7 @@ export const ForgotLink = styled.div`
 export const SignupLink = styled.div`
     margin: 120px 0 50px 0;
     text-align: center;
+    cursor: pointer;
 `
 
 export const ErrorMsg = styled.p`
