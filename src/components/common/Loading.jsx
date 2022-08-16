@@ -6,8 +6,7 @@ const Loading = () => {
   return (
     <>
       <LoadingSpinner>
-        {/* FIXME: 추후 메인 색상으로 수정 */}
-        <PuffLoader color="#77b256" />
+        <PuffLoader color="#3ec192" />
       </LoadingSpinner>
     </>
   );

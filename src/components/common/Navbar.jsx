@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '../../assets/icons';
+import {
+  IconHome,
+  IconGallery,
+  IconVoice,
+  IconCommunity,
+  IconSettings,
+} from '../../assets/icons';
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -11,7 +17,7 @@ const Navbar = () => {
   useEffect(() => {
     paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);
   }, [pathname]);
-  
+
   return (
     <>
       {isShowing && (
@@ -19,7 +25,8 @@ const Navbar = () => {
           <Lists>
             <li>
               <Menu to="/">
-                <IconHome />홈
+                <IconHome />
+                캘린더
               </Menu>
             </li>
             <li>
@@ -60,7 +67,7 @@ const Navigation = styled.nav`
   left: 0;
   right: 0;
   bottom: 0;
-  border-top: 1px solid #acacac;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
   color: #868686;
   font-size: 12px;
@@ -89,10 +96,10 @@ const Menu = styled(NavLink)`
     margin-bottom: 2px;
   }
   &.active {
-    color: #2d2d2d;
+    color: ${({ theme }) => theme.palette.primary.main};
     font-weight: 600;
     svg path {
-      fill: #2d2d2d;
+      fill: ${({ theme }) => theme.palette.primary.main};
     }
   }
 `;
