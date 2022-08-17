@@ -41,6 +41,14 @@ const Home = () => {
     },
   );
 
+  const activityCounts = {
+    eatCount: monthSchedule.eatCount,
+    tripCount: monthSchedule.tripCount,
+    cookCount: monthSchedule.cookCount,
+    cleanCount: monthSchedule.cleanCount,
+    etcCount: monthSchedule.etcCount,
+  };
+
   useEffect(() => {
     refetch();
   }, [monthIdx]);
@@ -69,7 +77,7 @@ const Home = () => {
             <IconPlus />
           </BtnAdd>
         )}
-        <Summary />
+        <Summary counts={activityCounts} />
         <Calendar />
         {monthSchedule?.schedules.length > 0 ? (
           <ul>

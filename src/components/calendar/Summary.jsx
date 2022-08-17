@@ -1,34 +1,39 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Summary = () => {
+const Summary = ({ counts }) => {
   return (
     <CalendarSummary>
       <Category val="eatout">
         <div />
-        외식 +1
+        외식 +{counts.eatCount}
       </Category>
       <Category val="trip">
         <div />
-        여행 +1
+        여행 +{counts.tripCount}
       </Category>
       <Category val="cook">
         <div />
-        요리 +0
+        요리 +{counts.cookCount}
       </Category>
       <Category val="clean">
         <div />
-        청소 +5
+        청소 +{counts.cleanCount}
       </Category>
       <Category val="etc">
         <div />
-        기타 +3
+        기타 +{counts.etcCount}
       </Category>
     </CalendarSummary>
   );
 };
 
 export default Summary;
+
+Summary.propTypes = {
+  counts: PropTypes.object.isRequired,
+};
 
 const CalendarSummary = styled.section`
   position: fixed;
@@ -49,7 +54,7 @@ const Category = styled.div`
   width: 100%;
   color: #7d7d7d;
   font-size: 14px;
-  letter-spacing: -0.9px;;
+  letter-spacing: -0.9px;
   div {
     width: 7px;
     height: 7px;
