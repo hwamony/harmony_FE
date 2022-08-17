@@ -1,22 +1,43 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { MdMoreVert, MdModeEdit, MdDelete } from 'react-icons/md';
 
 const MoreVert = ({ scheduleId }) => {
+  const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const onClickEdit = () => {
-    handleClose();
+
+  const deleteSchedule = async () => {
+    try {
+      const res = await api.delete(`/schedules/${scheduleId}`);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const onClickDelete = () => {
+
+  const { mutate: deleteData } = useMutation(deleteSchedule, {
+    onSuccess: (res) => {
+      alert(res.data.msg);
+      queryClient.invalidateQueries(['schedule']);
+    },
+  });
+
+  const onClickEdit = () => {
+    console.log(scheduleId);
     handleClose();
   };
 
@@ -44,7 +65,7 @@ const MoreVert = ({ scheduleId }) => {
           <MdModeEdit />
           수정
         </MenuItem>
-        <MenuItem onClick={onClickDelete} disableRipple>
+        <MenuItem onClick={deleteData} disableRipple>
           <MdDelete />
           삭제
         </MenuItem>
