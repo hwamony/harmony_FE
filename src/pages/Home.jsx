@@ -19,8 +19,6 @@ const Home = () => {
   const { selectedDate, monthIdx, selectedDay } = useSelector(
     (state) => state.calendar,
   );
-  // TODO: 넘겨주기
-  // dayjs(new Date(dayjs().year(), monthIdx, selectedDay));
 
   const getMonthSchedule = async () => {
     try {
@@ -55,10 +53,6 @@ const Home = () => {
       )}&month=${selectedDate.format('M')}`,
     );
     console.log(monthSchedule);
-    // console.log(dayjs(monthSchedule.schedules[0].startDate).format('DD'));
-    // console.log(
-    //   dayjs(new Date(dayjs().year(), monthIdx, selectedDay)).format('DD'),
-    // );
   }, [monthSchedule]);
 
   return (
@@ -79,7 +73,6 @@ const Home = () => {
         <Calendar />
         {monthSchedule?.schedules.length > 0 ? (
           <ul>
-            {/* selectedDay가 null이면 전체일정 조회, 있으면 filter로 해당 일 */}
             {!selectedDay
               ? monthSchedule.schedules.map((schedule, i) => (
                   <ScheduleList key={i} schedule={schedule} />
