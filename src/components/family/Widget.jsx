@@ -1,23 +1,11 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
-import api from '../../api/AxiosManager';
+import { useFamilyData } from '../../hooks/useData';
 import { IconAlert, IconDetail } from '../../assets/icons';
 
 const Widget = () => {
   // FIXME: 랭킹 api 완성 후 교체 - 방울 정보 및 화목 등급 필요
-  const getFamilyInfo = async () => {
-    try {
-      const res = await api.get('/family');
-      return res.data.data;
-    } catch (err) {
-      console.log(err.response.data);
-    }
-  };
-
-  const { data: familyInfo } = useQuery(['familyInfo'], getFamilyInfo, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: familyInfo } = useFamilyData();
 
   return (
     <FamilyWidget>

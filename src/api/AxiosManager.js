@@ -16,3 +16,7 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+
+export const apis = {
+  getFamily: () => api.get('/family'),
+};
