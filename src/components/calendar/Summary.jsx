@@ -5,23 +5,23 @@ import styled from 'styled-components';
 const Summary = ({ counts }) => {
   return (
     <CalendarSummary>
-      <Category val="eatout">
+      <Category val="EAT_OUT">
         <div />
         외식 +{counts.eatCount}
       </Category>
-      <Category val="trip">
+      <Category val="TRIP">
         <div />
         여행 +{counts.tripCount}
       </Category>
-      <Category val="cook">
+      <Category val="COOK">
         <div />
         요리 +{counts.cookCount}
       </Category>
-      <Category val="clean">
+      <Category val="CLEAN">
         <div />
         청소 +{counts.cleanCount}
       </Category>
-      <Category val="etc">
+      <Category val="ETC">
         <div />
         기타 +{counts.etcCount}
       </Category>
@@ -60,6 +60,6 @@ const Category = styled.div`
     height: 7px;
     margin-right: 4px;
     border-radius: 50%;
-    background: ${({ theme, val }) => theme.palette[val]};
+    background: ${({ theme, val }) => theme.palette[val].main};
   }
 `;
