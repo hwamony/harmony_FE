@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
@@ -7,7 +8,8 @@ import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { MdMoreVert, MdModeEdit, MdDelete } from 'react-icons/md';
 
-const MoreVert = ({ scheduleId }) => {
+const MoreVert = ({ schedule }) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -22,7 +24,7 @@ const MoreVert = ({ scheduleId }) => {
 
   const deleteSchedule = async () => {
     try {
-      const res = await api.delete(`/schedules/${scheduleId}`);
+      const res = await api.delete(`/schedules/${schedule.scheduleId}`);
       return res;
     } catch (err) {
       console.log(err);
@@ -37,7 +39,8 @@ const MoreVert = ({ scheduleId }) => {
   });
 
   const onClickEdit = () => {
-    console.log(scheduleId);
+    console.log(schedule.scheduleId);
+    navigate('/schedules/edit', { state: schedule });
     handleClose();
   };
 
@@ -77,7 +80,7 @@ const MoreVert = ({ scheduleId }) => {
 export default MoreVert;
 
 MoreVert.propTypes = {
-  scheduleId: PropTypes.number.isRequired,
+  schedule: PropTypes.object.isRequired,
 };
 
 const StyledMenu = styled((props) => (

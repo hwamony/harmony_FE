@@ -22,7 +22,7 @@ const ScheduleList = ({ schedule }) => {
         </CategoryAndDate>
         <strong>{schedule.title}</strong>
       </div>
-      <MoreVert scheduleId={schedule.scheduleId} />
+      <MoreVert schedule={schedule} />
     </ScheduleItem>
   );
 };
