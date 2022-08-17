@@ -12,7 +12,12 @@ dayjs.locale('ko');
 import { Switch, TextField } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { IconHistory } from '../../assets/icons';
+import {
+  IconHistory,
+  IconMembers,
+  IconSelect,
+  IconChevronBot,
+} from '../../assets/icons';
 import { Button } from '../../components/Button';
 
 const Schedule = () => {
@@ -119,19 +124,24 @@ const Schedule = () => {
           </DateWrapper>
 
           {/* TODO: 추후 가족 선택하도록 수정 */}
-          <input
-            type="text"
-            id="input-members"
-            placeholder="참석자"
-            autoComplete="off"
-            ref={memberInput}
-            required
-          />
+          <MemberWrapper>
+            <div>
+              <IconMembers />
+              참석자
+            </div>
+            <IconChevronBot />
+          </MemberWrapper>
 
           <CategoryWrapper>
-            <strong>카테고리</strong>
-            <div>
-              <input
+            <div className="category-top">
+              <strong>
+                <IconSelect />
+                카테고리 선택
+              </strong>
+              <small>* 개인 일정은 점수에서 제외됩니다.</small>
+            </div>
+            <div className="category-inputs">
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-1"
@@ -139,8 +149,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-1">외식</label>
-              <input
+              <label htmlFor="cat-1">
+                <div />
+                외식
+              </label>
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-2"
@@ -148,8 +161,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-2">여행</label>
-              <input
+              <label htmlFor="cat-2">
+                <div />
+                여행
+              </label>
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-3"
@@ -157,8 +173,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-3">요리</label>
-              <input
+              <label htmlFor="cat-3">
+                <div />
+                요리
+              </label>
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-4"
@@ -166,8 +185,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-4">청소</label>
-              <input
+              <label htmlFor="cat-4">
+                <div />
+                청소
+              </label>
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-5"
@@ -175,8 +197,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-5">기타</label>
-              <input
+              <label htmlFor="cat-5">
+                <div />
+                기타
+              </label>
+              <CategoryInput
                 type="radio"
                 name="category"
                 id="cat-6"
@@ -184,9 +209,11 @@ const Schedule = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 hidden
               />
-              <label htmlFor="cat-6">개인</label>
+              <label htmlFor="cat-6">
+                <div />
+                개인
+              </label>
             </div>
-            <small>* 개인 일정은 점수에서 제외됩니다.</small>
           </CategoryWrapper>
 
           <ContentWrapper>
@@ -223,22 +250,18 @@ const ScheduleForm = styled.form`
   input {
     width: 100%;
     padding: 23px 20px 17px;
-    border-bottom: 1px solid #ebebeb;
     &::placeholder {
       color: #979797;
     }
   }
   strong {
     font-weight: 500;
-    color: #979797;
+    color: #000;
   }
   #input-title {
     font-size: 20px;
     font-weight: 700;
-  }
-  #input-members {
-    font-size: 16px;
-    font-weight: 500;
+    border-bottom: 1px solid #ebebeb;
   }
   button {
     position: fixed;
@@ -258,9 +281,10 @@ const DateWrapper = styled.div`
     color: #8d8d8d;
   }
   label {
-    font-size: 14px;
+    color: #000;
+    font-weight: 500;
     svg {
-      margin: -2px 5px 0 0;
+      margin: -2px 9px 0 -1px;
     }
   }
   .MuiSwitch-root {
@@ -288,43 +312,74 @@ const DateWrapper = styled.div`
   }
 `;
 
+const MemberWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #ebebeb;
+  font-weight: 500;
+  svg {
+    margin: -2px 9px 0 0;
+    padding: 5.5px 0;
+  }
+`;
+
 const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 20px 20px 8px 20px;
   border-bottom: 1px solid #ebebeb;
-  small {
-    display: block;
-    font-size: 0.8em;
-    color: #979797;
-  }
-  div {
+  div.category-top {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 5px 0;
-    max-width: 400px;
-    padding: 10px 0;
-    input {
-      width: inherit;
+    margin-bottom: 3px;
+    svg {
+      margin-right: 11px;
     }
+    small {
+      display: block;
+      font-size: 0.8em;
+      color: #979797;
+    }
+  }
+  div.category-inputs {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0 4px;
+    padding: 10px 0;
     label {
-      padding: 5px 10px;
-      border: 1px solid #7d7d7d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 52px;
+      height: 25px;
+      border: 1px solid #ebebeb;
       border-radius: 30px;
-      background: #fff;
-      color: #7d7d7d;
+      color: #000;
       font-size: 14px;
-      font-weight: 500;
       transition: all 0.2s ease;
       cursor: pointer;
-    }
-    input {
-      &:checked + label {
-        background: #7d7d7d;
-        color: #fff;
+      div {
+        width: 7px;
+        height: 7px;
+        padding: 0;
+        margin-right: 4px;
+        border-radius: 50%;
       }
     }
+  }
+`;
+
+const CategoryInput = styled.input`
+  width: inherit;
+  & + label {
+    div {
+      background: ${({ theme, value }) => theme.palette[value].main};
+    }
+  }
+  &:checked + label {
+    background: ${({ theme, value }) => theme.palette[value].sub};
   }
 `;
 
