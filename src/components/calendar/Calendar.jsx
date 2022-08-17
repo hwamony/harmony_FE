@@ -6,7 +6,7 @@ import { setMonthIdx } from '../../redux/modules/calendarSlice';
 import Month from './Month';
 import { IconBack } from '../../assets/icons';
 
-const Calendar = () => {
+const Calendar = ({ schedules }) => {
   const dispatch = useDispatch();
   const { selectedDate, monthIdx } = useSelector((state) => state.calendar);
   const [curMonthMatrix, setCurMonthMatrix] = useState(getMonth());
@@ -36,7 +36,7 @@ const Calendar = () => {
           <IconBack />
         </button>
       </header>
-      <Month monthMatrix={curMonthMatrix} />
+      <Month monthMatrix={curMonthMatrix} schedules={schedules} />
     </CalendarContainer>
   );
 };

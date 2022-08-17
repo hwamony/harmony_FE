@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Day from './Day';
 
-const Month = ({ monthMatrix }) => {
+const Month = ({ monthMatrix, schedules }) => {
   return (
     <CalendarBox>
       {monthMatrix[0].map((day, id) => (
@@ -10,9 +10,12 @@ const Month = ({ monthMatrix }) => {
       ))}
       {monthMatrix.map((weekArr, i) => (
         <React.Fragment key={i}>
-          {weekArr.map((day, idx) => (
-            <Day key={idx} day={day} weekIdx={i} />
-          ))}
+          {weekArr.map((day, idx) => {
+            const dailySchedule = schedules.filter(
+              (schedule) => schedule.startDate.slice(-5) === day.format('MM-DD'),
+            );
+            return <Day key={idx} day={day} dailySchedule={dailySchedule} />;
+          })}
         </React.Fragment>
       ))}
     </CalendarBox>

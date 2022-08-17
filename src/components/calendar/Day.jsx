@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 import cn from 'classnames';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDay } from '../../redux/modules/calendarSlice';
 
-const Day = ({ day, weekIdx }) => {
+const Day = ({ day, dailySchedule }) => {
   const dispatch = useDispatch();
   const { monthIdx, selectedDay } = useSelector((state) => state.calendar);
+
+  useEffect(() => {
+    console.log(`${day.format('DD')}일의 일정은`, dailySchedule);
+  }, []);
+
+  /* TODO:
+  dailySchedule에서 3개까지 달력에 표시해야 하니까 .slice(0, 3)로 자르고,
+  .map 돌면서 div에 val attribute로 category를 전달해서 div 배경색 적용하기
+  */
 
   return (
     <>

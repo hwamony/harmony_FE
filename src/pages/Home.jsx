@@ -79,7 +79,7 @@ const Home = () => {
           </BtnAdd>
         )}
         <Summary counts={activityCounts} />
-        <Calendar />
+        <Calendar schedules={monthSchedule.schedules} />
         {monthSchedule?.schedules.length > 0 ? (
           <ListWrapper>
             {!selectedDay
@@ -131,4 +131,4 @@ const ListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px 0;
-`
+`;
