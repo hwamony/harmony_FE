@@ -62,6 +62,7 @@ const CalendarContainer = styled.article`
     h2 {
       font-size: 1em;
       font-weight: 700;
+      user-select: none;
     }
     button {
       height: 30px;
