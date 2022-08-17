@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDay } from '../redux/modules/calendarSlice';
 import api from '../api/AxiosManager';
+import dayjs from 'dayjs';
 
 import PageTitle from '../components/common/PageTitle';
 import Widget from '../components/family/Widget';
@@ -13,7 +15,10 @@ import ScheduleList from '../components/calendar/ScheduleList';
 import { IconPlus } from '../assets/icons';
 
 const Home = () => {
-  const { selectedDate, monthIdx } = useSelector((state) => state.calendar);
+  const dispatch = useDispatch();
+  const { selectedDate, monthIdx, selectedDay } = useSelector(
+    (state) => state.calendar,
+  );
 
   const getMonthSchedule = async () => {
     try {
@@ -24,14 +29,25 @@ const Home = () => {
       );
       return res.data.data;
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err.response);
     }
   };
 
   const { data: monthSchedule, refetch } = useQuery(
     ['schedule'],
     getMonthSchedule,
+    {
+      onSuccess: () => dispatch(setDay(null)),
+    },
   );
+
+  const activityCounts = {
+    eatCount: monthSchedule.eatCount,
+    tripCount: monthSchedule.tripCount,
+    cookCount: monthSchedule.cookCount,
+    cleanCount: monthSchedule.cleanCount,
+    etcCount: monthSchedule.etcCount,
+  };
 
   useEffect(() => {
     refetch();
@@ -61,14 +77,26 @@ const Home = () => {
             <IconPlus />
           </BtnAdd>
         )}
-        <Summary />
+        <Summary counts={activityCounts} />
         <Calendar />
-        {monthSchedule.schedules.length > 0 ? (
-          <ul>
-            {monthSchedule.schedules.map((schedule, i) => (
-              <ScheduleList key={i} schedule={schedule} />
-            ))}
-          </ul>
+        {monthSchedule?.schedules.length > 0 ? (
+          <ListWrapper>
+            {!selectedDay
+              ? monthSchedule.schedules.map((schedule, i) => (
+                  <ScheduleList key={i} schedule={schedule} />
+                ))
+              : monthSchedule.schedules
+                  .filter(
+                    (s) =>
+                      dayjs(s.startDate).format('DD') <=
+                        selectedDate.format('DD') &&
+                      dayjs(s.endDate).format('DD') >=
+                        selectedDate.format('DD'),
+                  )
+                  .map((schedule, i) => (
+                    <ScheduleList key={i} schedule={schedule} />
+                  ))}
+          </ListWrapper>
         ) : (
           <p>{selectedDate.format('YYYY년 M월')} 일정이 없습니다.</p>
         )}
@@ -84,7 +112,7 @@ const Main = styled.main`
   overflow-y: auto;
   height: calc(100vh - 110px - 356px - 65px);
   margin-top: 465px;
-  padding: 20px 20px 20px 20px;
+  padding: 25px;
 `;
 
 const BtnAdd = styled(Link)`
@@ -96,3 +124,9 @@ const BtnAdd = styled(Link)`
   border-radius: 50%;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
 `;
+
+const ListWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+`

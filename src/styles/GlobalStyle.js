@@ -6,11 +6,12 @@ export const theme = createTheme(
   {
     palette: {
       primary: { main: '#3ec192' },
-      eatout: '#FF7583',
-      trip: '#45BFFF',
-      cook: '#FFBC54',
-      clean: '#3EC192',
-      etc: '#727DF0',
+      EAT_OUT: { main: '#FF7583', sub: '#FFF1F2' },
+      TRIP: { main: '#45BFFF', sub: '#EDF8FF' },
+      COOK: { main: '#FFBC54', sub: '#FFF5E5' },
+      CLEAN: { main: '#3EC192', sub: '#EDFAF6' },
+      ETC: { main: '#727DF0', sub: '#F5F4FE' },
+      PERSONAL: { main: '#7D7D7D', sub: '#F2F2F2' },
     },
   },
   koKR,

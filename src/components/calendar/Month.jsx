@@ -26,6 +26,7 @@ const CalendarBox = styled.div`
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: 0.7fr repeat(4, minmax(0, 1fr));
   flex: 1;
+  user-select: none;
   strong {
     color: #b4b4b4;
     font-weight: 500;
