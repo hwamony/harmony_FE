@@ -80,7 +80,7 @@ const Home = () => {
         <Summary counts={activityCounts} />
         <Calendar />
         {monthSchedule?.schedules.length > 0 ? (
-          <ul>
+          <ListWrapper>
             {!selectedDay
               ? monthSchedule.schedules.map((schedule, i) => (
                   <ScheduleList key={i} schedule={schedule} />
@@ -96,7 +96,7 @@ const Home = () => {
                   .map((schedule, i) => (
                     <ScheduleList key={i} schedule={schedule} />
                   ))}
-          </ul>
+          </ListWrapper>
         ) : (
           <p>{selectedDate.format('YYYY년 M월')} 일정이 없습니다.</p>
         )}
@@ -112,7 +112,7 @@ const Main = styled.main`
   overflow-y: auto;
   height: calc(100vh - 110px - 356px - 65px);
   margin-top: 465px;
-  padding: 20px 20px 20px 20px;
+  padding: 25px;
 `;
 
 const BtnAdd = styled(Link)`
@@ -124,3 +124,9 @@ const BtnAdd = styled(Link)`
   border-radius: 50%;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
 `;
+
+const ListWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+`
