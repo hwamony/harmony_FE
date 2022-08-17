@@ -54,6 +54,7 @@ const CalendarContainer = styled.article`
   padding: 15px 10px 30px 10px;
   background: #fafafa;
   text-align: center;
+  z-index: 20;
   header {
     display: flex;
     justify-content: space-between;

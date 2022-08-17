@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +38,7 @@ const Home = () => {
     getMonthSchedule,
     {
       onSuccess: () => dispatch(setDay(null)),
+      refetchOnWindowFocus: false,
     },
   );
 
@@ -112,7 +113,7 @@ const Main = styled.main`
   overflow-y: auto;
   height: calc(100vh - 110px - 356px - 65px);
   margin-top: 465px;
-  padding: 25px;
+  padding: 25px 10px 65px 25px;
 `;
 
 const BtnAdd = styled(Link)`
@@ -123,6 +124,7 @@ const BtnAdd = styled(Link)`
   background: ${({ theme }) => theme.palette.primary.main};
   border-radius: 50%;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
+  z-index: 50;
 `;
 
 const ListWrapper = styled.ul`
