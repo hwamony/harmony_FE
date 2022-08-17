@@ -324,7 +324,7 @@ const DateWrapper = styled.div`
     width: 100%;
     padding: 10px 20px;
     label {
-      margin: 15px 0 0 15px;
+      margin: 11px 0 0 20px;
       font-size: 16px;
     }
     &:last-child {
@@ -340,7 +340,7 @@ const MemberWrapper = styled.div`
   padding: 0 20px;
   font-weight: 500;
   div.member-title {
-    min-width: 30%;
+    min-width: 85px;
     svg {
       margin: -2px 9px 0 0;
     }
@@ -378,7 +378,7 @@ const CategoryWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 0 4px;
+    gap: 2px 4px;
     padding: 10px 0;
     label {
       display: flex;
