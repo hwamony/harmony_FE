@@ -346,8 +346,10 @@ const MemberWrapper = styled.div`
     }
   }
   .MuiInputBase-root {
-    width: 70%;
-    max-width: 500px;
+    max-width: 70%;
+    fieldset {
+      border: transparent;
+    }
   }
   svg.MuiSelect-icon {
     padding: 12px;
