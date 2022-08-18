@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
-export const getMonth = (month = dayjs().month()) => {
+const getMonth = (month = dayjs().month()) => {
   const year = dayjs().year();
   const firstDay = dayjs(new Date(year, month, 1)).day();
   let curMonthCnt = 0 - firstDay;
@@ -24,3 +24,5 @@ export const getMonth = (month = dayjs().month()) => {
 
   return daysMatrix;
 };
+
+export default getMonth;

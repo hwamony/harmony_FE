@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getMonth } from '../../util';
+import getMonth from '../../utils/getMonth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMonthIdx } from '../../redux/modules/calendarSlice';
 import Month from './Month';
