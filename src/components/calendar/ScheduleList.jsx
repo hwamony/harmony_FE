@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreVert from './MoreVert';
 
@@ -28,6 +29,10 @@ const ScheduleList = ({ schedule }) => {
       <MoreVert schedule={schedule} />
     </ScheduleItem>
   );
+};
+
+ScheduleList.propTypes = {
+  schedule: PropTypes.object,
 };
 
 export default ScheduleList;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import cn from 'classnames';
 import styled from 'styled-components';
@@ -37,6 +38,11 @@ const Day = ({ day, dailySchedule }) => {
     </>
   );
 };
+
+Day.propTypes = {
+  day: PropTypes.object.isRequired,
+  dailySchedule: PropTypes.array
+}
 
 export default Day;
 

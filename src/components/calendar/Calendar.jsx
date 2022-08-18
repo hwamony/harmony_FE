@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import getMonth from '../../utils/getMonth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,6 +40,10 @@ const Calendar = ({ schedules }) => {
       <Month monthMatrix={curMonthMatrix} schedules={schedules} />
     </CalendarContainer>
   );
+};
+
+Calendar.propTypes = {
+  schedules: PropTypes.array,
 };
 
 export default Calendar;

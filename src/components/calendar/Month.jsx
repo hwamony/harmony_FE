@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Day from './Day';
 
@@ -21,6 +22,11 @@ const Month = ({ monthMatrix, schedules }) => {
       ))}
     </CalendarBox>
   );
+};
+
+Month.propTypes = {
+  monthMatrix: PropTypes.array.isRequired,
+  schedules: PropTypes.array,
 };
 
 export default Month;

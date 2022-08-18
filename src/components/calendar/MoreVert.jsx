@@ -77,11 +77,11 @@ const MoreVert = ({ schedule }) => {
   );
 };
 
-export default MoreVert;
-
 MoreVert.propTypes = {
   schedule: PropTypes.object.isRequired,
 };
+
+export default MoreVert;
 
 const StyledMenu = styled((props) => (
   <Menu

@@ -1,4 +1,5 @@
 import React, { createContext, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const AuthValueContext = createContext();
 export const AuthActionsContext = createContext();
@@ -24,6 +25,10 @@ const AuthProvider = ({ children }) => {
       </AuthValueContext.Provider>
     </AuthActionsContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default AuthProvider;

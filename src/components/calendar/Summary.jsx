@@ -19,11 +19,11 @@ const Summary = ({ counts }) => {
   );
 };
 
-export default Summary;
-
 Summary.propTypes = {
   counts: PropTypes.array.isRequired,
 };
+
+export default Summary;
 
 const CalendarSummary = styled.section`
   position: fixed;
