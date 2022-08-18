@@ -50,8 +50,8 @@ const CalendarContainer = styled.article`
   right: 0;
   display: flex;
   flex-direction: column;
-  height: 356px;
-  padding: 15px 10px 30px 10px;
+  height: 347px;
+  padding: 10px 10px 20px 10px;
   background: #fafafa;
   text-align: center;
   z-index: 20;
@@ -59,7 +59,7 @@ const CalendarContainer = styled.article`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 11px 0 27px;
+    margin: 11px 0 18px;
     h2 {
       font-size: 1em;
       font-weight: 700;

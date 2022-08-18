@@ -70,8 +70,6 @@ const Home = () => {
       <Widget />
       <Main>
         <h1 className="hidden">캘린더 홈</h1>
-        {/* TODO: 선택된 날짜 state로 관리하기 (기본값: 오늘) */}
-        {/* TODO: 일정 추가 시 날짜 넘겨주기 */}
         {IconPlus && (
           <BtnAdd to="/schedules">
             <p className="hidden">일정 추가</p>
@@ -111,9 +109,9 @@ export default Home;
 const Main = styled.main`
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 110px - 356px - 65px);
-  margin-top: 465px;
-  padding: 25px 10px 65px 25px;
+  height: calc(100vh - 127px - 347px - 65px);
+  margin-top: 474px;
+  padding: 5px 10px 65px 25px;
 `;
 
 const BtnAdd = styled(Link)`

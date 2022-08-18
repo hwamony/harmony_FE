@@ -12,7 +12,8 @@ const Month = ({ monthMatrix, schedules }) => {
         <React.Fragment key={i}>
           {weekArr.map((day, idx) => {
             const dailySchedule = schedules.filter(
-              (schedule) => schedule.startDate.slice(-5) === day.format('MM-DD'),
+              (schedule) =>
+                schedule.startDate.slice(-5) === day.format('MM-DD'),
             );
             return <Day key={idx} day={day} dailySchedule={dailySchedule} />;
           })}
@@ -27,7 +28,7 @@ export default Month;
 const CalendarBox = styled.div`
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: 0.7fr repeat(4, minmax(0, 1fr));
+  grid-template-rows: 30px repeat(5, minmax(0, 1fr));
   flex: 1;
   user-select: none;
   strong {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import cn from 'classnames';
 import styled from 'styled-components';
@@ -8,10 +8,6 @@ import { setDay } from '../../redux/modules/calendarSlice';
 const Day = ({ day, dailySchedule }) => {
   const dispatch = useDispatch();
   const { monthIdx, selectedDay } = useSelector((state) => state.calendar);
-
-  useEffect(() => {
-    console.log(`${day.format('DD')}일의 일정은`, dailySchedule);
-  }, []);
 
   return (
     <>
