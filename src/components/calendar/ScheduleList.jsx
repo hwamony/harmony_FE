@@ -20,7 +20,10 @@ const ScheduleList = ({ schedule }) => {
             </span>
           )}
         </CategoryAndDate>
-        <strong>{schedule.title}</strong>
+        <CategoryTitle>
+          <strong>{schedule.title}</strong>
+          {schedule.done && <DoneBadge>완료</DoneBadge>}
+        </CategoryTitle>
       </div>
       <MoreVert schedule={schedule} />
     </ScheduleItem>
@@ -52,4 +55,22 @@ const Circle = styled.div`
   margin-right: 7px;
   border-radius: 50%;
   background: ${({ theme, val }) => theme.palette[val].main};
+`;
+
+const CategoryTitle = styled.div`
+  display: flex;
+  align-items: center;
+  strong {
+    font-size: 17px;
+    color: #232323;
+  }
+`;
+
+const DoneBadge = styled.span`
+  display: inline-block;
+  margin-left: 5px;
+  padding: 2px 8px;
+  border: 1px solid #8f8f8f;
+  border-radius: 20px;
+  font-size: 12px;
 `;
