@@ -78,4 +78,5 @@ const DoneBadge = styled.span`
   border: 1px solid #8f8f8f;
   border-radius: 20px;
   font-size: 12px;
+  user-select: none;
 `;
