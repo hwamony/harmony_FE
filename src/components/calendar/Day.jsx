@@ -13,11 +13,6 @@ const Day = ({ day, dailySchedule }) => {
     console.log(`${day.format('DD')}일의 일정은`, dailySchedule);
   }, []);
 
-  /* TODO:
-  dailySchedule에서 3개까지 달력에 표시해야 하니까 .slice(0, 3)로 자르고,
-  .map 돌면서 div에 val attribute로 category를 전달해서 div 배경색 적용하기
-  */
-
   return (
     <>
       <DayBox>
@@ -33,6 +28,15 @@ const Day = ({ day, dailySchedule }) => {
         >
           {day.format('D')}
         </h3>
+        <DailyWrapper>
+          {dailySchedule &&
+            dailySchedule.length > 0 &&
+            dailySchedule
+              .slice(0, 5)
+              .map((daily) => (
+                <MiniCircle key={daily.scheduleId} val={daily.category} />
+              ))}
+        </DailyWrapper>
       </DayBox>
     </>
   );
@@ -68,4 +72,18 @@ const DayBox = styled.section`
       background: #dfdfdf;
     }
   }
+`;
+
+const DailyWrapper = styled.div`
+  display: flex;
+  gap: 2px;
+  height: 4px;
+`;
+
+const MiniCircle = styled.div`
+  width: 4px;
+  height: 4px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: ${({ theme, val }) => theme.palette[val].main};
 `;
