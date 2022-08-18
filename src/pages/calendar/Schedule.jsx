@@ -16,6 +16,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { IconHistory, IconMembers, IconSelect } from '../../assets/icons';
 import { Button } from '../../components/Button';
+import { categories } from '../../utils/data';
 
 const Schedule = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const Schedule = () => {
       let memberIds = [];
       for (let role of scheduleData.members) {
         familyInfo.members.forEach((member) => {
-          member.role === role && memberIds.push(member.useId);
+          member.role === role && memberIds.push(member.userId);
         });
       }
 
@@ -53,6 +54,7 @@ const Schedule = () => {
       contentInput.current.value = scheduleData.content;
       setStartDate(dayjs(scheduleData.startDate));
       setEndDate(dayjs(scheduleData.endDate));
+      setCategory(scheduleData.category);
       if (scheduleData.startDate === scheduleData.endDate) {
         setSwitchChecked(true);
       }
@@ -88,9 +90,18 @@ const Schedule = () => {
     // console.log(endDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
 
     try {
-      const res = await api.post('/schedules', data);
-      console.log(res);
-      alert(res.data.msg);
+      if (!scheduleData) {
+        const res = await api.post('/schedules', data);
+        console.log(res);
+        alert(res.data.msg);
+      } else {
+        const res = await api.put(
+          `/schedules/${scheduleData.scheduleId}`,
+          data,
+        );
+        console.log(res);
+        alert(res.data.msg);
+      }
       navigate('/');
     } catch (err) {
       console.log(err.response.data);
@@ -196,78 +207,24 @@ const Schedule = () => {
               <small>* 개인 일정은 점수에서 제외됩니다.</small>
             </div>
             <div className="category-inputs">
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-1"
-                value="EAT_OUT"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-1">
-                <div />
-                외식
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-2"
-                value="TRIP"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-2">
-                <div />
-                여행
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-3"
-                value="COOK"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-3">
-                <div />
-                요리
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-4"
-                value="CLEAN"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-4">
-                <div />
-                청소
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-5"
-                value="ETC"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-5">
-                <div />
-                기타
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-6"
-                value="PERSONAL"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-6">
-                <div />
-                개인
-              </label>
+              {categories &&
+                categories.map((cat, i) => (
+                  <React.Fragment key={cat.value}>
+                    <CategoryInput
+                      type="radio"
+                      name="category"
+                      id={`cat-${i}`}
+                      value={cat.value}
+                      checked={category === cat.value}
+                      onChange={() => setCategory(cat.value)}
+                      hidden
+                    />
+                    <label htmlFor={`cat-${i}`}>
+                      <div />
+                      {cat.name}
+                    </label>
+                  </React.Fragment>
+                ))}
             </div>
           </CategoryWrapper>
 
