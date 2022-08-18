@@ -15,7 +15,14 @@ const Navbar = () => {
   const paths = ['/login', '/signup', '/schedules'];
 
   useEffect(() => {
-    paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);
+    for (let path of paths) {
+      if (pathname.includes(path)) {
+        setIsShowing(false);
+        return;
+      } else {
+        setIsShowing(true);
+      }
+    }
   }, [pathname]);
 
   return (
