@@ -42,13 +42,13 @@ const Home = () => {
     },
   );
 
-  const activityCounts = {
-    eatCount: monthSchedule.eatCount,
-    tripCount: monthSchedule.tripCount,
-    cookCount: monthSchedule.cookCount,
-    cleanCount: monthSchedule.cleanCount,
-    etcCount: monthSchedule.etcCount,
-  };
+  const activityCounts = [
+    monthSchedule.eatCount,
+    monthSchedule.tripCount,
+    monthSchedule.cookCount,
+    monthSchedule.cleanCount,
+    monthSchedule.etcCount,
+  ];
 
   useEffect(() => {
     refetch();
