@@ -29,4 +29,5 @@ export const BackButton = styled.img`
     width: 20px;
     height: 20px;
     border: none;
+    cursor: pointer;
 `

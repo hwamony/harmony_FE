@@ -17,6 +17,7 @@ import {
   PolicyDesc,
   PolicyLink,
   PolicyCheck,
+  PolicyIcon,
   ButtonWrap,
   ErrorMsg,
 } from './style';
@@ -93,7 +94,7 @@ const Signup = () => {
             <InputWrap style={{ marginTop: '63px' }}>
               <Label>이메일</Label>
               <Input
-                style={{ width: '246px' }}
+                style={{ width: 'calc(100vw - 128px)' }}
                 placeholder="아이디를 입력해주세요."
                 name="email"
                 ref={register({
@@ -176,7 +177,7 @@ const Signup = () => {
             <InputWrap>
               <Label>닉네임</Label>
               <Input
-                style={{ width: '246px' }}
+                style={{ width: 'calc(100vw - 128px)' }}
                 placeholder="닉네임를 입력해주세요."
                 name="nickname"
                 ref={register({
@@ -237,7 +238,8 @@ const Signup = () => {
                   value="agree"
                   ref={register({ required: true })}
                 />
-                <Label htmlFor="policy" style={{ fontWeight: '400' }}>
+                <PolicyIcon src={`${process.env.PUBLIC_URL}/images/check_8px.png`} alt="아이콘" />
+                <Label htmlFor="policy" style={{ marginLeft: '4px', fontWeight: '400' }}>
                   동의함
                 </Label>
               </PolicyCheck>

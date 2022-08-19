@@ -1,10 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.form`
-    width: 375px;
     padding: 20px;
-    border: 1px solid #DDDDDD;
-    margin: auto;
 `
 
 export const LogoWrap = styled.div`

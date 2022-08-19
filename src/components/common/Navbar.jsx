@@ -12,7 +12,7 @@ import {
 const Navbar = () => {
   const { pathname } = useLocation();
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/login', '/signup', '/schedules'];
+  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules'];
 
   useEffect(() => {
     paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);

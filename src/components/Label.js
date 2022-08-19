@@ -21,7 +21,6 @@ export const RadioLabel = styled.label`
 `
 
 export const CodeLabel = styled.label`
-    width: 335px;
     height: 130px;
     border-radius: 12px;
     padding: 42px 0 0 30px;
@@ -29,8 +28,8 @@ export const CodeLabel = styled.label`
 
 export const RoleLabel = styled.label`
     height: 107px;
-    box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
     padding-top: 60px;
+    box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
     border-radius: 5px;
     display: block;
     font-size: 20px;
