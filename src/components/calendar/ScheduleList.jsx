@@ -89,9 +89,13 @@ const CircleOutlined = styled.div`
 const CategoryTitle = styled.div`
   display: flex;
   align-items: center;
+  width: calc(100vw - 90px);
+  white-space: nowrap;
   strong {
+    overflow: hidden;
     font-size: 17px;
     color: #232323;
+    text-overflow: ellipsis;
     &.no-category {
       color: #adadad;
       font-weight: 400;
