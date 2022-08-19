@@ -42,6 +42,16 @@ const Home = () => {
     },
   );
 
+  useEffect(() => {
+    refetch();
+  }, [monthIdx]);
+
+  const filteredSchedules = monthSchedule.schedules.filter(
+    (s) =>
+      dayjs(s.startDate).format('DD') <= selectedDate.format('DD') &&
+      dayjs(s.endDate).format('DD') >= selectedDate.format('DD'),
+  );
+
   const activityCounts = [
     monthSchedule.eatCount,
     monthSchedule.tripCount,
@@ -49,10 +59,6 @@ const Home = () => {
     monthSchedule.cleanCount,
     monthSchedule.etcCount,
   ];
-
-  useEffect(() => {
-    refetch();
-  }, [monthIdx]);
 
   // FIXME: 개발 끝나면 지우기
   useEffect(() => {
@@ -78,27 +84,34 @@ const Home = () => {
         )}
         <Summary counts={activityCounts} />
         <Calendar schedules={monthSchedule.schedules} />
-        {monthSchedule?.schedules.length > 0 ? (
-          <ListWrapper>
-            {!selectedDay
-              ? monthSchedule.schedules.map((schedule, i) => (
+        <ListWrapper>
+          {selectedDay ? (
+            monthSchedule?.schedules.length > 0 ? (
+              filteredSchedules.length > 0 ? (
+                filteredSchedules.map((schedule, i) => (
                   <ScheduleList key={i} schedule={schedule} />
                 ))
-              : monthSchedule.schedules
-                  .filter(
-                    (s) =>
-                      dayjs(s.startDate).format('DD') <=
-                        selectedDate.format('DD') &&
-                      dayjs(s.endDate).format('DD') >=
-                        selectedDate.format('DD'),
-                  )
-                  .map((schedule, i) => (
-                    <ScheduleList key={i} schedule={schedule} />
-                  ))}
-          </ListWrapper>
-        ) : (
-          <p>{selectedDate.format('YYYY년 M월')} 일정이 없습니다.</p>
-        )}
+              ) : (
+                <ScheduleList selectedDate={selectedDate.format('M월 D일')} />
+              )
+            ) : (
+              <ScheduleList selectedDate={selectedDate.format('M월 D일')} />
+            )
+          ) : monthSchedule?.schedules.length > 0 ? (
+            monthSchedule.schedules.map((schedule, i) => (
+              <ScheduleList key={i} schedule={schedule} />
+            ))
+          ) : (
+            <NoSchedule>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/logo_light.png`}
+                alt=""
+              />
+              <p>아직 등록된 일정이 없습니다.</p>
+              <p>{(monthIdx % 12) + 1}월의 첫 번째 일정을 기록해보세요!</p>
+            </NoSchedule>
+          )}
+        </ListWrapper>
       </Main>
     </>
   );
@@ -129,4 +142,22 @@ const ListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px 0;
+`;
+
+const NoSchedule = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.4;
+  color: #adadad;
+  user-select: none;
+  img {
+    padding-bottom: 10px;
+  }
 `;
