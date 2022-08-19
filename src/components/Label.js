@@ -19,3 +19,23 @@ export const RadioLabel = styled.label`
     color: #7D7D7D;
     text-align: center;
 `
+
+export const CodeLabel = styled.label`
+    width: 335px;
+    height: 130px;
+    border-radius: 12px;
+    padding: 42px 0 0 30px;
+`
+
+export const RoleLabel = styled.label`
+    height: 107px;
+    box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
+    padding-top: 60px;
+    border-radius: 5px;
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #191919;
+    text-align: center;    
+`

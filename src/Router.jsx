@@ -13,6 +13,9 @@ const Post = React.lazy(() => import('./pages/community/post'));
 const Setting = React.lazy(() => import('./pages/setting'));
 const Ranking = React.lazy(() => import('./pages/ranking'));
 const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
+const Familycode = React.lazy(() => import('./pages/familycode'));
+const Role = React.lazy(() => import('./pages/role'));
+
 
 
 
@@ -31,6 +34,8 @@ const Router = () => {
       <Route path="/settings" element={<Setting />} />
       <Route path="/rankings" element={<Ranking />} />
       <Route path="/signupcomplete" element={<SignupComplete />} />
+      <Route path="/familycode" element={<Familycode />} />
+      <Route path="/role" element={<Role />} />
     </Routes>
   );
 };
