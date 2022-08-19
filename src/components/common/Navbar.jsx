@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import _ from 'lodash';
 import {
   IconHome,
   IconGallery,
@@ -15,7 +16,14 @@ const Navbar = () => {
   const paths = ['/login', '/signup', '/schedules'];
 
   useEffect(() => {
-    paths.includes(pathname) ? setIsShowing(false) : setIsShowing(true);
+    for (let path of paths) {
+      if (_.includes(pathname, path)) {
+        setIsShowing(false);
+        return;
+      } else {
+        setIsShowing(true);
+      }
+    }
   }, [pathname]);
 
   return (

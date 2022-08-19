@@ -1,39 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { categories } from '../../utils/data';
 
 const Summary = ({ counts }) => {
   return (
     <CalendarSummary>
-      <Category val="EAT_OUT">
-        <div />
-        외식 +{counts.eatCount}
-      </Category>
-      <Category val="TRIP">
-        <div />
-        여행 +{counts.tripCount}
-      </Category>
-      <Category val="COOK">
-        <div />
-        요리 +{counts.cookCount}
-      </Category>
-      <Category val="CLEAN">
-        <div />
-        청소 +{counts.cleanCount}
-      </Category>
-      <Category val="ETC">
-        <div />
-        기타 +{counts.etcCount}
-      </Category>
+      {categories &&
+        categories.slice(0, 5).map((cat, i) => (
+          <React.Fragment key={cat.value}>
+            <Category val={cat.value}>
+              <div />
+              {`${cat.name} +${counts[i]}`}
+            </Category>
+          </React.Fragment>
+        ))}
     </CalendarSummary>
   );
 };
 
-export default Summary;
-
 Summary.propTypes = {
-  counts: PropTypes.object.isRequired,
+  counts: PropTypes.array.isRequired,
 };
+
+export default Summary;
 
 const CalendarSummary = styled.section`
   position: fixed;

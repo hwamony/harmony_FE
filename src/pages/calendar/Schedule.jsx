@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../components/common/PageTitle';
 import Header from '../../components/common/Header';
 import api from '../../api/AxiosManager';
 import { useFamilyData } from '../../hooks/useData';
+import { useSelector } from 'react-redux';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -15,24 +16,51 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { IconHistory, IconMembers, IconSelect } from '../../assets/icons';
 import { Button } from '../../components/Button';
+import { categories } from '../../utils/data';
 
 const Schedule = () => {
   const navigate = useNavigate();
-  const [switchChecked, setSwitchChecked] = useState(true);
-  const [startDate, setStartDate] = useState(dayjs().locale('ko'));
-  const [endDate, setEndDate] = useState(dayjs().locale('ko'));
+  const location = useLocation();
+  const scheduleData = location.state;
+  const [switchChecked, setSwitchChecked] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [selectedMember, setSelectedMember] = useState([]);
   const [category, setCategory] = useState(null);
   const titleInput = useRef();
   const contentInput = useRef();
   const { data: familyInfo } = useFamilyData();
+  const { selectedDate, selectedDay } = useSelector((state) => state.calendar);
 
   useEffect(() => {
-    if (switchChecked) {
-      setStartDate(dayjs());
-      setEndDate(dayjs());
+    if (selectedDay) {
+      setStartDate(selectedDate);
+      setEndDate(selectedDate);
+      setSwitchChecked(true);
     }
-  }, [switchChecked]);
+  }, [selectedDay]);
+
+  useEffect(() => {
+    if (scheduleData && familyInfo) {
+      let memberIds = [];
+      for (let role of scheduleData.members) {
+        familyInfo.members.forEach((member) => {
+          member.role === role && memberIds.push(member.userId);
+        });
+      }
+
+      console.log(scheduleData);
+      titleInput.current.value = scheduleData.title;
+      contentInput.current.value = scheduleData.content;
+      setStartDate(dayjs(scheduleData.startDate));
+      setEndDate(dayjs(scheduleData.endDate));
+      setCategory(scheduleData.category);
+      if (scheduleData.startDate === scheduleData.endDate) {
+        setSwitchChecked(true);
+      }
+      setSelectedMember(memberIds);
+    }
+  }, [scheduleData, familyInfo]);
 
   const handleMemberChange = (event) => {
     const {
@@ -62,12 +90,22 @@ const Schedule = () => {
     // console.log(endDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
 
     try {
-      const res = await api.post('/schedules', data);
-      console.log(res);
-      alert(res.data.msg);
+      if (!scheduleData) {
+        const res = await api.post('/schedules', data);
+        console.log(res);
+        alert(res.data.msg);
+      } else {
+        const res = await api.put(
+          `/schedules/${scheduleData.scheduleId}`,
+          data,
+        );
+        console.log(res);
+        alert(res.data.msg);
+      }
       navigate('/');
     } catch (err) {
       console.log(err.response.data);
+      alert(err.response.data.message);
     }
   };
 
@@ -93,13 +131,22 @@ const Schedule = () => {
               <label htmlFor="switch-allday">
                 <IconHistory />
                 종일
+                {!startDate && <small>* 시작일을 입력해주세요.</small>}
+                {startDate && switchChecked && (
+                  <span>({startDate.format('M/D dd')})</span>
+                )}
               </label>
               <Switch
                 id="switch-allday"
                 color="default"
                 checked={switchChecked}
                 onChange={(e) => {
-                  setSwitchChecked((state) => !state);
+                  if (startDate) {
+                    setEndDate(startDate);
+                    setSwitchChecked((state) => !state);
+                  } else {
+                    alert('시작일을 입력해주세요.');
+                  }
                 }}
               />
             </div>
@@ -111,21 +158,22 @@ const Schedule = () => {
                   onChange={(state) => {
                     setStartDate(state);
                   }}
-                  maxDate={endDate}
                   label="시작일"
                   onError={console.log}
                   inputFormat="YYYY년 M월 D일 ddd요일"
                   renderInput={(params) => <TextField {...params} />}
                 />
-                <MobileDatePicker
-                  value={endDate}
-                  onChange={(state) => setEndDate(state)}
-                  minDate={startDate}
-                  label="종료일"
-                  onError={console.log}
-                  inputFormat="YYYY년 M월 D일 ddd요일"
-                  renderInput={(params) => <TextField {...params} />}
-                />
+                {startDate && (
+                  <MobileDatePicker
+                    value={endDate}
+                    onChange={(state) => setEndDate(state)}
+                    minDate={startDate}
+                    label="종료일"
+                    onError={console.log}
+                    inputFormat="YYYY년 M월 D일 ddd요일"
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                )}
               </>
             )}
           </DateWrapper>
@@ -159,78 +207,24 @@ const Schedule = () => {
               <small>* 개인 일정은 점수에서 제외됩니다.</small>
             </div>
             <div className="category-inputs">
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-1"
-                value="EAT_OUT"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-1">
-                <div />
-                외식
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-2"
-                value="TRIP"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-2">
-                <div />
-                여행
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-3"
-                value="COOK"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-3">
-                <div />
-                요리
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-4"
-                value="CLEAN"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-4">
-                <div />
-                청소
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-5"
-                value="ETC"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-5">
-                <div />
-                기타
-              </label>
-              <CategoryInput
-                type="radio"
-                name="category"
-                id="cat-6"
-                value="PERSONAL"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-6">
-                <div />
-                개인
-              </label>
+              {categories &&
+                categories.map((cat, i) => (
+                  <React.Fragment key={cat.value}>
+                    <CategoryInput
+                      type="radio"
+                      name="category"
+                      id={`cat-${i}`}
+                      value={cat.value}
+                      checked={category === cat.value}
+                      onChange={() => setCategory(cat.value)}
+                      hidden
+                    />
+                    <label htmlFor={`cat-${i}`}>
+                      <div />
+                      {cat.name}
+                    </label>
+                  </React.Fragment>
+                ))}
             </div>
           </CategoryWrapper>
 
@@ -287,10 +281,16 @@ const ScheduleForm = styled.form`
     bottom: 35px;
     width: calc(100% - 40px);
   }
+  small {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.8em;
+    color: #979797;
+  }
 `;
 
 const DateWrapper = styled.div`
-  margin-top: 5px;
+  padding: 5px 0 10px;
   label {
     color: #000;
     font-weight: 500;
@@ -302,7 +302,7 @@ const DateWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 12px 15px 20px;
+    padding: 15px 12px 5px 20px;
     color: #8d8d8d;
   }
   .MuiSwitch-root {
@@ -322,13 +322,10 @@ const DateWrapper = styled.div`
   }
   .MuiFormControl-root {
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px 20px 0;
     label {
       margin: 11px 0 0 20px;
       font-size: 16px;
-    }
-    &:last-child {
-      padding-bottom: 20px;
     }
   }
 `;
@@ -346,8 +343,10 @@ const MemberWrapper = styled.div`
     }
   }
   .MuiInputBase-root {
-    width: 70%;
-    max-width: 500px;
+    max-width: 70%;
+    fieldset {
+      border: transparent;
+    }
   }
   svg.MuiSelect-icon {
     padding: 12px;
@@ -365,13 +364,11 @@ const CategoryWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 3px;
+    strong {
+      word-break: keep-all;
+    }
     svg {
       margin-right: 11px;
-    }
-    small {
-      display: block;
-      font-size: 0.8em;
-      color: #979797;
     }
   }
   div.category-inputs {

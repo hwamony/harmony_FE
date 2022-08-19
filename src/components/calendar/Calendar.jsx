@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { getMonth } from '../../util';
+import getMonth from '../../utils/getMonth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMonthIdx } from '../../redux/modules/calendarSlice';
 import Month from './Month';
 import { IconBack } from '../../assets/icons';
 
-const Calendar = () => {
+const Calendar = ({ schedules }) => {
   const dispatch = useDispatch();
   const { selectedDate, monthIdx } = useSelector((state) => state.calendar);
   const [curMonthMatrix, setCurMonthMatrix] = useState(getMonth());
@@ -36,9 +37,13 @@ const Calendar = () => {
           <IconBack />
         </button>
       </header>
-      <Month monthMatrix={curMonthMatrix} />
+      <Month monthMatrix={curMonthMatrix} schedules={schedules} />
     </CalendarContainer>
   );
+};
+
+Calendar.propTypes = {
+  schedules: PropTypes.array,
 };
 
 export default Calendar;
@@ -50,15 +55,16 @@ const CalendarContainer = styled.article`
   right: 0;
   display: flex;
   flex-direction: column;
-  height: 356px;
-  padding: 15px 10px 30px 10px;
+  height: 347px;
+  padding: 10px 10px 20px 10px;
   background: #fafafa;
   text-align: center;
+  z-index: 20;
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 11px 0 27px;
+    margin: 11px 0 18px;
     h2 {
       font-size: 1em;
       font-weight: 700;

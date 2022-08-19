@@ -13,6 +13,7 @@ const getFamilyInfo = async () => {
 export const useFamilyData = () =>
   useQuery(['familyInfo'], getFamilyInfo, {
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
     onSuccess: (data) => {
       console.log(data);
     },

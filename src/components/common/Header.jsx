@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconBack } from '../../assets/icons';
@@ -13,6 +14,10 @@ const Header = ({ text }) => {
       {text}
     </HeaderContainer>
   );
+};
+
+Header.propTypes = {
+  text: PropTypes.string,
 };
 
 export default Header;
