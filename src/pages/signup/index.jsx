@@ -20,7 +20,6 @@ import {
   ButtonWrap,
   ErrorMsg,
 } from './style';
-import SignupComplete from '../signupcomplete/index';
 
 const Signup = () => {
   const navigate = useNavigate();
