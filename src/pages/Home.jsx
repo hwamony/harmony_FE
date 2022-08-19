@@ -108,7 +108,7 @@ const Home = () => {
                 alt=""
               />
               <p>아직 등록된 일정이 없습니다.</p>
-              <p>{(monthIdx % 12) + 1}월의 첫 번째 일정을 기록해보세요!</p>
+              <p>{selectedDate.format('M월')}의 첫 번째 일정을 기록해보세요!</p>
             </NoSchedule>
           )}
         </ListWrapper>

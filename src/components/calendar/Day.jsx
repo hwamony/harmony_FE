@@ -8,7 +8,9 @@ import { setDay } from '../../redux/modules/calendarSlice';
 
 const Day = ({ day, dailySchedule }) => {
   const dispatch = useDispatch();
-  const { monthIdx, selectedDay } = useSelector((state) => state.calendar);
+  const { monthIdx, selectedDay, selectedDate } = useSelector(
+    (state) => state.calendar,
+  );
 
   return (
     <>
@@ -18,7 +20,7 @@ const Day = ({ day, dailySchedule }) => {
             monthIdx % 12 === day.month() && dispatch(setDay(day.format('DD')))
           }
           className={cn(
-            monthIdx % 12 !== day.month() ? 'other' : 'this',
+            selectedDate.format('M') - 1 !== day.month() ? 'other' : 'this',
             day.format('YY-MM-DD') === dayjs().format('YY-MM-DD') && 'today',
             selectedDay === day.format('DD') && 'selected',
           )}
@@ -41,8 +43,8 @@ const Day = ({ day, dailySchedule }) => {
 
 Day.propTypes = {
   day: PropTypes.object.isRequired,
-  dailySchedule: PropTypes.array
-}
+  dailySchedule: PropTypes.array,
+};
 
 export default Day;
 
