@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Modal = (props) => {
     const [ type, setType ] = useState(props.type)
     const [ familycode, setFamilycode ] = useState('')
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, errors } = useForm();
     const { isVisible, setIsVisible } = props
     const navigate = useNavigate()
 
@@ -16,22 +16,37 @@ const Modal = (props) => {
         setIsVisible(false);
     }
 
-    const createApi = async (data) => {
+    const createHandler = async (data) => {
+        const errorMsg = document.getElementById('errorMsg');
+
         try {
             const response = await api.post('/families', data);
             setType('copy');
             setFamilycode(response.data.data.familyCode);
         } catch (err) {
             console.log('err>>', err.response);
+            errorMsg.innerText = err.response.data.message;
         }
     }
 
-    const joinApi = async (data) => {
-        const errorMsg = document.getElementById("errorMsg");
+    const copyHandler = () => {
+        const familycode = document.getElementById('familycode');
+        const tempElement = document.createElement("textarea");
+        document.body.appendChild(tempElement);
+        tempElement.value = familycode.innerText;
+        tempElement.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempElement);
+        ModalClose();
+    }
+    
+
+    const joinHandler = async (data) => {
+        const errorMsg = document.getElementById('errorMsg');
 
         try {
             const response = await api.put('/family/join', data);
-            navigate('/')
+            navigate('/role')
         } catch (err) {
             console.log('err>>', err.response.data);
             errorMsg.innerText = err.response.data.message;
@@ -41,6 +56,11 @@ const Modal = (props) => {
     const onDimmerClick = (event) => {
         if (event.currentTarget !== event.target) return;
         ModalClose();
+    }
+
+    const onDimmerCopy = (event) => {
+        if (event.currentTarget !== event.target) return;
+        copyHandler();
     }
 
     const ClipboardCopy = (e) => {
@@ -54,16 +74,19 @@ const Modal = (props) => {
 
     const Create = () => {
         return (
-            <ContentsWrap onSubmit={handleSubmit(createApi)}>
+            <ContentsWrap onSubmit={handleSubmit(createHandler)}>
                 <Desc>가족 이름을 입력해주세요.</Desc>
                 <InputWrap>
                     <Input name='familyName' style={{ border: 'none', background: '#EFEFEF' }} placeholder='예) 화목네'
                         ref={register({ required: true })}
                     />
+                    <ErrorMsg id='errorMsg'>
+                    {errors.familyName && errors.familyName.type === 'required' && ('가족 이름을 입력해주세요.')}
+                    </ErrorMsg>
                 </InputWrap>
                 <BtnWrap>
-                    <ModalBtn fontWeight='400' onClick={ModalClose}>취소</ModalBtn>
-                    <ModalBtn fontWeight='600'>확인</ModalBtn>
+                    <ModalBtn style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }} onClick={ModalClose}>취소</ModalBtn>
+                    <ModalBtn style={{ fontWeight: '600', color: '#3EC192' }}>확인</ModalBtn>
                 </BtnWrap>
             </ContentsWrap>
         )
@@ -71,15 +94,14 @@ const Modal = (props) => {
 
     const Copy = () => {
         return (
-            <ContentsWrap>
+            <ContentsWrap onSubmit={handleSubmit(copyHandler)}>
                 <Desc>코드가 생성되었습니다.</Desc>
                 <CodeWrap>
-                    <Code onClick={ClipboardCopy}>{familycode}</Code>
+                    <Code id='familycode' onClick={ClipboardCopy}>{familycode}</Code>
                     <CodeDesc>클릭하면 코드가 복사됩니다.</CodeDesc>
                 </CodeWrap>
                 <BtnWrap>
-                    <ModalBtn fontWeight='400' onClick={ModalClose}>취소</ModalBtn>
-                    <ModalBtn fontWeight='600' onClick={ModalClose}>확인</ModalBtn>
+                    <ModalBtn style={{ width: '100%', fontWeight: '600', color: '#3EC192' }}>확인</ModalBtn>
                 </BtnWrap>
             </ContentsWrap>
         )
@@ -87,17 +109,19 @@ const Modal = (props) => {
 
     const Join = () => {
         return (
-            <ContentsWrap onSubmit={handleSubmit(joinApi)}>
+            <ContentsWrap onSubmit={handleSubmit(joinHandler)}>
                 <Desc>코드를 입력해주세요.</Desc>
                 <InputWrap>
                     <Input name='familyCode' style={{ border: 'none', background: '#EFEFEF' }} placeholder='예) 94321114'
-                        ref={register()}
+                        ref={register({ required: true })}
                     />
-                    <ErrorMsg id='errorMsg'></ErrorMsg>
+                    <ErrorMsg id='errorMsg'>
+                    {errors.familyCode && errors.familyCode.type === 'required' && ('코드를 입력해주세요.')}
+                    </ErrorMsg>
                 </InputWrap>
                 <BtnWrap>
-                    <ModalBtn fontWeight='400' onClick={ModalClose}>취소</ModalBtn>
-                    <ModalBtn fontWeight='600'>확인</ModalBtn>
+                    <ModalBtn style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }} onClick={ModalClose}>취소</ModalBtn>
+                    <ModalBtn style={{ fontWeight: '600', color: '#3EC192' }}>확인</ModalBtn>
                 </BtnWrap>
             </ContentsWrap>
         )
@@ -105,11 +129,11 @@ const Modal = (props) => {
 
     return (
         <ModalWrap visible={isVisible}>
-            <Overlay onClick={onDimmerClick}>
+            <Overlay onClick={ type !== 'join' ? onDimmerClick : onDimmerCopy }>
                 <ModalInner>
                 { type === 'create' && <Create></Create>}
                 { type === 'copy' && <Copy></Copy>}
-                { type === 'join' && <Join></Join>}
+                { type === 'join' && <Copy></Copy>}
                 </ModalInner>
             </Overlay>
         </ModalWrap>
@@ -198,6 +222,6 @@ const ModalBtn = styled.button`
     width: 50%;
     height: 56px;
     border-top: 1px solid #DADADA;
-    font-weight: ${(props) => props.fontWeight};
     font-size: 18px;
+    cursor: pointer;
 `
