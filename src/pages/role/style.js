@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.form`
-    width: 375px;
+    height: 100vh;
     padding: 20px;
-    border: 1px solid #DDDDDD;
-    margin: auto;
     position: relative;
     background: #FFFFFF;
 `
@@ -23,6 +21,7 @@ export const Desc = styled.div`
 `
 
 export const InputWrap = styled.div`
+    margin-top: 64px;
     display: flex;
     flex-wrap: wrap;
 `
@@ -32,10 +31,12 @@ export const IconWrap = styled.span`
     height: 24px;
     padding: 2px 4px;
     border-radius: 12px;
+    margin: auto;
     background: #DCDCDC;
     position: absolute;
     top: 48px;
-    left: 42px;
+    left: 50%;
+    transform: translateX(-50%);
 `
 
 export const BtnWrap = styled.div`

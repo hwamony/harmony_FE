@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Modal = (props) => {
     const [ type, setType ] = useState(props.type)
     const [ familycode, setFamilycode ] = useState('')
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit } = useForm();
     const { isVisible, setIsVisible } = props
     const navigate = useNavigate()
 
