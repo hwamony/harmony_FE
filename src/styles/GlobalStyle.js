@@ -67,19 +67,22 @@ const GlobalStyle = createGlobalStyle`
   }
 
   * {
-    &::-webkit-scrollbar {
-      width: 12px;
-    }
-    &::-webkit-scrollbar-thumb {
-      width: 5px;
-      height: 80px;
-      border: 4px solid transparent;
-      border-radius: 10px;
-      background: #ccc;
-      background-clip: padding-box;
-    }
-    &::-webkit-scrollbar-trac {
-      background: none;
+    @media only screen and (min-width: 821px) {
+      &::-webkit-scrollbar {
+        display: fixed;
+        width: 12px;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 5px;
+        height: 80px;
+        border: 4px solid transparent;
+        border-radius: 10px;
+        background: #ccc;
+        background-clip: padding-box;
+      }
+      &::-webkit-scrollbar-trac {
+        background: none;
+      }
     }
   }
   .hidden {
