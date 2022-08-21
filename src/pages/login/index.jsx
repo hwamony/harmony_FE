@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
@@ -23,17 +23,12 @@ const Login = () => {
   const { actions, isLoggedIn } = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
-  useEffect(() => {
-    isLoggedIn && navigate('/');
-  }, [isLoggedIn]);
-
   const onSubmit = async (data) => {
     // 로그인 API 통신
     try {
       const response = await api.post('/login', data);
       localStorage.setItem('TOKEN', response.headers.authorization);
       actions.onLoggedIn();
-      navigate('/');
     } catch (err) {
       console.log(err.response.data);
       setErrMsg(err.response.data.message);
@@ -80,7 +75,7 @@ const Login = () => {
             </BtnWrap>
           </Container>
         </>
-      )}
+      )} 
     </>
   );
 };

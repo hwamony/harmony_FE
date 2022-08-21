@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +25,6 @@ import {
 const Signup = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    isLoggedIn && navigate('/');
-  }, [isLoggedIn]);
 
   const { register, handleSubmit, watch, getValues, errors } = useForm();
   const password = useRef();
@@ -223,9 +219,9 @@ const Signup = () => {
                   value="agree"
                   ref={register({ required: true })}
                 />
-                <PolicyIcon src={`${process.env.PUBLIC_URL}/images/check_8px.png`} alt="아이콘" />
-                <Label htmlFor="policy" style={{ marginLeft: '4px', fontWeight: '400' }}>
-                  동의함
+                <Label htmlFor="policy">
+                  <PolicyIcon src={`${process.env.PUBLIC_URL}/images/check_8px.png`} alt="아이콘" />
+                  <span style={{ marginLeft: '4px', fontWeight: '400' }}>동의함</span>
                 </Label>
               </PolicyCheck>
               <ErrorMsg>
