@@ -1,19 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconFilter } from '../../assets/icons';
 
-const Header = ({ text }) => {
+const Header = ({ title, subtitle }) => {
   return (
     <HeaderContainer>
-      {text}
-      <IconFilter />
+      <p>
+        <Link to="/galleries">{title}</Link>
+        {subtitle && <span>- {subtitle}</span>}
+      </p>
+      {!subtitle && <IconFilter />}
     </HeaderContainer>
   );
 };
 
 Header.propTypes = {
-  text: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
 };
 
 export default Header;
@@ -26,10 +31,15 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
+  height: 70px;
   padding: 0 20px;
   background: #fff;
   color: #18191f;
   font-size: 20px;
   font-weight: 700;
+  span {
+    margin-left: 5px;
+    font-size: 16px;
+    font-weight: 500;
+  }
 `;

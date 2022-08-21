@@ -29,7 +29,6 @@ const ScheduleItem = ({ isLoading, lists }) => {
       ) : (
         <p>등록된 사진이 없습니다.</p>
       )}
-      {lists.length % 3 === 0 && <li />}
     </ItemContainer>
   );
 };
