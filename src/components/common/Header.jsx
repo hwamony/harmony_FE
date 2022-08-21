@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconBack } from '../../assets/icons';
+import { IconFilter } from '../../assets/icons';
 
 const Header = ({ text }) => {
-  const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <button type="button" onClick={() => navigate(-1)}>
-        <IconBack />
-      </button>
       {text}
+      <IconFilter />
     </HeaderContainer>
   );
 };
@@ -27,14 +23,13 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  padding: 19px 0 15px;
-  border-bottom: 2px solid #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55px;
+  padding: 0 20px;
   background: #fff;
-  text-align: center;
+  color: #18191f;
+  font-size: 20px;
   font-weight: 700;
-  button {
-    position: absolute;
-    top: 19px;
-    left: 15px;
-  }
 `;
