@@ -19,6 +19,7 @@ import api from '../../api/AxiosManager';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [ errMsg, setErrMsg ] = useState('');
   const { actions, isLoggedIn } = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
@@ -35,8 +36,7 @@ const Login = () => {
       navigate('/');
     } catch (err) {
       console.log(err.response.data);
-      document.getElementById('errMsg').innerText =
-        '아이디와 비밀번호가 맞지 않습니다.';
+      setErrMsg(err.response.data.message);
     }
   };
 
@@ -63,7 +63,9 @@ const Login = () => {
                 style={{ background: '#F2F2F2' }}
                 ref={register({ required: true })}
               />
-              <ErrorMsg id="errMsg"></ErrorMsg>
+              <ErrorMsg>
+                { errors.email && errors.password ? '아이디와 비밀번호를 입력해주세요.' : errMsg }
+              </ErrorMsg>
             </InputWrap>
             <BtnWrap>
               <Button style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.1)' }}>로그인</Button>
