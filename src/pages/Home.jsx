@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +8,10 @@ import dayjs from 'dayjs';
 
 import PageTitle from '../components/common/PageTitle';
 import Widget from '../components/family/Widget';
+import BtnAdd from '../components/common/BtnAdd';
 import Summary from '../components/calendar/Summary';
 import Calendar from '../components/calendar/Calendar';
 import ScheduleList from '../components/calendar/ScheduleList';
-import { IconPlus } from '../assets/icons';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -76,12 +75,7 @@ const Home = () => {
       <Widget />
       <Main>
         <h1 className="hidden">캘린더 홈</h1>
-        {IconPlus && (
-          <BtnAdd to="/schedules">
-            <p className="hidden">일정 추가</p>
-            <IconPlus />
-          </BtnAdd>
-        )}
+        <BtnAdd link="/schedules" text="일정 추가" />
         <Summary counts={activityCounts} />
         <Calendar schedules={monthSchedule.schedules} />
         <ListWrapper>
@@ -125,17 +119,6 @@ const Main = styled.main`
   height: calc(100vh - 127px - 347px - 65px);
   margin-top: 474px;
   padding: 5px 10px 65px 25px;
-`;
-
-const BtnAdd = styled(Link)`
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  padding: 15px;
-  background: ${({ theme }) => theme.palette.primary.main};
-  border-radius: 50%;
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
-  z-index: 50;
 `;
 
 const ListWrapper = styled.ul`
