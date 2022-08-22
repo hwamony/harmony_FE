@@ -96,3 +96,9 @@ export const IconClose = () => (
     <path d="M19.7101 4.29001C17.3201 6.57001 4.29004 19.71 4.29004 19.71" stroke="black" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round"/>
   </svg>
 );
+
+export const IconCheck = () => (
+  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1.05859 2.29412L4.47941 6.52941L10.9409 0.882355" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
