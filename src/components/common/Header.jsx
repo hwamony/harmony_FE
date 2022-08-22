@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
 import { IconFilter, IconClose } from '../../assets/icons';
 
 const Header = ({ title, subtitle, select }) => {
-  const [onSelect, setOnSelect] = useState(false);
-  const [onSelectAll, setOnSelectAll] = useState(false);
+  const dispatch = useDispatch();
+  const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
+
   return (
     <HeaderContainer>
       {onSelect ? (
         <p
           onClick={() => {
-            setOnSelect(false);
-            setOnSelectAll(false);
+            dispatch(setOnSelect(false));
+            dispatch(setOnSelectAll(false));
           }}
         >
           <IconClose />
@@ -35,12 +38,12 @@ const Header = ({ title, subtitle, select }) => {
           <BtnSelect
             type="button"
             className={cn('all', onSelectAll && 'selected')}
-            onClick={() => setOnSelectAll((state) => !state)}
+            onClick={() => dispatch(setOnSelectAll(!onSelectAll))}
           >
             전체선택
           </BtnSelect>
         ) : (
-          <BtnSelect type="button" onClick={() => setOnSelect(true)}>
+          <BtnSelect type="button" onClick={() => dispatch(setOnSelect(true))}>
             선택
           </BtnSelect>
         ))}
@@ -75,9 +78,9 @@ const HeaderContainer = styled.header`
   p {
     display: flex;
     align-items: center;
-    cursor: pointer;
     svg {
       margin-right: 5px;
+      cursor: pointer;
     }
     span {
       align-items: center;
