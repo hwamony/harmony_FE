@@ -5,7 +5,12 @@ export const Container = styled.form`
 `
 
 export const LogoWrap = styled.div`
-    margin: 160px 0 90px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    padding-top: 30px;
     text-align: center;
 `
 
@@ -18,7 +23,6 @@ export const WelcomeDesc = styled.div`
 `
 
 export const InputWrap = styled.div`
-    margin-top: 18px;
     position: relative;
     display: flex;
     flex-direction: column;
