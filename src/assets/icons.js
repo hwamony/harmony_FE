@@ -89,3 +89,10 @@ export const IconComment = () => (
     <path d="M13.5 0H1.5C0.675 0 0 0.68088 0 1.51307V15.1307L3 12.1045H13.5C14.325 12.1045 15 11.4236 15 10.5915V1.51307C15 0.68088 14.325 0 13.5 0ZM13.5 10.5915H2.4L1.5 11.4993V1.51307H13.5V10.5915Z" fill="#A6A6A6"/>
   </svg>
 );
+
+export const IconClose = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.29004 4.29001C6.56004 6.68001 19.7101 19.71 19.7101 19.71" stroke="black" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round"/>
+    <path d="M19.7101 4.29001C17.3201 6.57001 4.29004 19.71 4.29004 19.71" stroke="black" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round"/>
+  </svg>
+);

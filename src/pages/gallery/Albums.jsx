@@ -64,7 +64,7 @@ const Albums = () => {
       <Header title="갤러리" subtitle={dummyData.name} />
       <section>
         {dummyData.albums.map((album) => (
-          <AlbumItem key={album.albumId} album={album} />
+          <AlbumItem key={album.albumId} album={album} data={dummyData} />
         ))}
       </section>
     </>

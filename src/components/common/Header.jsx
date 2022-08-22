@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { IconFilter } from '../../assets/icons';
+import { IconFilter, IconClose } from '../../assets/icons';
 
-const Header = ({ title, subtitle }) => {
+const Header = ({ title, subtitle, select }) => {
+  const [onSelect, setOnSelect] = useState(false);
+  const [onSelectAll, setOnSelectAll] = useState(false);
   return (
     <HeaderContainer>
-      <p>
-        <Link to="/galleries">{title}</Link>
-        {subtitle && <span>- {subtitle}</span>}
-      </p>
+      {onSelect ? (
+        <p
+          onClick={() => {
+            setOnSelect(false);
+            setOnSelectAll(false);
+          }}
+        >
+          <IconClose />
+          <span>취소</span>
+        </p>
+      ) : (
+        <p>
+          <Link to="/galleries">
+            <strong>{title}</strong>
+          </Link>
+          {subtitle && <span>- {subtitle}</span>}
+        </p>
+      )}
+
       {!subtitle && <IconFilter />}
+      {select &&
+        (onSelect ? (
+          <BtnSelect
+            type="button"
+            className={cn('all', onSelectAll && 'selected')}
+            onClick={() => setOnSelectAll((state) => !state)}
+          >
+            전체선택
+          </BtnSelect>
+        ) : (
+          <BtnSelect type="button" onClick={() => setOnSelect(true)}>
+            선택
+          </BtnSelect>
+        ))}
     </HeaderContainer>
   );
 };
@@ -19,6 +51,7 @@ const Header = ({ title, subtitle }) => {
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
+  select: PropTypes.bool,
 };
 
 export default Header;
@@ -34,12 +67,43 @@ const HeaderContainer = styled.header`
   height: 70px;
   padding: 0 20px;
   background: #fff;
-  color: #18191f;
-  font-size: 20px;
-  font-weight: 700;
+  strong {
+    color: #18191f;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  p {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    svg {
+      margin-right: 5px;
+    }
+    span {
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
   span {
     margin-left: 5px;
     font-size: 16px;
     font-weight: 500;
+  }
+`;
+
+const BtnSelect = styled.button`
+  padding: 3px 13px;
+  border-radius: 57px;
+  background: #3c3c3c;
+  color: #fff;
+  font-size: 15px;
+  &.all {
+    background: transparent;
+    color: #3c3c3c;
+    &.selected {
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-weight: 700;
+    }
   }
 `;

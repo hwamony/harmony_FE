@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { MdExpandMore } from 'react-icons/md';
@@ -13,7 +14,8 @@ import {
 import { IconComment } from '../../assets/icons';
 import CommentItem from './CommentItem';
 
-const AlbumItem = ({ album }) => {
+const AlbumItem = ({ album, data }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +35,9 @@ const AlbumItem = ({ album }) => {
 
   return (
     <Item>
-      <ImgContainer>
+      <ImgContainer
+        onClick={() => navigate(`${album.albumId}`, { state: data })}
+      >
         {isLoading
           ? Array.from(new Array(5)).map((_, i) => (
               <ImgSkeleton key={i} variant="rectangular" />
@@ -91,6 +95,7 @@ const AlbumItem = ({ album }) => {
 
 AlbumItem.propTypes = {
   album: PropTypes.object.isRequired,
+  data: PropTypes.object,
 };
 
 export default AlbumItem;
@@ -106,14 +111,20 @@ const Item = styled.article`
 `;
 
 const ImgContainer = styled.div`
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 2px;
+  cursor: pointer;
   img {
     display: block;
     aspect-ratio: 3 / 4;
     object-fit: cover;
+    transition: transform 0.2s ease;
+    &:hover {
+      transform: scale(105%);
+    }
     &:first-child {
       aspect-ratio: 4 / 3.55;
       grid-area: 1 / 1 / 3 / 4;
