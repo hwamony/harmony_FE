@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDay } from '../redux/modules/calendarSlice';
 import api from '../api/AxiosManager';
+import { useValidUserData } from '../hooks/useData';
 import dayjs from 'dayjs';
 
 import PageTitle from '../components/common/PageTitle';
@@ -14,10 +16,23 @@ import Calendar from '../components/calendar/Calendar';
 import ScheduleList from '../components/calendar/ScheduleList';
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data: getValidInfo } = useValidUserData();
+  const isValidUser = getValidInfo.isFamily && getValidInfo.hasRole;
   const { selectedDate, monthIdx, selectedDay } = useSelector(
     (state) => state.calendar,
   );
+
+  useEffect(() => {
+    if (!isValidUser) {
+      if (!getValidInfo.isFamily) {
+        navigate('/familycode');
+      } else if (!getValidInfo.hasRole) {
+        navigate('/role');
+      }
+    }
+  }, []);
 
   const getMonthSchedule = async () => {
     try {
@@ -36,6 +51,9 @@ const Home = () => {
     ['schedule'],
     getMonthSchedule,
     {
+      enabled: isValidUser,
+      staleTime: 1000 * 60 * 30,
+      cacheTime: 1000 * 60 * 30,
       onSuccess: () => dispatch(setDay(null)),
       refetchOnWindowFocus: false,
     },
@@ -45,18 +63,18 @@ const Home = () => {
     refetch();
   }, [monthIdx]);
 
-  const filteredSchedules = monthSchedule.schedules.filter(
+  const filteredSchedules = monthSchedule?.schedules.filter(
     (s) =>
       dayjs(s.startDate).format('DD') <= selectedDate.format('DD') &&
       dayjs(s.endDate).format('DD') >= selectedDate.format('DD'),
   );
 
   const activityCounts = [
-    monthSchedule.eatCount,
-    monthSchedule.tripCount,
-    monthSchedule.cookCount,
-    monthSchedule.cleanCount,
-    monthSchedule.etcCount,
+    monthSchedule?.eatCount,
+    monthSchedule?.tripCount,
+    monthSchedule?.cookCount,
+    monthSchedule?.cleanCount,
+    monthSchedule?.etcCount,
   ];
 
   // FIXME: 개발 끝나면 지우기
@@ -71,42 +89,50 @@ const Home = () => {
 
   return (
     <>
-      <PageTitle title="홈 - 캘린더" />
-      <Widget />
-      <Main>
-        <h1 className="hidden">캘린더 홈</h1>
-        <BtnAdd link="/schedules" text="일정 추가" />
-        <Summary counts={activityCounts} />
-        <Calendar schedules={monthSchedule.schedules} />
-        <ListWrapper>
-          {selectedDay ? (
-            monthSchedule?.schedules.length > 0 ? (
-              filteredSchedules.length > 0 ? (
-                filteredSchedules.map((schedule, i) => (
+      {isValidUser && (
+        <>
+          <PageTitle title="홈 - 캘린더" />
+          <Widget />
+          <Main>
+            <h1 className="hidden">캘린더 홈</h1>
+            <BtnAdd link="/schedules" text="일정 추가" />
+            <Summary counts={activityCounts} />
+            <Calendar schedules={monthSchedule.schedules} />
+            <ListWrapper>
+              {selectedDay ? (
+                monthSchedule?.schedules.length > 0 ? (
+                  filteredSchedules.length > 0 ? (
+                    filteredSchedules.map((schedule, i) => (
+                      <ScheduleList key={i} schedule={schedule} />
+                    ))
+                  ) : (
+                    <ScheduleList
+                      selectedDate={selectedDate.format('M월 D일')}
+                    />
+                  )
+                ) : (
+                  <ScheduleList selectedDate={selectedDate.format('M월 D일')} />
+                )
+              ) : monthSchedule?.schedules.length > 0 ? (
+                monthSchedule.schedules.map((schedule, i) => (
                   <ScheduleList key={i} schedule={schedule} />
                 ))
               ) : (
-                <ScheduleList selectedDate={selectedDate.format('M월 D일')} />
-              )
-            ) : (
-              <ScheduleList selectedDate={selectedDate.format('M월 D일')} />
-            )
-          ) : monthSchedule?.schedules.length > 0 ? (
-            monthSchedule.schedules.map((schedule, i) => (
-              <ScheduleList key={i} schedule={schedule} />
-            ))
-          ) : (
-            <NoSchedule>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/logo_light.png`}
-                alt=""
-              />
-              <p>아직 등록된 일정이 없습니다.</p>
-              <p>{selectedDate.format('M월')}의 첫 번째 일정을 기록해보세요!</p>
-            </NoSchedule>
-          )}
-        </ListWrapper>
-      </Main>
+                <NoSchedule>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/logo_light.png`}
+                    alt=""
+                  />
+                  <p>아직 등록된 일정이 없습니다.</p>
+                  <p>
+                    {selectedDate.format('M월')}의 첫 번째 일정을 기록해보세요!
+                  </p>
+                </NoSchedule>
+              )}
+            </ListWrapper>
+          </Main>
+        </>
+      )}
     </>
   );
 };

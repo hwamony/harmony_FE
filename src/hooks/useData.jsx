@@ -18,3 +18,21 @@ export const useFamilyData = () =>
       console.log(data);
     },
   });
+
+const getValidInfo = async () => {
+  try {
+    const res = await apis.getValidUser();
+    return res.data.data;
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const useValidUserData = () =>
+  useQuery(['validUserInfo'], getValidInfo, {
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });

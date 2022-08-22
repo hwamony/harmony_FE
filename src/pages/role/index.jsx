@@ -14,9 +14,9 @@ const Role = () => {
     console.log(data);
     try {
       const response = await api.put('/user/role', data);
-      console(response);
+      console.log(response);
     } catch (err) {
-      console.log('err>>', err.response.data);
+      console.log('err>>', err.response);
     }
   };
 

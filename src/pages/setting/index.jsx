@@ -21,6 +21,7 @@ const Setting = () => {
             localStorage.removeItem('TOKEN');
             actions.onLoggedOut();
             queryClient.invalidateQueries(['familyInfo']);
+            queryClient.invalidateQueries(['validUserInfo']);
             navigate('/login');
           }}
         >
