@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
@@ -25,10 +25,6 @@ import {
 const Signup = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    isLoggedIn && navigate('/');
-  }, [isLoggedIn]);
 
   const { register, handleSubmit, watch, getValues, errors } = useForm();
   const password = useRef();
@@ -106,15 +102,11 @@ const Signup = () => {
               <InlineButton type="button" onClick={(e) => idOverlapCheck(e)}>
                 중복확인
               </InlineButton>
-              {errors.email && errors.email.type === 'required' && (
-                <ErrorMsg>이메일을 입력해주세요.</ErrorMsg>
-              )}
-              {errors.email && errors.email.type === 'pattern' && (
-                <ErrorMsg>올바른 형식이 아닙니다.</ErrorMsg>
-              )}
-              {errors.email && errors.email.type === 'validate' && (
-                <ErrorMsg>중복확인해주세요.</ErrorMsg>
-              )}
+              <ErrorMsg>
+                { errors.email && errors.email.type === 'required' && '이메일을 입력해주세요.' }
+                { errors.email && errors.email.type === 'pattern' && '올바른 형식이 아닙니다.' }
+                { errors.email && errors.email.type === 'validate' && '중복확인해주세요.' }
+              </ErrorMsg>
             </InputWrap>
 
             <InputWrap>
@@ -129,15 +121,10 @@ const Signup = () => {
                     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/,
                 })}
               />
-              {errors.password && errors.password.type === 'required' && (
-                <ErrorMsg>비밀번호을 입력해주세요.</ErrorMsg>
-              )}
-              {errors.password && errors.password.type === 'pattern' && (
-                <ErrorMsg>
-                  비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용할 수
-                  있습니다.
-                </ErrorMsg>
-              )}
+              <ErrorMsg>
+                { errors.password && errors.password.type === 'required' && '비밀번호을 입력해주세요.' }
+                { errors.password && errors.password.type === 'pattern' && '비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용하여 입력해주세요.' }
+              </ErrorMsg>
             </InputWrap>
 
             <InputWrap>
@@ -151,14 +138,10 @@ const Signup = () => {
                   validate: (value) => value === password.current,
                 })}
               />
-              {errors.passwordConfirm &&
-                errors.passwordConfirm.type === 'required' && (
-                  <ErrorMsg>비밀번호를 다시 한번 입력해주세요.</ErrorMsg>
-                )}
-              {errors.passwordConfirm &&
-                errors.passwordConfirm.type === 'validate' && (
-                  <ErrorMsg>비밀번호가 동일하지 않습니다.</ErrorMsg>
-                )}
+              <ErrorMsg>
+                { errors.passwordConfirm && errors.passwordConfirm.type === 'required' && '비밀번호를 다시 한번 입력해주세요.' }
+                { errors.passwordConfirm && errors.passwordConfirm.type === 'validate' && '비밀번호가 동일하지 않습니다.' }
+              </ErrorMsg>
             </InputWrap>
 
             <InputWrap>
@@ -169,9 +152,9 @@ const Signup = () => {
                 ref={register({ required: true })}
                 autoComplete="off"
               />
-              {errors.name && errors.name.type === 'required' && (
-                <ErrorMsg>이름을 입력해주세요.</ErrorMsg>
-              )}
+              <ErrorMsg>
+              { errors.name && errors.name.type === 'required' && '이름을 입력해주세요.' }
+              </ErrorMsg>
             </InputWrap>
 
             <InputWrap>
@@ -192,12 +175,10 @@ const Signup = () => {
               >
                 중복확인
               </InlineButton>
-              {errors.nickname && errors.nickname.type === 'required' && (
-                <ErrorMsg>닉네임을 입력해주세요.</ErrorMsg>
-              )}
-              {errors.nickname && errors.nickname.type === 'validate' && (
-                <ErrorMsg>중복확인해주세요.</ErrorMsg>
-              )}
+              <ErrorMsg>
+                { errors.nickname && errors.nickname.type === 'required' && '닉네임을 입력해주세요.' }
+                { errors.nickname && errors.nickname.type === 'validate' && '중복확인해주세요.' }
+              </ErrorMsg>
             </InputWrap>
 
             <InputWrap>
@@ -219,9 +200,9 @@ const Signup = () => {
                   ref={register({ required: true })}
                 />
                 <RadioLabel htmlFor="female">여성</RadioLabel>
-                {errors.gender && errors.gender.type === 'required' && (
-                  <ErrorMsg>성별을 선택해주세요.</ErrorMsg>
-                )}
+                <ErrorMsg>
+                { errors.gender && errors.gender.type === 'required' && '성별을 선택해주세요.' }
+                </ErrorMsg>
               </div>
             </InputWrap>
 
@@ -238,14 +219,14 @@ const Signup = () => {
                   value="agree"
                   ref={register({ required: true })}
                 />
-                <PolicyIcon src={`${process.env.PUBLIC_URL}/images/check_8px.png`} alt="아이콘" />
-                <Label htmlFor="policy" style={{ marginLeft: '4px', fontWeight: '400' }}>
-                  동의함
+                <Label htmlFor="policy">
+                  <PolicyIcon src={`${process.env.PUBLIC_URL}/images/check_8px.png`} alt="아이콘" />
+                  <span style={{ marginLeft: '4px', fontWeight: '400' }}>동의함</span>
                 </Label>
               </PolicyCheck>
-              {errors.policy && errors.policy.type === 'required' && (
-                <ErrorMsg>약관에 동의해주세요.</ErrorMsg>
-              )}
+              <ErrorMsg>
+              { errors.policy && errors.policy.type === 'required' && '약관에 동의해주세요.' }
+              </ErrorMsg>
             </PolicyWrap>
 
             <ButtonWrap>

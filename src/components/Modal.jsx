@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input } from './Input';
 import { useForm } from 'react-hook-form';
@@ -6,26 +6,35 @@ import api from '../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
 
 const Modal = (props) => {
-    const [ type, setType ] = useState(props.type)
-    const [ familycode, setFamilycode ] = useState('')
+    const [ modalData, setModalData ] = useState({
+        type: props.type,
+        familycode: '',
+        errormessage: ''
+    })
+    const { type, familycode, errormessage } = modalData;
+    const [ aaa, setaaa] = useState('');
     const { register, handleSubmit, errors } = useForm();
-    const { isVisible, setIsVisible } = props
-    const navigate = useNavigate()
+    const { isVisible, setIsVisible } = props;
+    const navigate = useNavigate();
 
     const ModalClose = () => {
         setIsVisible(false);
     }
 
     const createHandler = async (data) => {
-        const errorMsg = document.getElementById('errorMsg');
-
         try {
             const response = await api.post('/families', data);
-            setType('copy');
-            setFamilycode(response.data.data.familyCode);
+            setModalData({
+                ...modalData,
+                type: 'copy',
+                familycode: response.data.familyCode
+            });
         } catch (err) {
             console.log('err>>', err.response);
-            errorMsg.innerText = err.response.data.message;
+            setModalData({
+                ...modalData,
+                errormessage: err.response.data.message
+            });
         }
     }
 
@@ -42,14 +51,15 @@ const Modal = (props) => {
     
 
     const joinHandler = async (data) => {
-        const errorMsg = document.getElementById('errorMsg');
-
         try {
             const response = await api.put('/family/join', data);
-            navigate('/role')
+            navigate('/role');
         } catch (err) {
             console.log('err>>', err.response.data);
-            errorMsg.innerText = err.response.data.message;
+            setModalData({
+                ...modalData,
+                errormessage: err.response.data.message
+            });
         }
     }
 
@@ -77,11 +87,11 @@ const Modal = (props) => {
             <ContentsWrap onSubmit={handleSubmit(createHandler)}>
                 <Desc>가족 이름을 입력해주세요.</Desc>
                 <InputWrap>
-                    <Input name='familyName' style={{ border: 'none', background: '#EFEFEF' }} placeholder='예) 화목네'
-                        ref={register({ required: true })}
+                    <Input name='familyName' style={{ border: 'none', background: '#EFEFEF' }} placeholder='예) 화목네' type='text'
+                        ref={register({ required: true})}
                     />
                     <ErrorMsg id='errorMsg'>
-                    {errors.familyName && errors.familyName.type === 'required' && ('가족 이름을 입력해주세요.')}
+                        {errors.familyName && errors.familyName.type === 'required' ? '가족 이름을 입력해주세요.' : errormessage }
                     </ErrorMsg>
                 </InputWrap>
                 <BtnWrap>
@@ -116,7 +126,7 @@ const Modal = (props) => {
                         ref={register({ required: true })}
                     />
                     <ErrorMsg id='errorMsg'>
-                    {errors.familyCode && errors.familyCode.type === 'required' && ('코드를 입력해주세요.')}
+                        {errors.familyCode && errors.familyCode.type === 'required' ? '가족 코드을 입력해주세요.' : errormessage }
                     </ErrorMsg>
                 </InputWrap>
                 <BtnWrap>
@@ -133,7 +143,7 @@ const Modal = (props) => {
                 <ModalInner>
                 { type === 'create' && <Create></Create>}
                 { type === 'copy' && <Copy></Copy>}
-                { type === 'join' && <Copy></Copy>}
+                { type === 'join' && <Join></Join>}
                 </ModalInner>
             </Overlay>
         </ModalWrap>
