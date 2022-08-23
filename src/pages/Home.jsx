@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDay } from '../redux/modules/calendarSlice';
@@ -18,17 +19,19 @@ import ScheduleList from '../components/calendar/ScheduleList';
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: getValidInfo } = useValidUserData();
-  const isValidUser = getValidInfo.isFamily && getValidInfo.hasRole;
+  const { hasToken } = useAuth();
   const { selectedDate, monthIdx, selectedDay } = useSelector(
     (state) => state.calendar,
   );
 
+  const { data: getValidInfo } = useValidUserData();
+  const isValidUser = getValidInfo?.isFamily && getValidInfo?.hasRole;
+
   useEffect(() => {
-    if (!isValidUser) {
-      if (!getValidInfo.isFamily) {
+    if (getValidInfo && !isValidUser) {
+      if (!getValidInfo?.isFamily) {
         navigate('/familycode');
-      } else if (!getValidInfo.hasRole) {
+      } else if (!getValidInfo?.hasRole) {
         navigate('/role');
       }
     }
@@ -51,17 +54,20 @@ const Home = () => {
     ['schedule'],
     getMonthSchedule,
     {
-      enabled: isValidUser,
-      staleTime: 1000 * 60 * 30,
-      cacheTime: 1000 * 60 * 30,
-      onSuccess: () => dispatch(setDay(null)),
+      enabled: !!getValidInfo && isValidUser,
+      onSuccess: (data) => {
+        console.log(data);
+        dispatch(setDay(null));
+      },
       refetchOnWindowFocus: false,
     },
   );
 
   useEffect(() => {
-    refetch();
-  }, [monthIdx]);
+    if (isValidUser) {
+      refetch();
+    }
+  }, [isValidUser, monthIdx]);
 
   const filteredSchedules = monthSchedule?.schedules.filter(
     (s) =>
@@ -77,19 +83,9 @@ const Home = () => {
     monthSchedule?.etcCount,
   ];
 
-  // FIXME: 개발 끝나면 지우기
-  useEffect(() => {
-    console.log(
-      `/schedules?year=${selectedDate.format(
-        'YYYY',
-      )}&month=${selectedDate.format('M')}`,
-    );
-    console.log(monthSchedule);
-  }, [monthSchedule]);
-
   return (
     <>
-      {isValidUser && (
+      {hasToken && monthSchedule && (
         <>
           <PageTitle title="홈 - 캘린더" />
           <Widget />

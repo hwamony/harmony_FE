@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apis } from '../api/AxiosManager';
+const hasToken = localStorage.getItem('TOKEN');
 
 const getFamilyInfo = async () => {
   try {
@@ -12,6 +13,7 @@ const getFamilyInfo = async () => {
 
 export const useFamilyData = () =>
   useQuery(['familyInfo'], getFamilyInfo, {
+    enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
     onSuccess: (data) => {
@@ -30,6 +32,7 @@ const getValidInfo = async () => {
 
 export const useValidUserData = () =>
   useQuery(['validUserInfo'], getValidInfo, {
+    enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
     onSuccess: (data) => {

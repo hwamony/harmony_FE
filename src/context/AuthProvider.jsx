@@ -5,6 +5,7 @@ export const AuthValueContext = createContext();
 export const AuthActionsContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const hasToken = !!localStorage.getItem('TOKEN');
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const actions = useMemo(
     () => ({
@@ -20,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthActionsContext.Provider value={actions}>
-      <AuthValueContext.Provider value={isLoggedIn}>
+      <AuthValueContext.Provider value={{hasToken, isLoggedIn}}>
         {children}
       </AuthValueContext.Provider>
     </AuthActionsContext.Provider>
