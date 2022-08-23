@@ -1,11 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import {FaRegComment, FaRegThumbsUp} from 'react-icons/fa'
+import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa'
+import { RiPlantLine } from 'react-icons/ri';
 
 
 const shortCard = () => {
   const [like, setLike] = useState(0);
+  // const [isShowMore, setIsShowMore] = useState<boolean>(false);
+  // const textLimit = useRef<number>(246);
+  
+  // const commenter = useMemo(() => {
+  //   const shortReview: string = comment.slice(0, textLimit.current);
+    
+  //   if (comment.length > textLimit.current) {
+  //     if (isShowMore) { return comment; }
+  //     return showrtReview
+  //   }
+  //   return comment;
+  // }, [isShowMore]);
   const navigate = useNavigate();
   return (
     <>
@@ -15,7 +28,7 @@ const shortCard = () => {
             <Profile>
               <Photo>프사</Photo>
               <Info>
-                <h5>화목화목</h5>
+                <h5><span><RiPlantLine/></span> 화목화목</h5>
                 <p>12시간 전</p>
                 </Info>
             </Profile>
@@ -32,8 +45,9 @@ const shortCard = () => {
             <H1>
               <Image>
                 <div/>
-                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quam risus, convallis sit amet justo in, venenatis lacinia dui. Suspendisse potenti. Vivamus quis risus eleifend, eleifend augue in, ultricies nisl. Phasellus at fermentum nibh. Cras fin
+                <h3 onClick={() => navigate('/posts/comments')}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quam risus, convallis sit amet justo in, venenatis lacinia dui. Suspendisse potenti. Vivamus quis risus eleifend, eleifend augue in, ultricies nisl. Phasellus at fermentum nibh. Cras fin
                   <span >... 더 보기</span>
+                  {/* <span >... { commenter }</span> */}
                 </h3>
               </Image>
             </H1>
@@ -111,6 +125,9 @@ border-radius: 100%;
 
 export const Info = styled.div`
   flex-direction: column;
+  span{
+    color: #3EC192;
+  }
 `
 
 export const CardContent = styled.div`
@@ -172,6 +189,11 @@ export const Image = styled.div`
     width: 90px;
     height: 75px;
     margin-left: 25px;
+  }
+  h3{
+    :hover{
+      cursor: pointer;
+    }
   }
 `
 

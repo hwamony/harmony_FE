@@ -57,7 +57,7 @@ const LongInventory = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 380px;
+  height: 455px;
   border-radius: 5px;
   text-align: center;
   background-color: white;
@@ -66,7 +66,7 @@ const LongInventory = styled.div`
 const LongContent = styled.div`
   border-top: 0.01px solid #D9D9D9;
   width: 660px;
-  height: 320px;
+  height: 395px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -96,7 +96,7 @@ const WideImage = styled.div`
   div{
     background-image: url('https://t1.daumcdn.net/cfile/blog/21150B4654FFDC532D');
     width: 620px;
-    height: 70px;
+    height: 145px;
     margin-left: 50px;
     margin-bottom: 15px;
   }

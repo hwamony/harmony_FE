@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.form`
-    width: 375px;
+    height: 100vh;
     padding: 20px;
     padding-bottom: 200px;
-    border: 1px solid #DDDDDD;
-    margin: auto;
     position: relative;
     background: #FFFFFF;
 `

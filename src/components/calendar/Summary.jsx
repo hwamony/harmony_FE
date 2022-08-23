@@ -1,31 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { categories } from '../../utils/data';
 
-const Summary = () => {
+const Summary = ({ counts }) => {
   return (
     <CalendarSummary>
-      <Category val="eatout">
-        <div />
-        외식 +1
-      </Category>
-      <Category val="trip">
-        <div />
-        여행 +1
-      </Category>
-      <Category val="cook">
-        <div />
-        요리 +0
-      </Category>
-      <Category val="clean">
-        <div />
-        청소 +5
-      </Category>
-      <Category val="etc">
-        <div />
-        기타 +3
-      </Category>
+      {categories &&
+        categories.slice(0, 5).map((cat, i) => (
+          <React.Fragment key={cat.value}>
+            <Category val={cat.value}>
+              <div />
+              {`${cat.name} +${counts[i]}`}
+            </Category>
+          </React.Fragment>
+        ))}
     </CalendarSummary>
   );
+};
+
+Summary.propTypes = {
+  counts: PropTypes.array.isRequired,
 };
 
 export default Summary;
@@ -49,12 +44,12 @@ const Category = styled.div`
   width: 100%;
   color: #7d7d7d;
   font-size: 14px;
-  letter-spacing: -0.9px;;
+  letter-spacing: -0.9px;
   div {
     width: 7px;
     height: 7px;
     margin-right: 4px;
     border-radius: 50%;
-    background: ${({ theme, val }) => theme.palette[val]};
+    background: ${({ theme, val }) => theme.palette[val].main};
   }
 `;

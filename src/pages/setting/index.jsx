@@ -2,13 +2,10 @@ import React from 'react';
 import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useAuth from '../../hooks/useAuth';
 import { Button } from '@mui/material';
 
 const Setting = () => {
   const navigate = useNavigate();
-  const { actions } = useAuth();
-
   return (
     <>
       <PageTitle title="설정" />
@@ -17,13 +14,12 @@ const Setting = () => {
           variant="contained"
           onClick={() => {
             localStorage.removeItem('TOKEN');
-            actions.onLoggedOut();
-            navigate('/login');
+            window.location.href = '/login';
           }}
         >
           로그아웃 (토큰 삭제)
         </BtnAuth>
-        
+
         <BtnAuth variant="outlined" onClick={() => navigate('/login')}>
           <p>로그인 링크 (로그인 시 진입 X)</p>
         </BtnAuth>

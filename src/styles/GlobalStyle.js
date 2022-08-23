@@ -6,11 +6,12 @@ export const theme = createTheme(
   {
     palette: {
       primary: { main: '#3ec192' },
-      eatout: '#FF7583',
-      trip: '#45BFFF',
-      cook: '#FFBC54',
-      clean: '#3EC192',
-      etc: '#727DF0',
+      EAT_OUT: { main: '#FF7583', sub: '#FFF1F2' },
+      TRIP: { main: '#45BFFF', sub: '#EDF8FF' },
+      COOK: { main: '#FFBC54', sub: '#FFF5E5' },
+      CLEAN: { main: '#3EC192', sub: '#EDFAF6' },
+      ETC: { main: '#727DF0', sub: '#F5F4FE' },
+      PERSONAL: { main: '#7D7D7D', sub: '#F2F2F2' },
     },
   },
   koKR,
@@ -66,19 +67,22 @@ const GlobalStyle = createGlobalStyle`
   }
 
   * {
-    &::-webkit-scrollbar {
-      width: 12px;
-    }
-    &::-webkit-scrollbar-thumb {
-      width: 5px;
-      height: 80px;
-      border: 4px solid transparent;
-      border-radius: 10px;
-      background: #ccc;
-      background-clip: padding-box;
-    }
-    &::-webkit-scrollbar-trac {
-      background: none;
+    @media only screen and (min-width: 821px) {
+      &::-webkit-scrollbar {
+        display: fixed;
+        width: 12px;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 5px;
+        height: 80px;
+        border: 4px solid transparent;
+        border-radius: 10px;
+        background: #ccc;
+        background-clip: padding-box;
+      }
+      &::-webkit-scrollbar-trac {
+        background: none;
+      }
     }
   }
   .hidden {

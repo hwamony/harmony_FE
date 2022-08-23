@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.form`
-    width: 375px;
+    height: 100vh;
     padding: 20px;
-    border: 1px solid #DDDDDD;
-    margin: auto;
     position: relative;
     background: #F2F2F2;
 `
@@ -32,8 +30,15 @@ export const InputWrap = styled.div`
     flex-direction: column;
 `
 
+export const IconWrap = styled.span`
+    width: 20px;
+    height: 20px;
+    border: 1px solid #DDDDDD;
+    border-radius: 12px;`
+
 export const PolicyWrap = styled.div`
     margin-top: 22px;
+    position: relative;
 `
 
 export const PolicyDesc = styled.div`
@@ -49,6 +54,15 @@ export const PolicyLink = styled.div`
 
 export const PolicyCheck = styled.div`
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+
+`
+
+export const PolicyIcon = styled.img`
+    position: absolute;
+    top: 58px;
+    left: 5px;
 `
 
 export const ButtonWrap = styled.div`

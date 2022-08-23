@@ -1,70 +1,119 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../components/common/PageTitle';
-import Header from '../../components/common/Header';
+import HeaderMid from '../../components/common/HeaderMid';
 import api from '../../api/AxiosManager';
+import { useFamilyData } from '../../hooks/useData';
+import { useSelector } from 'react-redux';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
-import { Switch, TextField } from '@mui/material';
+import { Switch, TextField, Select, MenuItem } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { IconHistory } from '../../assets/icons';
+import { IconHistory, IconMembers, IconSelect } from '../../assets/icons';
 import { Button } from '../../components/Button';
+import { categories } from '../../utils/data';
 
 const Schedule = () => {
   const navigate = useNavigate();
-  const [switchChecked, setSwitchChecked] = useState(true);
-  const [startDate, setStartDate] = useState(dayjs().locale('ko'));
-  const [endDate, setEndDate] = useState(dayjs().locale('ko'));
+  const location = useLocation();
+  const scheduleData = location.state;
+  const [switchChecked, setSwitchChecked] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [selectedMember, setSelectedMember] = useState([]);
   const [category, setCategory] = useState(null);
   const titleInput = useRef();
   const contentInput = useRef();
-  const memberInput = useRef();
+  const { data: familyInfo } = useFamilyData();
+  const { selectedDate, selectedDay } = useSelector((state) => state.calendar);
 
   useEffect(() => {
-    if (switchChecked) {
-      setStartDate(dayjs());
-      setEndDate(dayjs());
+    if (selectedDay) {
+      setStartDate(selectedDate);
+      setEndDate(selectedDate);
+      setSwitchChecked(true);
     }
-  }, [switchChecked]);
+  }, [selectedDay]);
 
-  // TODO: 가족 정보 조회 /api/family
+  useEffect(() => {
+    if (scheduleData && familyInfo) {
+      let memberIds = [];
+      for (let role of scheduleData.members) {
+        familyInfo.members.forEach((member) => {
+          member.role === role && memberIds.push(member.userId);
+        });
+      }
+
+      console.log(scheduleData);
+      titleInput.current.value = scheduleData.title;
+      contentInput.current.value = scheduleData.content;
+      setStartDate(dayjs(scheduleData.startDate));
+      setEndDate(dayjs(scheduleData.endDate));
+      setCategory(scheduleData.category);
+      if (scheduleData.startDate === scheduleData.endDate) {
+        setSwitchChecked(true);
+      }
+      setSelectedMember(memberIds);
+    }
+  }, [scheduleData, familyInfo]);
+
+  const handleMemberChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedMember(typeof value === 'string' ? value.split(',') : value);
+  };
 
   const onSubmitSchedule = async (e) => {
     e.preventDefault();
-    // TODO: 카테고리 선택 안했을 때 처리 추가
+    if (!category) {
+      alert('카테고리를 선택해주세요');
+      return;
+    }
 
     const data = {
       category,
       title: titleInput.current.value,
       startDate: startDate.format('YYYY-MM-DD'),
       endDate: endDate.format('YYYY-MM-DD'),
-      memberIds: memberInput.current.value.split(','),
+      memberIds: selectedMember,
       content: contentInput.current.value,
     };
+    console.log(data);
     // FIXME: 추후 일정 등록에 시간 추가하면 바꾸기
     // console.log(startDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
     // console.log(endDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
-    console.log(data);
 
     try {
-      const res = await api.post('/schedules', data);
-      console.log(res);
-      alert(res.data.msg);
+      if (!scheduleData) {
+        const res = await api.post('/schedules', data);
+        console.log(res);
+        alert(res.data.msg);
+      } else {
+        const res = await api.put(
+          `/schedules/${scheduleData.scheduleId}`,
+          data,
+        );
+        console.log(res);
+        alert(res.data.msg);
+      }
       navigate('/');
     } catch (err) {
       console.log(err.response.data);
+      alert(err.response.data.message);
     }
   };
 
   return (
     <>
       <PageTitle title="일정기록 - 캘린더" />
-      <Header text="일정기록" />
+      <HeaderMid text="일정기록" />
+
       <ScheduleSection>
         <ScheduleForm onSubmit={(e) => onSubmitSchedule(e)}>
           <input
@@ -82,13 +131,22 @@ const Schedule = () => {
               <label htmlFor="switch-allday">
                 <IconHistory />
                 종일
+                {!startDate && <small>* 시작일을 입력해주세요.</small>}
+                {startDate && switchChecked && (
+                  <span>({startDate.format('M/D dd')})</span>
+                )}
               </label>
               <Switch
                 id="switch-allday"
                 color="default"
                 checked={switchChecked}
                 onChange={(e) => {
-                  setSwitchChecked((state) => !state);
+                  if (startDate) {
+                    setEndDate(startDate);
+                    setSwitchChecked((state) => !state);
+                  } else {
+                    alert('시작일을 입력해주세요.');
+                  }
                 }}
               />
             </div>
@@ -105,88 +163,69 @@ const Schedule = () => {
                   inputFormat="YYYY년 M월 D일 ddd요일"
                   renderInput={(params) => <TextField {...params} />}
                 />
-                <MobileDatePicker
-                  value={endDate}
-                  onChange={(state) => setEndDate(state)}
-                  minDate={startDate}
-                  label="종료일"
-                  onError={console.log}
-                  inputFormat="YYYY년 M월 D일 ddd요일"
-                  renderInput={(params) => <TextField {...params} />}
-                />
+                {startDate && (
+                  <MobileDatePicker
+                    value={endDate}
+                    onChange={(state) => setEndDate(state)}
+                    minDate={startDate}
+                    label="종료일"
+                    onError={console.log}
+                    inputFormat="YYYY년 M월 D일 ddd요일"
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                )}
               </>
             )}
           </DateWrapper>
 
-          {/* TODO: 추후 가족 선택하도록 수정 */}
-          <input
-            type="text"
-            id="input-members"
-            placeholder="참석자"
-            autoComplete="off"
-            ref={memberInput}
-            required
-          />
+          <MemberWrapper>
+            <div className="member-title">
+              <IconMembers />
+              참석자
+            </div>
+            <Select
+              id="member-select"
+              value={selectedMember}
+              onChange={handleMemberChange}
+              multiple
+              required
+            >
+              {familyInfo?.members.map((member) => (
+                <MenuItem key={member.userId} value={member.userId}>
+                  {member.role}({member.name})
+                </MenuItem>
+              ))}
+            </Select>
+          </MemberWrapper>
 
           <CategoryWrapper>
-            <strong>카테고리</strong>
-            <div>
-              <input
-                type="radio"
-                name="category"
-                id="cat-1"
-                value="EAT_OUT"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-1">외식</label>
-              <input
-                type="radio"
-                name="category"
-                id="cat-2"
-                value="TRIP"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-2">여행</label>
-              <input
-                type="radio"
-                name="category"
-                id="cat-3"
-                value="COOK"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-3">요리</label>
-              <input
-                type="radio"
-                name="category"
-                id="cat-4"
-                value="CLEAN"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-4">청소</label>
-              <input
-                type="radio"
-                name="category"
-                id="cat-5"
-                value="ETC"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-5">기타</label>
-              <input
-                type="radio"
-                name="category"
-                id="cat-6"
-                value="PERSONAL"
-                onChange={(e) => setCategory(e.target.value)}
-                hidden
-              />
-              <label htmlFor="cat-6">개인</label>
+            <div className="category-top">
+              <strong>
+                <IconSelect />
+                카테고리 선택
+              </strong>
+              <small>* 개인 일정은 점수에서 제외됩니다.</small>
             </div>
-            <small>* 개인 일정은 점수에서 제외됩니다.</small>
+            <div className="category-inputs">
+              {categories &&
+                categories.map((cat, i) => (
+                  <React.Fragment key={cat.value}>
+                    <CategoryInput
+                      type="radio"
+                      name="category"
+                      id={`cat-${i}`}
+                      value={cat.value}
+                      checked={category === cat.value}
+                      onChange={() => setCategory(cat.value)}
+                      hidden
+                    />
+                    <label htmlFor={`cat-${i}`}>
+                      <div />
+                      {cat.name}
+                    </label>
+                  </React.Fragment>
+                ))}
+            </div>
           </CategoryWrapper>
 
           <ContentWrapper>
@@ -220,25 +259,21 @@ const ScheduleSection = styled.section`
 const ScheduleForm = styled.form`
   overflow-y: auto;
   height: calc(100vh - 55px - 90px);
+  #input-title {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 1px solid #ebebeb;
+  }
   input {
     width: 100%;
     padding: 23px 20px 17px;
-    border-bottom: 1px solid #ebebeb;
     &::placeholder {
       color: #979797;
     }
   }
   strong {
     font-weight: 500;
-    color: #979797;
-  }
-  #input-title {
-    font-size: 20px;
-    font-weight: 700;
-  }
-  #input-members {
-    font-size: 16px;
-    font-weight: 500;
+    color: #000;
   }
   button {
     position: fixed;
@@ -246,22 +281,29 @@ const ScheduleForm = styled.form`
     bottom: 35px;
     width: calc(100% - 40px);
   }
+  small {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.8em;
+    color: #979797;
+  }
 `;
 
 const DateWrapper = styled.div`
-  border-bottom: 1px solid #ebebeb;
+  padding: 5px 0 10px;
+  label {
+    color: #000;
+    font-weight: 500;
+    svg {
+      margin: -2px 9px 0 -1px;
+    }
+  }
   .switch-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 12px 15px 20px;
+    padding: 15px 12px 5px 20px;
     color: #8d8d8d;
-  }
-  label {
-    font-size: 14px;
-    svg {
-      margin: -2px 5px 0 0;
-    }
   }
   .MuiSwitch-root {
     width: 61px;
@@ -280,51 +322,93 @@ const DateWrapper = styled.div`
   }
   .MuiFormControl-root {
     width: 100%;
-    padding: 15px;
+    padding: 10px 20px 0;
     label {
-      margin: 15px 0 0 15px;
+      margin: 11px 0 0 20px;
       font-size: 16px;
     }
+  }
+`;
+
+const MemberWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  font-weight: 500;
+  div.member-title {
+    min-width: 85px;
+    svg {
+      margin: -2px 9px 0 0;
+    }
+  }
+  .MuiInputBase-root {
+    max-width: 70%;
+    fieldset {
+      border: transparent;
+    }
+  }
+  svg.MuiSelect-icon {
+    padding: 12px;
+    background: #fff url(/images/chevron_down.png) center no-repeat;
+    transition: all 0.2s ease;
   }
 `;
 
 const CategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 25px 20px 10px 20px;
   border-bottom: 1px solid #ebebeb;
-  small {
-    display: block;
-    font-size: 0.8em;
-    color: #979797;
-  }
-  div {
+  div.category-top {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 5px 0;
-    max-width: 400px;
-    padding: 10px 0;
-    input {
-      width: inherit;
+    margin-bottom: 3px;
+    strong {
+      word-break: keep-all;
     }
+    svg {
+      margin-right: 11px;
+    }
+  }
+  div.category-inputs {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 2px 4px;
+    padding: 10px 0;
     label {
-      padding: 5px 10px;
-      border: 1px solid #7d7d7d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 52px;
+      height: 25px;
+      border: 1px solid #ebebeb;
       border-radius: 30px;
-      background: #fff;
-      color: #7d7d7d;
+      color: #000;
       font-size: 14px;
-      font-weight: 500;
       transition: all 0.2s ease;
       cursor: pointer;
-    }
-    input {
-      &:checked + label {
-        background: #7d7d7d;
-        color: #fff;
+      div {
+        width: 7px;
+        height: 7px;
+        padding: 0;
+        margin-right: 4px;
+        border-radius: 50%;
       }
     }
+  }
+`;
+
+const CategoryInput = styled.input`
+  width: inherit;
+  & + label {
+    div {
+      background: ${({ theme, value }) => theme.palette[value].main};
+    }
+  }
+  &:checked + label {
+    background: ${({ theme, value }) => theme.palette[value].sub};
   }
 `;
 

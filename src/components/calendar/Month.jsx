@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Day from './Day';
 
-const Month = ({ monthMatrix }) => {
+const Month = ({ monthMatrix, schedules }) => {
   return (
     <CalendarBox>
       {monthMatrix[0].map((day, id) => (
@@ -10,13 +11,22 @@ const Month = ({ monthMatrix }) => {
       ))}
       {monthMatrix.map((weekArr, i) => (
         <React.Fragment key={i}>
-          {weekArr.map((day, idx) => (
-            <Day key={idx} day={day} weekIdx={i} />
-          ))}
+          {weekArr.map((day, idx) => {
+            const dailySchedule = schedules.filter(
+              (schedule) =>
+                schedule.startDate.slice(-5) === day.format('MM-DD'),
+            );
+            return <Day key={idx} day={day} dailySchedule={dailySchedule} />;
+          })}
         </React.Fragment>
       ))}
     </CalendarBox>
   );
+};
+
+Month.propTypes = {
+  monthMatrix: PropTypes.array.isRequired,
+  schedules: PropTypes.array,
 };
 
 export default Month;
@@ -24,8 +34,9 @@ export default Month;
 const CalendarBox = styled.div`
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: 0.7fr repeat(4, minmax(0, 1fr));
+  grid-template-rows: 30px repeat(5, minmax(0, 1fr));
   flex: 1;
+  user-select: none;
   strong {
     color: #b4b4b4;
     font-weight: 500;

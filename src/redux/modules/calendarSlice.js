@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 const initialState = {
   selectedDate: dayjs(),
   monthIdx: dayjs().month(),
+  selectedDay: null,
 };
 
 const calendarSlice = createSlice({
@@ -15,9 +16,15 @@ const calendarSlice = createSlice({
       state.selectedDate = dayjs(new Date(dayjs().year(), action.payload));
     },
     setDay: (state, action) => {
-      state.selectedDate = dayjs(
-        new Date(dayjs().year(), state.monthIdx, action.payload),
-      );
+      if (action.payload) {
+        state.selectedDay =
+          state.selectedDay === action.payload ? null : action.payload;
+        state.selectedDate = dayjs(
+          new Date(dayjs().year(), state.monthIdx, action.payload),
+        );
+      } else {
+        state.selectedDay = null;
+      }
     },
   },
 });

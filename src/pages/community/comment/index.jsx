@@ -59,7 +59,6 @@ const Pagecolor = styled.article`
 
 const TitleC = styled.div`
   border-bottom: 1px solid #e7e7e7;
-  margin-bottom: 3px;
   position: fixed;
   left: 0;
   right: 0;
@@ -91,10 +90,9 @@ const Arrow = styled.div`
 `
 
 const Repl = styled.div`
-
   width: 670px;
   height: 150px;
-  margin: 470px auto 0 auto;
+  margin: 545px auto 0 auto;
   background-color: white;
   border-radius: 5px;
   h3{
