@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { AuthValueContext, AuthActionsContext } from '../context/AuthProvider';
 
 const useAuth = () => {
-  const isLoggedIn = useContext(AuthValueContext);
+  const { hasToken, isLoggedIn } = useContext(AuthValueContext);
   const actions = useContext(AuthActionsContext);
-  return { isLoggedIn, actions };
+  return { hasToken, isLoggedIn, actions };
 };
 
 export default useAuth;
