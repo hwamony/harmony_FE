@@ -76,3 +76,29 @@ export const IconSelect = () => (
     <path d="M18 0H6C5.46957 0 4.96086 0.210714 4.58579 0.585786C4.21071 0.960859 4 1.46957 4 2V14C4 14.5304 4.21071 15.0391 4.58579 15.4142C4.96086 15.7893 5.46957 16 6 16H18C18.5304 16 19.0391 15.7893 19.4142 15.4142C19.7893 15.0391 20 14.5304 20 14V2C20 1.46957 19.7893 0.960859 19.4142 0.585786C19.0391 0.210714 18.5304 0 18 0ZM18 14H6V2H18V14ZM14 18V20H2C1.46957 20 0.960859 19.7893 0.585786 19.4142C0.210714 19.0391 0 18.5304 0 18V5H2V18H14ZM16.53 6.06L15.47 5L10.59 9.88L8.47 7.76L7.41 8.82L10.59 12L16.53 6.06Z" fill="#717171"/>
   </svg>
 );
+
+// Gallery
+export const IconFilter = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.99969 6H16.9997L11.9897 12.3L6.99969 6ZM4.24969 5.61C6.26969 8.2 9.99969 13 9.99969 13V19C9.99969 19.55 10.4497 20 10.9997 20H12.9997C13.5497 20 13.9997 19.55 13.9997 19V13C13.9997 13 17.7197 8.2 19.7397 5.61C20.2497 4.95 19.7797 4 18.9497 4H5.03969C4.20969 4 3.73969 4.95 4.24969 5.61Z" fill="black"/>
+  </svg>
+);
+
+export const IconComment = () => (
+  <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.5 0H1.5C0.675 0 0 0.68088 0 1.51307V15.1307L3 12.1045H13.5C14.325 12.1045 15 11.4236 15 10.5915V1.51307C15 0.68088 14.325 0 13.5 0ZM13.5 10.5915H2.4L1.5 11.4993V1.51307H13.5V10.5915Z" fill="#A6A6A6"/>
+  </svg>
+);
+
+export const IconClose = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.29004 4.29001C6.56004 6.68001 19.7101 19.71 19.7101 19.71" stroke="black" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round"/>
+    <path d="M19.7101 4.29001C17.3201 6.57001 4.29004 19.71 4.29004 19.71" stroke="black" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round"/>
+  </svg>
+);
+
+export const IconCheck = () => (
+  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1.05859 2.29412L4.47941 6.52941L10.9409 0.882355" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);

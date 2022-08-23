@@ -13,7 +13,7 @@ import {
 const Navbar = () => {
   const { pathname } = useLocation();
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules'];
+  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules', '/galleries/posts'];
 
   useEffect(() => {
     for (let path of paths) {

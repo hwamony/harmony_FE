@@ -24,6 +24,7 @@ export const CodeLabel = styled.label`
     height: 130px;
     border-radius: 12px;
     padding: 42px 0 0 30px;
+    cursor: pointer;
 `
 
 export const RoleLabel = styled.label`
@@ -37,4 +38,5 @@ export const RoleLabel = styled.label`
     line-height: 24px;
     color: #191919;
     text-align: center;    
+    cursor: pointer;
 `

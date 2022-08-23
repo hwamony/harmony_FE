@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../components/common/PageTitle';
-import Header from '../../components/common/Header';
+import HeaderMid from '../../components/common/HeaderMid';
 import api from '../../api/AxiosManager';
 import { useFamilyData } from '../../hooks/useData';
 import { useSelector } from 'react-redux';
@@ -112,7 +112,7 @@ const Schedule = () => {
   return (
     <>
       <PageTitle title="일정기록 - 캘린더" />
-      <Header text="일정기록" />
+      <HeaderMid text="일정기록" />
 
       <ScheduleSection>
         <ScheduleForm onSubmit={(e) => onSubmitSchedule(e)}>

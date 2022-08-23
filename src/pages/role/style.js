@@ -1,44 +1,57 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.form`
-    height: 100vh;
-    padding: 20px;
-    position: relative;
-    background: #FFFFFF;
-`
+  height: 100vh;
+  padding: 20px;
+  position: relative;
+  background: #ffffff;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  margin: auto;
+`;
 
 export const Wrap = styled.div`
-    width: 33.333%;
-    padding: 5px 4px;
-    position: relative;
-`
+  position: relative;
+  width: 33.333%;
+  padding: 5px 4px;
+`;
 
 export const Desc = styled.div`
-    margin-top: 160px;
-    font-size: 25px;
-    color: #191919;
-    text-align: center;
-`
+  display: block;
+  width: 100%;
+  margin: 50px 0 30px;
+  font-size: 25px;
+  color: #191919;
+  text-align: center;
+`;
 
 export const InputWrap = styled.div`
-    margin-top: 64px;
-    display: flex;
-    flex-wrap: wrap;
-`
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  width: 100%;
+`;
 
 export const IconWrap = styled.span`
-    width: 24px;
-    height: 24px;
-    padding: 2px 4px;
-    border-radius: 12px;
-    margin: auto;
-    background: #DCDCDC;
-    position: absolute;
-    top: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-`
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: auto;
+  padding: 2px 4px;
+  border-radius: 12px;
+  background: #dcdcdc;
+  transform: translateX(-50%);
+`;
 
 export const BtnWrap = styled.div`
-    margin-top: 100px;
-`
+  position: relative;
+  width: 100%;
+  margin-top: 70px;
+`;
