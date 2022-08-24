@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Widget from '../../components/family/Widget';
+import { useFamilyCode } from '../../hooks/useData';
 import { IconNext } from '../../assets/icons';
 
 const Setting = () => {
   const navigate = useNavigate();
+  const { data } = useFamilyCode();
+
   return (
     <>
       <PageTitle title="설정" />
@@ -15,7 +18,7 @@ const Setting = () => {
         <h3>초대코드</h3>
         <div className="box-code">
           {/* TODO: 가족코드 조회 API 요청 */}
-          <p>94321114</p>
+          <p>{data.familyCode}</p>
         </div>
         <button type="button" onClick={() => navigate('/rankings')}>
           <h3>가족랭킹</h3>

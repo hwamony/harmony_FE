@@ -39,3 +39,22 @@ export const useValidUserData = () =>
       console.log(data);
     },
   });
+
+const getFamilyCode = async () => {
+  try {
+    const res = await apis.getCode();
+    return res.data.data;
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const useFamilyCode = () =>
+  useQuery(['familyCode'], getFamilyCode, {
+    enabled: !!hasToken,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
