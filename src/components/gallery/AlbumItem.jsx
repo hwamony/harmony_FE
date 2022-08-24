@@ -26,7 +26,7 @@ const AlbumItem = ({ album, data }) => {
     };
 
     const setLoadingTrue = async () => {
-      await getTimeDelay(3000);
+      await getTimeDelay(1500);
       setIsLoading(false);
     };
 

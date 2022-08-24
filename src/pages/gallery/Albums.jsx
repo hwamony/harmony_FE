@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from '../../components/common/Header';
+import styled from 'styled-components'
+import HeaderMid from '../../components/common/HeaderMid';
 import PageTitle from '../../components/common/PageTitle';
 import AlbumItem from '../../components/gallery/AlbumItem';
 
@@ -61,14 +62,22 @@ const Albums = () => {
   return (
     <>
       <PageTitle title={`${dummyData.name} - 갤러리`} />
-      <Header title="갤러리" subtitle={dummyData.name} />
-      <section>
+      <HeaderMid text={dummyData.name} />
+      <AlbumsSection>
         {dummyData.albums.map((album) => (
           <AlbumItem key={album.albumId} album={album} data={dummyData} />
         ))}
-      </section>
+      </AlbumsSection>
     </>
   );
 };
 
 export default Albums;
+
+const AlbumsSection = styled.section`
+  position: relative;
+  overflow-y: auto;
+  height: calc(100vh - 55px - 65px);
+  margin-top: 55px;
+  padding: 23px 20px 20px;
+`;

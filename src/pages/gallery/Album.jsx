@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../../components/common/Header';
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
+import HeaderMid from '../../components/common/HeaderMid';
 import { IconCheck } from '../../assets/icons';
 
 const Album = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   // FIXME: API 요청할 때는 캐싱된 데이터 사용하기
   const location = useLocation();
   const albumsData = location.state;
 
+  useEffect(() => {
+    return () => {
+      dispatch(setOnSelect(false));
+      dispatch(setOnSelectAll(false));
+    };
+  }, []);
+
   // TODO: 이미지id를 checkList 배열에 담기
   // TODO: 전체 선택 기능 구현하기
 
   return (
-    <>
+    <AlbumSection>
       {albumsData && (
         <>
-          <Header title="갤러리" subtitle={albumsData.name} select={true} />
+          <HeaderMid text={albumsData.name} select={true} />
           <AlbumList>
             {albumsData.albums.map((album) => (
               <li
@@ -70,11 +79,19 @@ const Album = () => {
           </ImageList>
         </>
       )}
-    </>
+    </AlbumSection>
   );
 };
 
 export default Album;
+
+const AlbumSection = styled.section`
+  position: relative;
+  overflow-y: auto;
+  height: calc(100vh - 55px - 65px);
+  margin-top: 55px;
+  padding: 20px;
+`;
 
 const AlbumList = styled.ul`
   display: flex;
@@ -101,6 +118,7 @@ const ImageList = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 1fr;
   grid-gap: 2px;
+  margin: 0 -20px;
   div {
     position: relative;
   }
