@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
+
 import HeaderMid from '../../components/common/HeaderMid';
+import BtnAdd from '../../components/common/BtnAdd';
+import ImageItem from '../../components/gallery/ImageItem';
 import { IconSave } from '../../assets/icons';
 import { FiTrash2 } from 'react-icons/fi';
-import ImageItem from '../../components/gallery/ImageItem';
 
 const Album = () => {
   const params = useParams();
@@ -51,6 +53,8 @@ const Album = () => {
       {albumsData && (
         <>
           <HeaderMid text={albumsData.name} select={true} />
+          <BtnAdd link="/galleries/posts" text="앨범 추가" />
+
           <AlbumList>
             {albumsData.albums.map((album) => (
               <li

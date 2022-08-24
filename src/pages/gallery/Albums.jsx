@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import HeaderMid from '../../components/common/HeaderMid';
 import PageTitle from '../../components/common/PageTitle';
+import BtnAdd from '../../components/common/BtnAdd';
 import AlbumItem from '../../components/gallery/AlbumItem';
 
 const dummyData = {
@@ -63,6 +64,7 @@ const Albums = () => {
     <>
       <PageTitle title={`${dummyData.name} - 갤러리`} />
       <HeaderMid text={dummyData.name} />
+      <BtnAdd link="/galleries/posts" text="앨범 추가" />
       <AlbumsSection>
         {dummyData.albums.map((album) => (
           <AlbumItem key={album.albumId} album={album} data={dummyData} />

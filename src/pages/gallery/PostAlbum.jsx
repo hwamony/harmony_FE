@@ -120,7 +120,7 @@ const InputWrapper = styled.div`
     width: 100%;
   }
   svg.MuiSelect-icon {
-    padding: 12px;
+    padding: 12px 13px 16px;
     margin-right: 5px;
     background: #fff url(/images/chevron_down.png) center no-repeat;
     transition: all 0.2s ease;
