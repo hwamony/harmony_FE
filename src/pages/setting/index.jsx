@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Widget from '../../components/family/Widget';
 import { useFamilyCode } from '../../hooks/useData';
+import useCopyClipBoard from '../../hooks/useCopyClipBoard';
+import { Snackbar } from '@mui/material';
 import { IconNext } from '../../assets/icons';
 
 const Setting = () => {
   const navigate = useNavigate();
   const { data } = useFamilyCode();
+  const [isCopied, onCopy] = useCopyClipBoard();
+  const [isOpened, setIsOpened] = useState(false);
+
+  const onCopyClick = () => {
+    onCopy(data?.familyCode);
+    setIsOpened(true);
+  };
 
   return (
     <>
@@ -17,13 +26,15 @@ const Setting = () => {
       <SettingsContainer>
         <h3>초대코드</h3>
         <div className="box-code">
-          {/* TODO: 가족코드 조회 API 요청 */}
-          <p>{data.familyCode}</p>
+          <p onClick={onCopyClick}>{data?.familyCode}</p>
+          {isCopied && <img src={`${process.env.PUBLIC_URL}/images/congratulations.png`} alt="복사 완료" />}
         </div>
+
         <button type="button" onClick={() => navigate('/rankings')}>
           <h3>가족랭킹</h3>
           <IconNext />
         </button>
+
         <button
           onClick={() => {
             localStorage.removeItem('TOKEN');
@@ -33,6 +44,15 @@ const Setting = () => {
           <h3>로그아웃</h3>
           <IconNext />
         </button>
+
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={isOpened}
+          autoHideDuration={2000}
+          onClose={() => setIsOpened(false)}
+          message="초대 코드 복사 완료! 가족들에게 공유해 보세요."
+          key={'bottom' + 'center'}
+        />
       </SettingsContainer>
     </>
   );
@@ -54,6 +74,7 @@ const SettingsContainer = styled.section`
   }
 
   div.box-code {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,6 +86,13 @@ const SettingsContainer = styled.section`
     font-weight: 700;
     p {
       border-bottom: 2px solid #000;
+      cursor: pointer;
+    }
+    img {
+      position: absolute;
+      right: 20px;
+      width: 30px;
+      height: 30px;
     }
   }
 
@@ -76,5 +104,9 @@ const SettingsContainer = styled.section`
     margin-bottom: 5px;
     padding: 24px 0;
     border-bottom: 1px solid #dadada;
+  }
+
+  .MuiSnackbar-root {
+    bottom: 75px;
   }
 `;

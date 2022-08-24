@@ -140,7 +140,7 @@ const Schedule = () => {
                 id="switch-allday"
                 color="default"
                 checked={switchChecked}
-                onChange={(e) => {
+                onChange={() => {
                   if (startDate) {
                     setEndDate(startDate);
                     setSwitchChecked((state) => !state);

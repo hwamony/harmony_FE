@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import api from '../../api/AxiosManager';
@@ -10,7 +10,7 @@ const AuthControl = () => {
   const { hasToken, isLoggedIn, actions } = useAuth();
 
   useEffect(() => {
-    console.log({ hasToken: hasToken, isLoggedIn: isLoggedIn });
+    console.log('hasToken:', hasToken);
     if (hasToken) {
       actions.onLoggedIn();
     } else {
@@ -39,7 +39,7 @@ const AuthControl = () => {
     try {
       const response = await api.get('/user/info');
       const { hasRole, isFamily } = response.data.data;
-      
+
       if (!isFamily) {
         navigate('/familycode');
       } else if (!hasRole) {
