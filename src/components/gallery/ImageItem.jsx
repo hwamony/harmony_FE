@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { IconCheck } from '../../assets/icons';
@@ -18,7 +19,8 @@ const ImageItem = ({ url, handleCheck }) => {
   };
 
   return (
-    <div>
+    // FIXME: imageId로 수정하기
+    <Link to={`${url.slice(-6)}`} state={{ url }}>
       {onSelect && (
         <>
           <input
@@ -43,7 +45,7 @@ const ImageItem = ({ url, handleCheck }) => {
       ) : (
         <img src={url} alt="" />
       )}
-    </div>
+    </Link>
   );
 };
 

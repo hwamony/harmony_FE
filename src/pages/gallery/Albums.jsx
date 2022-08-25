@@ -16,7 +16,7 @@ const dummyData = {
       images: [
         'https://source.unsplash.com/random/?spring',
         'https://source.unsplash.com/random/?summer',
-        'https://source.unsplash.com/random/?fall',
+        'https://source.unsplash.com/random/?flower',
         'https://source.unsplash.com/random/?winter',
         'https://source.unsplash.com/random/?season',
       ],

@@ -14,7 +14,7 @@ const dummySchedule = [
   },
   {
     scheduleId: 2,
-    name: '야경',
+    name: '빵지순례',
     image: 'https://source.unsplash.com/random',
   },
   {

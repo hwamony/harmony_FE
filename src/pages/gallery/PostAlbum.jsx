@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
 
 import {
   TextField,
@@ -26,7 +28,7 @@ const PostAlbum = () => {
       <HeaderMid text="앨범생성" />
       <AlbumForm>
         <InputWrapper>
-          <TextField id="input-albumtitle" label="앨범명" variant="outlined" />
+          <TextField id="input-albumtitle" label="앨범명" variant="outlined" autoComplete="off" />
         </InputWrapper>
         <hr />
 
