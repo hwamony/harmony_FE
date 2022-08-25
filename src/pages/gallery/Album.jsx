@@ -79,7 +79,7 @@ const Album = () => {
               .images.map((img) =>
                 // FIXME: key와 url을 img.imageId로 수정하기
                 onSelect ? (
-                  <ImageItem url={img} handleCheck={handleCheck} />
+                  <ImageItem url={img} handleCheck={handleCheck} key={img} />
                 ) : (
                   <Link to={`${img.slice(-6)}`} state={{ url: img }} key={img}>
                     <ImageItem url={img} handleCheck={handleCheck} />
