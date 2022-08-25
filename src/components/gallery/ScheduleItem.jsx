@@ -12,18 +12,21 @@ const ScheduleItem = ({ isLoading, lists }) => {
           <Item key={list.scheduleId}>
             <Link to={`/galleries/${list.scheduleId}`}>
               {isLoading ? (
-                <p>
-                  <Skeleton width="70px" />
-                </p>
-              ) : (
-                <p>{list.name}</p>
-              )}
-              {isLoading ? (
                 <ImgSkeleton variant="rectangular" />
               ) : (
                 <img src={list.image} alt="" />
               )}
             </Link>
+            {isLoading ? (
+              <p>
+                <Skeleton width="70px" />
+              </p>
+            ) : (
+              <>
+                <p>{list.name}</p>
+                <small>{list.size}</small>
+              </>
+            )}
           </Item>
         ))
       ) : (
@@ -42,32 +45,33 @@ export default ScheduleItem;
 
 const ItemContainer = styled.ul`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
-  gap: 20px;
-  li {
-    width: 150px;
-    height: 120px;
-  }
+  gap: 17px 8px;
 `;
 
 const Item = styled.li`
-  overflow: hidden;
-  border-radius: 10px;
   a {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 163px;
+    height: 163px;
+    border-radius: 5px;
   }
-  box-shadow: 2px 2px 10px rgba(184, 187, 192, 0.24);
   p {
-    margin: 6px auto;
+    margin: 7px auto 0;
     font-size: 14px;
     font-weight: 500;
   }
+  small {
+    color: #7d7d7d;
+    font-size: 12px;
+  }
   img {
     width: 100%;
-    height: 92px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
   }
 `;

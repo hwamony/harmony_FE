@@ -76,10 +76,16 @@ const Album = () => {
           <ImageList>
             {albumsData.albums
               .filter((v) => v.albumId === parseInt(params.albumId))[0]
-              .images.map((img) => (
+              .images.map((img) =>
                 // FIXME: key와 url을 img.imageId로 수정하기
-                <ImageItem key={img} url={img} handleCheck={handleCheck} />
-              ))}
+                onSelect ? (
+                  <ImageItem url={img} handleCheck={handleCheck} />
+                ) : (
+                  <Link to={`${img.slice(-6)}`} state={{ url: img }} key={img}>
+                    <ImageItem url={img} handleCheck={handleCheck} />
+                  </Link>
+                ),
+              )}
           </ImageList>
         </>
       )}

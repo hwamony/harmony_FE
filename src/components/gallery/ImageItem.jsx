@@ -20,7 +20,7 @@ const ImageItem = ({ url, handleCheck }) => {
 
   return (
     // FIXME: imageId로 수정하기
-    <Link to={`${url.slice(-6)}`} state={{ url }}>
+    <div>
       {onSelect && (
         <>
           <input
@@ -45,7 +45,7 @@ const ImageItem = ({ url, handleCheck }) => {
       ) : (
         <img src={url} alt="" />
       )}
-    </Link>
+    </div>
   );
 };
 

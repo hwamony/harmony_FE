@@ -103,6 +103,12 @@ export const IconSave = () => (
   </svg>
 );
 
+export const IconDate = () => (
+  <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14.2222 1.8H13.3333V0H11.5556V1.8H4.44444V0H2.66667V1.8H1.77778C0.791111 1.8 0 2.61 0 3.6V16.2C0 17.199 0.8 18 1.77778 18H14.2222C15.2089 18 16 17.199 16 16.2V3.6C16 2.61 15.2089 1.8 14.2222 1.8ZM14.2222 16.2H1.77778V7.2H14.2222V16.2ZM14.2222 5.4H1.77778V3.6H14.2222V5.4Z" fill="#717171"/>
+  </svg>
+);
+
 
 // Settings
 export const IconNext = () => (
