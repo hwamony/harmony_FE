@@ -1,47 +1,65 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreVert from './MoreVert';
+import Modal from '../Modal';
 
 const ScheduleList = ({ schedule, selectedDate }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsVisible(true);
+  };
+
   return (
-    <ScheduleItem>
-      {schedule ? (
-        <>
+    <>
+      <ScheduleItem>
+        {schedule ? (
+          <>
+            <Schedule onClick={handleModalOpen}>
+              <CategoryAndDate>
+                <Circle val={schedule.category} />
+                {schedule.startDate === schedule.endDate ? (
+                  <span className="date">
+                    {dayjs(schedule.startDate).format('M월 D일, dd')}
+                  </span>
+                ) : (
+                  <span className="date">
+                    {dayjs(schedule.startDate).format('M월 D일, dd')} ~{' '}
+                    {dayjs(schedule.endDate).format('M월 D일, dd')}
+                  </span>
+                )}
+              </CategoryAndDate>
+              <CategoryTitle>
+                <strong>{schedule.title}</strong>
+                {schedule.done && <DoneBadge>완료</DoneBadge>}
+              </CategoryTitle>
+            </Schedule>
+            <MoreVert schedule={schedule} />
+          </>
+        ) : (
           <div>
             <CategoryAndDate>
-              <Circle val={schedule.category} />
-              {schedule.startDate === schedule.endDate ? (
-                <span className="date">
-                  {dayjs(schedule.startDate).format('M월 D일, dd')}
-                </span>
-              ) : (
-                <span className="date">
-                  {dayjs(schedule.startDate).format('M월 D일, dd')} ~{' '}
-                  {dayjs(schedule.endDate).format('M월 D일, dd')}
-                </span>
-              )}
+              <CircleOutlined />
+              <span className="date">{selectedDate}</span>
             </CategoryAndDate>
             <CategoryTitle>
-              <strong>{schedule.title}</strong>
-              {schedule.done && <DoneBadge>완료</DoneBadge>}
+              <strong className="no-category">일정이 없습니다.</strong>
             </CategoryTitle>
           </div>
-          <MoreVert schedule={schedule} />
-        </>
-      ) : (
-        <div>
-          <CategoryAndDate>
-            <CircleOutlined />
-            <span className="date">{selectedDate}</span>
-          </CategoryAndDate>
-          <CategoryTitle>
-            <strong className="no-category">일정이 없습니다.</strong>
-          </CategoryTitle>
-        </div>
+        )}
+      </ScheduleItem>
+
+      {isVisible === true && (
+        <Modal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          type="detail"
+          schedule={schedule}
+        />
       )}
-    </ScheduleItem>
+    </>
   );
 };
 
@@ -56,6 +74,11 @@ const ScheduleItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Schedule = styled.div`
+  cursor: pointer;
 `;
 
 const CategoryAndDate = styled.div`

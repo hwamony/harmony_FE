@@ -4,6 +4,7 @@ import { Input } from './Input';
 import { useForm } from 'react-hook-form';
 import api from '../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
+import ScheduleDetail from './calendar/ScheduleDetail';
 
 const Modal = (props) => {
   const [modalData, setModalData] = useState({
@@ -168,14 +169,45 @@ const Modal = (props) => {
     );
   };
 
+  const Detail = () => {
+    return (
+      <article>
+        <ScheduleDetail schedule={props.schedule} />
+        <BtnWrap>
+          <ModalBtn
+            style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
+            onClick={() => {
+              ModalClose();
+              navigate('/schedules/edit', { state: props.schedule });
+            }}
+          >
+            수정
+          </ModalBtn>
+          <ModalBtn
+            style={{ fontWeight: '600', color: '#3EC192' }}
+            onClick={ModalClose}
+          >
+            확인
+          </ModalBtn>
+        </BtnWrap>
+      </article>
+    );
+  };
+
   return (
     <ModalWrap visible={isVisible}>
       <Overlay onClick={type !== 'join' ? onDimmerClick : onDimmerCopy}>
-        <ModalInner>
-          {type === 'create' && <Create></Create>}
-          {type === 'copy' && <Copy></Copy>}
-          {type === 'join' && <Join></Join>}
-        </ModalInner>
+        {type === 'detail' ? (
+          <ModalScheduleInner>
+            <Detail></Detail>
+          </ModalScheduleInner>
+        ) : (
+          <ModalInner>
+            {type === 'create' && <Create></Create>}
+            {type === 'copy' && <Copy></Copy>}
+            {type === 'join' && <Join></Join>}
+          </ModalInner>
+        )}
       </Overlay>
     </ModalWrap>
   );
@@ -202,6 +234,20 @@ const ModalInner = styled.div`
   max-width: 480px;
   height: 210px;
   padding: 34px 26px;
+  border-radius: 10px;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background: #ffffff;
+`;
+
+const ModalScheduleInner = styled.div`
+  width: 335px;
+  max-width: 480px;
+  height: 367px;
+  padding: 30px 18px 16px;
   border-radius: 10px;
   margin: auto;
   position: relative;

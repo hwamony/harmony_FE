@@ -146,7 +146,6 @@ const Main = styled.main`
 const ListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 20px 0;
 `;
 
 const NoSchedule = styled.div`
