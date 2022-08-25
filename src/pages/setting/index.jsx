@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+
 import Widget from '../../components/family/Widget';
 import { useFamilyCode } from '../../hooks/useData';
 import useCopyClipBoard from '../../hooks/useCopyClipBoard';
@@ -19,6 +21,17 @@ const Setting = () => {
     setIsOpened(true);
   };
 
+  const onLogout = async () => {
+    try {
+      const res = await axios.post('http://43.200.174.197/logout');
+      console.log(res);
+      localStorage.removeItem('TOKEN');
+      window.location.href = '/login';
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+
   return (
     <>
       <PageTitle title="설정" />
@@ -27,7 +40,12 @@ const Setting = () => {
         <h3>초대코드</h3>
         <div className="box-code">
           <p onClick={onCopyClick}>{data?.familyCode}</p>
-          {isCopied && <img src={`${process.env.PUBLIC_URL}/images/congratulations.png`} alt="복사 완료" />}
+          {isCopied && (
+            <img
+              src={`${process.env.PUBLIC_URL}/images/congratulations.png`}
+              alt="복사 완료"
+            />
+          )}
         </div>
 
         <button type="button" onClick={() => navigate('/rankings')}>
@@ -35,12 +53,7 @@ const Setting = () => {
           <IconNext />
         </button>
 
-        <button
-          onClick={() => {
-            localStorage.removeItem('TOKEN');
-            window.location.href = '/login';
-          }}
-        >
+        <button onClick={onLogout}>
           <h3>로그아웃</h3>
           <IconNext />
         </button>
