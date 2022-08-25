@@ -37,16 +37,19 @@ const ScheduleDetail = ({ schedule }) => {
 
       <strong>{schedule.title}</strong>
       <hr className="line-strong" />
-      <textarea
-        defaultValue={schedule.content}
-        readOnly
-        className="detail-content"
-      />
+
       <div className="detail-members">
         {schedule.members.map((member, i) => (
           <span key={i}>{member}</span>
         ))}
       </div>
+
+      <textarea
+        defaultValue={schedule.content}
+        readOnly
+        className="detail-content"
+      />
+
       <button
         type="button"
         onClick={toggleDone}
@@ -70,38 +73,13 @@ const DetailContent = styled.div`
     font-size: 14px;
     text-align: center;
   }
-  .detail-content {
-    width: 100%;
-    height: 100px;
-    margin-top: 1px;
-    padding: 16px 10px 3px;
-    border: none;
-    outline: none;
-    resize: none;
-    font-size: 14px;
-    &::-webkit-scrollbar {
-      display: fixed;
-      height: 2px;
-    }
-    &::-webkit-scrollbar-thumb {
-      width: 5px;
-      height: 80px;
-      border: 7px solid transparent;
-      border-radius: 10px;
-      background: #e3e5e9;
-      background-clip: padding-box;
-    }
-    &::-webkit-scrollbar-trac {
-      background: none;
-    }
-  }
   .detail-members {
     overflow-x: scroll;
     overflow-y: hidden;
     display: flex;
     max-height: 42px;
-    margin: 3px 0;
-    padding-bottom: 10px;
+    margin: 6px 0 0;
+    padding-bottom: 5px;
     span {
       padding: 4px 14px;
       font-size: 14px;
@@ -125,6 +103,32 @@ const DetailContent = styled.div`
       background: none;
     }
   }
+  .detail-content {
+    width: 100%;
+    height: 107px;
+    margin-top: 1px;
+    padding: 2px 10px 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 14px;
+    &::-webkit-scrollbar {
+      display: fixed;
+      height: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      width: 5px;
+      height: 80px;
+      border: 7px solid transparent;
+      border-radius: 10px;
+      background: #e3e5e9;
+      background-clip: padding-box;
+    }
+    &::-webkit-scrollbar-trac {
+      background: none;
+    }
+  }
+
   strong {
     display: block;
     margin: 5px 0 18px;
@@ -133,7 +137,6 @@ const DetailContent = styled.div`
   }
   button {
     float: right;
-    margin-top: 7px;
     padding: 13px 18px;
     border: 1px solid #ddd;
     border-radius: 5px;
