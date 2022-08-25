@@ -140,7 +140,7 @@ const Schedule = () => {
                 id="switch-allday"
                 color="default"
                 checked={switchChecked}
-                onChange={(e) => {
+                onChange={() => {
                   if (startDate) {
                     setEndDate(startDate);
                     setSwitchChecked((state) => !state);
@@ -349,7 +349,7 @@ const MemberWrapper = styled.div`
     }
   }
   svg.MuiSelect-icon {
-    padding: 12px;
+    padding: 12px 13px 16px;
     background: #fff url(/images/chevron_down.png) center no-repeat;
     transition: all 0.2s ease;
   }

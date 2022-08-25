@@ -26,7 +26,7 @@ const AlbumItem = ({ album, data }) => {
     };
 
     const setLoadingTrue = async () => {
-      await getTimeDelay(3000);
+      await getTimeDelay(1500);
       setIsLoading(false);
     };
 
@@ -111,11 +111,13 @@ const Item = styled.article`
 `;
 
 const ImgContainer = styled.div`
+  /* FIXME: 반응형 수정해야 함 */
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 2px;
+  /* max-height: 177px; */
   cursor: pointer;
   img {
     display: block;

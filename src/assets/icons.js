@@ -78,12 +78,6 @@ export const IconSelect = () => (
 );
 
 // Gallery
-export const IconFilter = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.99969 6H16.9997L11.9897 12.3L6.99969 6ZM4.24969 5.61C6.26969 8.2 9.99969 13 9.99969 13V19C9.99969 19.55 10.4497 20 10.9997 20H12.9997C13.5497 20 13.9997 19.55 13.9997 19V13C13.9997 13 17.7197 8.2 19.7397 5.61C20.2497 4.95 19.7797 4 18.9497 4H5.03969C4.20969 4 3.73969 4.95 4.24969 5.61Z" fill="black"/>
-  </svg>
-);
-
 export const IconComment = () => (
   <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.5 0H1.5C0.675 0 0 0.68088 0 1.51307V15.1307L3 12.1045H13.5C14.325 12.1045 15 11.4236 15 10.5915V1.51307C15 0.68088 14.325 0 13.5 0ZM13.5 10.5915H2.4L1.5 11.4993V1.51307H13.5V10.5915Z" fill="#A6A6A6"/>
@@ -100,5 +94,25 @@ export const IconClose = () => (
 export const IconCheck = () => (
   <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M1.05859 2.29412L4.47941 6.52941L10.9409 0.882355" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+export const IconSave = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 12V19H5V12H3V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V12H19ZM13 12.67L15.59 10.09L17 11.5L12 16.5L7 11.5L8.41 10.09L11 12.67V3H13V12.67Z" fill="#3EC192"/>
+  </svg>
+);
+
+export const IconDate = () => (
+  <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14.2222 1.8H13.3333V0H11.5556V1.8H4.44444V0H2.66667V1.8H1.77778C0.791111 1.8 0 2.61 0 3.6V16.2C0 17.199 0.8 18 1.77778 18H14.2222C15.2089 18 16 17.199 16 16.2V3.6C16 2.61 15.2089 1.8 14.2222 1.8ZM14.2222 16.2H1.77778V7.2H14.2222V16.2ZM14.2222 5.4H1.77778V3.6H14.2222V5.4Z" fill="#717171"/>
+  </svg>
+);
+
+
+// Settings
+export const IconNext = () => (
+  <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.88756 5L0.256282 1.21936C-0.0854273 0.940416 -0.0854273 0.488155 0.256282 0.209209C0.597991 -0.0697365 1.15201 -0.0697365 1.49372 0.209209L6.74372 4.49492C7.08543 4.77387 7.08543 5.22613 6.74372 5.50508L1.49372 9.79079C1.15201 10.0697 0.597991 10.0697 0.256282 9.79079C-0.0854273 9.51184 -0.0854273 9.05958 0.256282 8.78064L4.88756 5Z" fill="#ABABAB"/>
   </svg>
 );

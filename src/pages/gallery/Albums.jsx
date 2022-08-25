@@ -1,6 +1,8 @@
 import React from 'react';
-import Header from '../../components/common/Header';
+import styled from 'styled-components'
+import HeaderMid from '../../components/common/HeaderMid';
 import PageTitle from '../../components/common/PageTitle';
+import BtnAdd from '../../components/common/BtnAdd';
 import AlbumItem from '../../components/gallery/AlbumItem';
 
 const dummyData = {
@@ -14,7 +16,7 @@ const dummyData = {
       images: [
         'https://source.unsplash.com/random/?spring',
         'https://source.unsplash.com/random/?summer',
-        'https://source.unsplash.com/random/?fall',
+        'https://source.unsplash.com/random/?flower',
         'https://source.unsplash.com/random/?winter',
         'https://source.unsplash.com/random/?season',
       ],
@@ -61,14 +63,23 @@ const Albums = () => {
   return (
     <>
       <PageTitle title={`${dummyData.name} - 갤러리`} />
-      <Header title="갤러리" subtitle={dummyData.name} />
-      <section>
+      <HeaderMid text={dummyData.name} />
+      <BtnAdd link="/galleries/posts" text="앨범 추가" />
+      <AlbumsSection>
         {dummyData.albums.map((album) => (
           <AlbumItem key={album.albumId} album={album} data={dummyData} />
         ))}
-      </section>
+      </AlbumsSection>
     </>
   );
 };
 
 export default Albums;
+
+const AlbumsSection = styled.section`
+  position: relative;
+  overflow-y: auto;
+  height: calc(100vh - 55px - 65px);
+  margin-top: 55px;
+  padding: 23px 20px 20px;
+`;
