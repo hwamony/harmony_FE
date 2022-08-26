@@ -9,13 +9,29 @@ const api = axios.create({
   },
 });
 
+const formApi = axios.create({
+  baseURL: 'http://43.200.174.197/api',
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
 api.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem('TOKEN');
   config.headers.common['Authorization'] = `${accessToken}`;
   return config;
 });
 
+formApi.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('TOKEN');
+  config.headers.common['Authorization'] = `${accessToken}`;
+  return config;
+});
+
 export default api;
+
+export const formdataApi = formApi;
 
 export const apis = {
   getFamily: () => api.get('/family'),
