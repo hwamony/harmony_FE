@@ -14,7 +14,7 @@ const ScheduleItem = ({ isLoading, lists }) => {
               {isLoading ? (
                 <ImgSkeleton variant="rectangular" />
               ) : (
-                <img src={list.image} alt="" />
+                <img src={list.imageUrl} alt="" />
               )}
             </Link>
             {isLoading ? (
@@ -23,8 +23,8 @@ const ScheduleItem = ({ isLoading, lists }) => {
               </p>
             ) : (
               <>
-                <p>{list.name}</p>
-                <small>{list.size}</small>
+                <p>{list.scheduleTitle}</p>
+                <small>{list.count}</small>
               </>
             )}
           </Item>
@@ -37,7 +37,7 @@ const ScheduleItem = ({ isLoading, lists }) => {
 };
 
 ScheduleItem.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+  // isLoading: PropTypes.bool.isRequired,
   lists: PropTypes.array,
 };
 
