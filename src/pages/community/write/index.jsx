@@ -1,11 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../../components/common/PageTitle';
+import Tag from '../../../components/community/Tag';
+import WriteActionButtons from '../../../components/community/WriteActionButtons';
 import { IoIosArrowBack } from 'react-icons/io';
 
 const Post = () => {
   const navigate = useNavigate();
+
+  const axiosAdd = async (Selected, title, content, tags, image) => {
+    try {
+      let data = {
+        category: Selected,
+        title: title,
+        content: content,
+        tags: tags,
+        image: image
+      };
+
+      const res = await axios.post(`http://43.200.174.197/api/posts`, data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const [Selected, setSelected] = useState('');
+
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  };
+
+  const title = React.useRef(null);
+  const content = React.useRef(null);
+  const tags = React.useRef(null);
+  const image = React.useRef(null);
+
   return (
     <>
       <PageTitle title='포스팅' />
@@ -19,23 +51,34 @@ const Post = () => {
           <BoxP>
             <form>
               <PostCategory>
-                <span>카테고리</span>
+                {/* <span>카테고리</span>
                 <label><input type='radio' name='category'/> 아빠</label>
                 <label><input type='radio' name='category' /> 엄마</label>
                 <label><input type='radio' name='category' /> 외동</label>
                 <label><input type='radio' name='category' /> 첫째</label>
                 <label><input type='radio' name='category' /> N째</label>
                 <label><input type='radio' name='category' /> 막내</label>
-                <label><input type='radio' name='category'/> 동거인</label>
+                <label><input type='radio' name='category'/> 동거인</label> */}
+                <select onChange={handleSelect}>
+                  <option defaultValue>Category</option>
+                  <option value='아빠'>아빠</option>
+                  <option value='엄마'>엄마</option>
+                  <option value='외동'>외동</option>
+                  <option value='첫째'>첫째</option>
+                  <option value='N째'>N째</option>
+                  <option value='막내'>막내</option>
+                  <option value='동거인'>동거인</option>
+                </select>
               </PostCategory>
               <PostTitle>
                 <input type='text' placeholder='제목을 입력해주세요' />
               </PostTitle>
               <PostContent>
-                <textarea type='text' placeholder='내용을 입력해주세요' />
+                <textarea type='text' placeholder='내용을 입력해주세요' ref={content} />
             </PostContent>
             <PostTitle>
-              <input type='text' placeholder='#해시태그, #최대5개, #쉼표필수' />
+              {/* <input type='text' placeholder='#해시태그, #최대5개, #쉼표필수' /> */}
+              <Tag />
             </PostTitle>
             <AddPhoto>
               <input type='file' placeholder='사진등록' />
@@ -43,9 +86,23 @@ const Post = () => {
             </form>
           </BoxP>
           <PostBar>
-            <WriteBtn>
-              <button></button>
-            </WriteBtn>
+            <WriteActionButtons 
+            onClick={() => {
+              if (
+                Selected != "" &&
+                title.current.value !="" &&
+                content.current.value != "" &&
+                tags.current.value !="" &&
+                image.current.value !=""
+              ){
+                axiosAdd(Selected, title.current.value, content.current.value, tags.current.value, image.current.value);
+                navigate.push('/api/community');
+                window.location.reload();
+              } else {
+                window.alert('입력하지 않은 항목이 있습니다.');
+              }
+            }}
+            />
           </PostBar>
         </PageColor>
     </>
@@ -130,6 +187,9 @@ const PostCategory = styled.div`
   label:last-child {
     padding-right: 15px;
   };
+  select {
+    font-size: 15px;
+  }
 `
 
 const PostTitle = styled.div`
@@ -197,23 +257,16 @@ const PostBar = styled.div`
   z-index: 100;
 `
 
-const WriteBtn = styled.div`
-  padding: 17px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  button{
-    width: calc(25% + 400px);
-    height: 43px;
-    background-color: #3EC192;
-    color: white;
-    font-size: 15px;
-    border-radius: 5px;
-    ::before{
-      content : '등록하기';
-    }
-    :hover::before {
-      content : '익명으로 등록됩니다 :)';
-    }
-  }
-`
+// import React from "react";
+// import Editor from "../../components/community/write/Editor";
+// import Responsive from "../../components/common/Responsive";
+
+// const WritePage = () => {
+//     return(
+//         <Responsive>
+//             <Editor />
+//         </Responsive>
+//     )
+// }
+
+// export default WritePage;
