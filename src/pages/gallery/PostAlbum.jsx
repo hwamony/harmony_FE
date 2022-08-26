@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
@@ -30,10 +30,6 @@ const PostAlbum = () => {
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   const getEnableSchedules = async (year, month) => {
     console.log(`/schedules/dates?year=${year}&month=${month}`);
@@ -74,53 +70,29 @@ const PostAlbum = () => {
 
   const createAlbum = async (e) => {
     e.preventDefault();
-    // let data = [
-    //   {
-    //     date: selectedDate,
-    //     title: titleInput.current.value,
-    //     images: files,
-    //     content: '',
-    //   },
-    // ];
-
-    // let formData = new FormData();
-    // formData.append(
-    //   'data',
-    //   new Blob([JSON.stringify(data)], { type: 'application/json' }),
-    // );
 
     let formData = new FormData();
-    // formData.append('date', selectedDate);
-    // formData.append('title', albumTitle);
-    // formData.append('content', '내용입니다');
-    // formData.append('imageFiles', files);
+    formData.append('date', selectedDate);
+    formData.append('title', albumTitle);
+    formData.append('content', '');
 
-    // for (let i = 0; i < files.length; i++) {
-    //   const imageForm = files[i];
-    //   formData.append(`imageFiles[${i}]`, imageForm)
-    // }
-
-    const blob = new Blob([files], { type: 'multipart/form-data' });
-    formData.append('imageFile', blob);
-
-    for (let key of formData.keys()) {
-      console.log(key, ':', formData.get(key));
+    for (let i = 0; i < files.length; i++) {
+      const imageForm = files[i];
+      console.log(imageForm);
+      formData.append(`imageFiles[${i}]`, imageForm)
     }
-    console.log(formData);
+
+    // FIXME: formData 조회. 최종 배포 전 지울 것
+    // for (let key of formData.keys()) {
+    //   console.log(key, ':', formData.get(key));
+    // }
+    // console.log(formData);
 
     try {
-      const res = formdataApi.post(
+      const res = await formdataApi.post(
         `/schedules/${data.schedules[scheduleNum].id}/galleries`,
         formData,
       );
-      // const res = await api({
-      //   method: 'post',
-      //   url: `/schedules/${data.schedules[scheduleNum].id}/galleries`,
-      //   data: formData,
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
       console.log(res);
     } catch (e) {
       console.log(e);
