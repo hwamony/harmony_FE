@@ -75,14 +75,6 @@ const Home = () => {
       dayjs(s.endDate).format('DD') >= selectedDate.format('DD'),
   );
 
-  const activityCounts = [
-    monthSchedule?.eatCount,
-    monthSchedule?.tripCount,
-    monthSchedule?.cookCount,
-    monthSchedule?.cleanCount,
-    monthSchedule?.etcCount,
-  ];
-
   return (
     <>
       {hasToken && monthSchedule && (
@@ -92,7 +84,7 @@ const Home = () => {
           <Main>
             <h1 className="hidden">캘린더 홈</h1>
             <BtnAdd link="/schedules" text="일정 추가" />
-            <Summary counts={activityCounts} />
+            <Summary counts={monthSchedule.counts} />
             <Calendar schedules={monthSchedule.schedules} />
             <ListWrapper>
               {selectedDay ? (
