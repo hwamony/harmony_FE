@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../../components/common/PageTitle';
-import Tag from '../../../components/community/Tag';
+import TagBox from '../../../components/community/TagBox';
 import WriteActionButtons from '../../../components/community/WriteActionButtons';
 import { IoIosArrowBack } from 'react-icons/io';
 
@@ -78,7 +78,7 @@ const Post = () => {
             </PostContent>
             <PostTitle>
               {/* <input type='text' placeholder='#해시태그, #최대5개, #쉼표필수' /> */}
-              <Tag />
+              <TagBox />
             </PostTitle>
             <AddPhoto>
               <input type='file' placeholder='사진등록' />
