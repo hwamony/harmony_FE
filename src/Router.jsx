@@ -14,7 +14,7 @@ const Voicemail = React.lazy(() => import('./pages/voicemail'));
 const Voicercorder = React.lazy(() => import('./pages/voicerecorder'));
 const Community = React.lazy(() => import('./pages/community'));
 const Comment = React.lazy(() => import('./pages/community/comment'));
-const Post = React.lazy(() => import('./pages/community/post'));
+const Post = React.lazy(() => import('./pages/community/write'));
 const Setting = React.lazy(() => import('./pages/setting'));
 const Ranking = React.lazy(() => import('./pages/ranking'));
 const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
