@@ -11,6 +11,7 @@ const Albums = React.lazy(() => import('./pages/gallery/Albums'));
 const Album = React.lazy(() => import('./pages/gallery/Album'));
 const PostAlbum = React.lazy(() => import('./pages/gallery/PostAlbum'));
 const Voicemail = React.lazy(() => import('./pages/voicemail'));
+const Voicercorder = React.lazy(() => import('./pages/voicerecorder'));
 const Community = React.lazy(() => import('./pages/community'));
 const Comment = React.lazy(() => import('./pages/community/comment'));
 const Post = React.lazy(() => import('./pages/community/post'));
@@ -34,6 +35,7 @@ const Router = () => {
       </Route>
       <Route path="/galleries/posts" element={<PostAlbum />} />
       <Route path="/voice-mails" element={<Voicemail />} />
+      <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />
       <Route path="/posts/comments" element={<Comment />} />
       <Route path="/posts" element={<Post />} />
