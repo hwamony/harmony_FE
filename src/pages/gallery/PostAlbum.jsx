@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
@@ -22,6 +23,7 @@ import { Button } from '../../components/Button';
 import { MdAddPhotoAlternate } from 'react-icons/md';
 
 const PostAlbum = () => {
+  const navigate = useNavigate();
   const [date, setDate] = useState(dayjs());
   const [schedule, setSchedule] = useState('');
   const [scheduleNum, setScheduleNum] = useState(-1);
@@ -32,7 +34,6 @@ const PostAlbum = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   const getEnableSchedules = async (year, month) => {
-    console.log(`/schedules/dates?year=${year}&month=${month}`);
     const res = await api.get(`/schedules/dates?year=${year}&month=${month}`);
     return res.data.data;
   };
@@ -74,12 +75,12 @@ const PostAlbum = () => {
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
-    formData.append('content', '');
+    formData.append('content', 'content');
 
     for (let i = 0; i < files.length; i++) {
       const imageForm = files[i];
       console.log(imageForm);
-      formData.append(`imageFiles[${i}]`, imageForm)
+      formData.append(`imageFiles[${i}]`, imageForm);
     }
 
     // FIXME: formData 조회. 최종 배포 전 지울 것
@@ -94,6 +95,8 @@ const PostAlbum = () => {
         formData,
       );
       console.log(res);
+      alert('앨범이 생성되었습니다!');
+      navigate('/galleries');
     } catch (e) {
       console.log(e);
     }

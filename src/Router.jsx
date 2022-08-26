@@ -30,8 +30,8 @@ const Router = () => {
       <Route path="/schedules/*" element={<Schedule />} />
       <Route path="/galleries" element={<Gallery />} />
       <Route path="/galleries/:scheduleId" element={<Albums />} />
-      <Route path="/galleries/:scheduleId/:albumId" element={<Album />} />
-      <Route path="/galleries/:scheduleId/:albumId/:imageId" element={<Image />} />
+      <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+      <Route path="/galleries/:scheduleId/:galleryId/:imageId" element={<Image />} />
       <Route path="/galleries/posts" element={<PostAlbum />} />
       <Route path="/voice-mails" element={<Voicemail />} />
       <Route path="/voice-recorder" element={<Voicercorder />} />

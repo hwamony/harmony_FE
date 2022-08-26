@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
 import styled from 'styled-components';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,15 +15,51 @@ import { FiTrash2 } from 'react-icons/fi';
 
 const Album = () => {
   const params = useParams();
+  const scheduleId = params.scheduleId;
+  const galleryId = params.galleryId;
   const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checkedImgs, setCheckedImgs] = useState(new Set());
   const [size, setSize] = useState(0);
-  // FIXME: API 요청할 때는 캐싱된 데이터 사용하기
   const location = useLocation();
-  const albumsData = location.state;
+  const albumTitle = location.state;
+  // FIXME: state로 받지 말고 밖에서 outlet으로 헤더 처리
+  // console.log('albumTitle', albumTitle);
+
+  const getAlbumSchedules = async () => {
+    const res = await api.get(`/schedules/${scheduleId}/galleryList`);
+    return res.data.data;
+  };
+
+  const { data: scheduleList } = useQuery(
+    ['albumSchedules', scheduleId],
+    getAlbumSchedules,
+    {
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
+
+  const getAlbumImages = async () => {
+    const res = await api.get(`/galleries/${galleryId}/images`);
+    return res.data.data;
+  };
+
+  const { data: imagerList } = useQuery(
+    ['albumImages', galleryId],
+    getAlbumImages,
+    {
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
 
   useEffect(() => {
+    console.log(params);
     return () => {
       dispatch(setOnSelect(false));
       dispatch(setOnSelectAll(false));
@@ -29,7 +67,6 @@ const Album = () => {
   }, []);
 
   useEffect(() => {
-    // console.log([...checkedImgs]);
     setCheckedImgs(new Set());
     setSize(0);
   }, [onSelect]);
@@ -49,53 +86,43 @@ const Album = () => {
   // TODO: 전체 선택 기능 구현하기
 
   return (
-    <AlbumSection>
-      {albumsData && (
-        <>
-          <HeaderMid text={albumsData.name} select={true} />
-          <BtnAdd link="/galleries/posts" text="앨범 추가" />
+    <>
+      <AlbumSection>
+        <HeaderMid text="강릉여행" select={true} />
+        <BtnAdd link="/galleries/posts" text="앨범 추가" />
 
-          <AlbumList>
-            {albumsData.albums.map((album) => (
-              <li
-                key={album.albumId}
-                className={cn(
-                  parseInt(params.albumId) === album.albumId && 'selected',
-                )}
-              >
-                <Link
-                  // to={`/galleries/${albumsData.scheduleId}/${album.albumId}`}
-                  to={`/galleries/${albumsData.scheduleId}`}
-                >
-                  {album.name}
-                </Link>
-              </li>
-            ))}
-          </AlbumList>
+        <AlbumList>
+          {scheduleList.galleries.map((album) => (
+            <li
+              key={album.id}
+              className={cn(parseInt(galleryId) === album.id && 'selected')}
+            >
+              <Link to={`/galleries/${scheduleId}/${album.id}`} replace="true">
+                {album.title}
+              </Link>
+            </li>
+          ))}
+        </AlbumList>
 
-          <ImageList>
-            {albumsData.albums
-              .filter((v) => v.albumId === parseInt(params.albumId))[0]
-              .images.map((img) =>
-                // FIXME: key와 url을 img.imageId로 수정하기
-                onSelect ? (
-                  <ImageItem url={img} handleCheck={handleCheck} key={img} />
-                ) : (
-                  <Link to={`${img.slice(-6)}`} state={{ url: img }} key={img}>
-                    <ImageItem url={img} handleCheck={handleCheck} />
-                  </Link>
-                ),
-              )}
-          </ImageList>
-        </>
-      )}
+        <ImageList>
+          {imagerList.images.map((img) =>
+            onSelect ? (
+              <ImageItem img={img} handleCheck={handleCheck} key={img.id} />
+            ) : (
+              <Link to={img.id + ''} state={{ url: img.url }} key={img.id}>
+                <ImageItem img={img} handleCheck={handleCheck} />
+              </Link>
+            ),
+          )}
+        </ImageList>
 
-      <SelectFooter className={cn(onSelect && 'on')}>
-        <IconSave />
-        <strong>선택 {size}</strong>
-        <FiTrash2 />
-      </SelectFooter>
-    </AlbumSection>
+        <SelectFooter className={cn(onSelect && 'on')}>
+          <IconSave />
+          <strong>선택 {size}</strong>
+          <FiTrash2 />
+        </SelectFooter>
+      </AlbumSection>
+    </>
   );
 };
 

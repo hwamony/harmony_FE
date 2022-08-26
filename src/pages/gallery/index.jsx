@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
+import api from '../../api/AxiosManager';
+import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
+
 import PageTitle from '../../components/common/PageTitle';
 import Header from '../../components/common/Header';
 import ScheduleItem from '../../components/gallery/ScheduleItem';
 import BtnAdd from '../../components/common/BtnAdd';
 import { IconDate } from '../../assets/icons';
 
-// FIXME: API 연결 후 삭제
-const dummySchedule = [
-  {
-    scheduleId: 1,
-    name: '강릉여행',
-    image: 'https://source.unsplash.com/random/?spring',
-    size: 250,
-  },
-  {
-    scheduleId: 2,
-    name: '빵지순례',
-    image: 'https://source.unsplash.com/random/?summer',
-    size: 4,
-  },
-  {
-    scheduleId: 3,
-    name: '엄마랑 꽃구경',
-    image: 'https://source.unsplash.com/random/?fall',
-    size: 14,
-  },
-];
-
 const Gallery = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState(dayjs());
+
+  const getGallerySchedules = async (year, month) => {
+    const res = await api.get(`/galleries?year=${year}&month=${month}`);
+    return res.data.data;
+  };
+
+  const { data, isLoading } = useQuery(
+    ['gallerySchedules', date.format('YYYY'), date.format('MM')],
+    () => getGallerySchedules(date.format('YYYY'), date.format('MM')),
+    {
+      enabled: !!date,
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
 
   return (
     <>
@@ -39,9 +38,13 @@ const Gallery = () => {
       <Main>
         <DateWrapper>
           <strong>2022년 8월</strong>
-          <button type="button"><IconDate />날짜선택</button>
+          <button type="button">
+            <IconDate />
+            날짜선택
+          </button>
         </DateWrapper>
-        <ScheduleItem isLoading={isLoading} lists={dummySchedule} />
+        {/* TODO: data.galleries.length 0일때 화면 추가하기 */}
+        <ScheduleItem lists={data.galleries} isLoading={isLoading} />
       </Main>
     </>
   );
