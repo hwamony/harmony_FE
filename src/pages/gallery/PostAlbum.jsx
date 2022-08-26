@@ -163,7 +163,7 @@ const PostAlbum = () => {
                   required
                 >
                   {data?.schedules[scheduleNum].dates.map((v, i) => (
-                    <MenuItem key={v.date} value={v.date} disabled={v.enable}>
+                    <MenuItem key={v.date} value={v.date} disabled={!v.enable}>
                       {v.date}
                     </MenuItem>
                   ))}
