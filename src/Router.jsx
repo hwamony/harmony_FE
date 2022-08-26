@@ -6,14 +6,15 @@ const Login = React.lazy(() => import('./pages/login'));
 const Signup = React.lazy(() => import('./pages/signup'));
 const Schedule = React.lazy(() => import('./pages/calendar/Schedule'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
-const GalleryMain = React.lazy(() => import('./pages/gallery/GalleryMain'));
 const Albums = React.lazy(() => import('./pages/gallery/Albums'));
 const Album = React.lazy(() => import('./pages/gallery/Album'));
+const Image = React.lazy(() => import('./pages/gallery/Image'));
 const PostAlbum = React.lazy(() => import('./pages/gallery/PostAlbum'));
 const Voicemail = React.lazy(() => import('./pages/voicemail'));
+const Voicercorder = React.lazy(() => import('./pages/voicerecorder'));
 const Community = React.lazy(() => import('./pages/community'));
 const Comment = React.lazy(() => import('./pages/community/comment'));
-const Post = React.lazy(() => import('./pages/community/post'));
+const Post = React.lazy(() => import('./pages/community/write'));
 const Setting = React.lazy(() => import('./pages/setting'));
 const Ranking = React.lazy(() => import('./pages/ranking'));
 const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
@@ -27,13 +28,13 @@ const Router = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/schedules/*" element={<Schedule />} />
-      <Route path="/galleries" element={<Gallery />}>
-        <Route index element={<GalleryMain />} />
-        <Route path="/galleries/:scheduleId" element={<Albums />} />
-        <Route path="/galleries/:scheduleId/:albumId" element={<Album />} />
-      </Route>
+      <Route path="/galleries" element={<Gallery />} />
+      <Route path="/galleries/:scheduleId" element={<Albums />} />
+      <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+      <Route path="/galleries/:scheduleId/:galleryId/:imageId" element={<Image />} />
       <Route path="/galleries/posts" element={<PostAlbum />} />
       <Route path="/voice-mails" element={<Voicemail />} />
+      <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />
       <Route path="/posts/comments" element={<Comment />} />
       <Route path="/posts" element={<Post />} />

@@ -11,11 +11,9 @@ const gallerySlice = createSlice({
   reducers: {
     setOnSelect: (state, action) => {
       state.onSelect = action.payload;
-      console.log('setOnSelect 작동', action.payload);
     },
     setOnSelectAll: (state, action) => {
       state.onSelectAll = action.payload;
-      console.log('setOnSelectAll 작동', action.payload);
     },
   },
 });

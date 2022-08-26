@@ -38,6 +38,8 @@ const MoreVert = ({ schedule }) => {
     },
   });
 
+  // TODO: 삭제 confirm 추가하기
+
   const onClickEdit = () => {
     console.log(schedule.scheduleId);
     navigate('/schedules/edit', { state: schedule });

@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 const CommentItem = ({ comment }) => {
-  useEffect(() => {
-    console.log(comment);
-  }, []);
-
   return (
     <Item>
       <div>

@@ -14,35 +14,19 @@ import {
 import { IconComment } from '../../assets/icons';
 import CommentItem from './CommentItem';
 
-const AlbumItem = ({ album, data }) => {
+const AlbumItem = ({ album, isLoading, title }) => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    console.log(album);
-
-    const getTimeDelay = (ms) => {
-      return new Promise((res) => setTimeout(res, ms));
-    };
-
-    const setLoadingTrue = async () => {
-      await getTimeDelay(3000);
-      setIsLoading(false);
-    };
-
-    setLoadingTrue();
-  }, []);
 
   return (
     <Item>
       <ImgContainer
-        onClick={() => navigate(`${album.albumId}`, { state: data })}
+        onClick={() => navigate(`${album.id}`, { state: title })}
       >
         {isLoading
           ? Array.from(new Array(5)).map((_, i) => (
               <ImgSkeleton key={i} variant="rectangular" />
             ))
-          : album.images.map((url, i) => <img key={i} src={url} alt="" />)}
+          : album.imageUrls.map((url, i) => <img key={i} src={url} alt="" />)}
       </ImgContainer>
       <AlbumInfo>
         {isLoading ? (
@@ -62,7 +46,7 @@ const AlbumItem = ({ album, data }) => {
               id="panel1a-header"
             >
               <InfoWrapper>
-                <strong>{album.name}</strong>
+                <strong>{album.title}</strong>
                 <span>
                   <IconComment />
                   {album.comments.length}
@@ -111,11 +95,13 @@ const Item = styled.article`
 `;
 
 const ImgContainer = styled.div`
+  /* FIXME: 반응형 수정해야 함 */
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 2px;
+  /* max-height: 177px; */
   cursor: pointer;
   img {
     display: block;

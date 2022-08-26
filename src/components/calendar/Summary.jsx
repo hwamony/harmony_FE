@@ -11,7 +11,7 @@ const Summary = ({ counts }) => {
           <React.Fragment key={cat.value}>
             <Category val={cat.value}>
               <div />
-              {`${cat.name} +${counts[i]}`}
+              {`${cat.name} +${counts[cat.value]}`}
             </Category>
           </React.Fragment>
         ))}
@@ -20,7 +20,7 @@ const Summary = ({ counts }) => {
 };
 
 Summary.propTypes = {
-  counts: PropTypes.array.isRequired,
+  counts: PropTypes.object.isRequired,
 };
 
 export default Summary;

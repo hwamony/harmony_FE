@@ -6,9 +6,42 @@ import LongCard from '../../../components/community/LongCard';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GiFlowerTwirl } from 'react-icons/gi'
 import { RiPlantLine } from 'react-icons/ri';
+import { FaHeart } from 'react-icons/fa'
 
 const Comment = () => {
   const navigate = useNavigate();
+  const [userName] = useState('');
+  const [comment, setComment] = useState('');
+  const [feedComments, setFeedComments] = useState([]);
+  const [isValid, setIsValid] = useState(false);
+
+  const post = e => {
+    const copyFeedComments = [...feedComments];
+    copyFeedComments.push(comment);
+    setFeedComments(copyFeedComments);
+    setComment('');
+
+    {feedComments.map((comment, i) => {
+      return (
+        <CommentList
+        userName={userName}
+        userComment={Comment}
+        key={i}
+        />
+      );
+    })}
+
+    const CommentList = props => {
+      return (
+        <div className='userCommentBox'>
+          <p className="userName">{props.userName}</p>
+          <div className='userComment'></div>
+          <p className='userHeart'><FaHeart /></p>
+        </div>
+      )
+    }
+  };
+
   return (
     <>
       <PageTitle title="댓글" />
@@ -33,8 +66,30 @@ const Comment = () => {
           </Repl>
           <CommentBar>
             <CommentP>
-              <input type='text' placeholder='댓글을 입력하세요.' />
-              <button>입력</button>
+              <input
+              type='text'
+              className='inputComment'
+              placeholder='댓글을 입력하세요.'
+              onChange={e => {
+                setComment(e.target.value)
+              }}
+              onKeyUp={e => {
+                e.target.value.length > 0
+                ? setIsValid(true)
+                : setIsValid(false);
+              }}
+              value={comment}
+              />
+              <button
+              type="button"
+              className={
+                comment.length > 0
+                ? 'submitCommentActive'
+                : 'submitCommentInactive'
+              }
+              onClick={post}
+              disabled={isValid ? false : true}
+              >입력</button>
             </CommentP>
           </CommentBar>
         </Pagecolor>
