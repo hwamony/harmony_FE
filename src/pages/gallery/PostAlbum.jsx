@@ -75,7 +75,7 @@ const PostAlbum = () => {
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
-    formData.append('content', '');
+    formData.append('content', 'content');
 
     for (let i = 0; i < files.length; i++) {
       const imageForm = files[i];
