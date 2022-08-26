@@ -109,7 +109,11 @@ const Album = () => {
     <>
       <AlbumSection>
         <HeaderMid text="강릉여행" select={true} />
-        <BtnAdd link={`/galleries/posts/${galleryId}`} text="앨범 추가" />
+        <BtnAdd
+          link={`/galleries/posts/${galleryId}`}
+          text="사진 추가"
+          photo={true}
+        />
 
         <AlbumList>
           {scheduleList.galleries.map((album) => (
