@@ -96,6 +96,16 @@ const GlobalStyle = createGlobalStyle`
     clip-path: inset(50%);
     z-index: -1;
   }
+
+  &::selection {
+    background: #3ec192;
+    color: #fff;
+  }
+
+  &::-moz-selection {
+    background: #3ec192;
+    color: #fff;
+  }
 `;
 
 export default GlobalStyle;

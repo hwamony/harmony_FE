@@ -19,8 +19,6 @@ const AlbumItem = ({ album, data }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(album);
-
     const getTimeDelay = (ms) => {
       return new Promise((res) => setTimeout(res, ms));
     };

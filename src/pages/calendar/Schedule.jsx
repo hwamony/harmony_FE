@@ -111,8 +111,17 @@ const Schedule = () => {
 
   return (
     <>
-      <PageTitle title="일정기록 - 캘린더" />
-      <HeaderMid text="일정기록" />
+      {scheduleData ? (
+        <>
+          <PageTitle title={`일정수정(${scheduleData.title}) - 캘린더`} />
+          <HeaderMid text="일정수정" />
+        </>
+      ) : (
+        <>
+          <PageTitle title="일정기록 - 캘린더" />
+          <HeaderMid text="일정기록" />
+        </>
+      )}
 
       <ScheduleSection>
         <ScheduleForm onSubmit={(e) => onSubmitSchedule(e)}>
@@ -126,77 +135,81 @@ const Schedule = () => {
             required
           />
 
-          <DateWrapper>
-            <div className="switch-wrapper">
-              <label htmlFor="switch-allday">
-                <IconHistory />
-                종일
-                {!startDate && <small>* 시작일을 입력해주세요.</small>}
-                {startDate && switchChecked && (
-                  <span>({startDate.format('M/D dd')})</span>
-                )}
-              </label>
-              <Switch
-                id="switch-allday"
-                color="default"
-                checked={switchChecked}
-                onChange={() => {
-                  if (startDate) {
-                    setEndDate(startDate);
-                    setSwitchChecked((state) => !state);
-                  } else {
-                    alert('시작일을 입력해주세요.');
-                  }
-                }}
-              />
-            </div>
-
-            {!switchChecked && (
-              <>
-                <MobileDatePicker
-                  value={startDate}
-                  onChange={(state) => {
-                    setStartDate(state);
-                  }}
-                  label="시작일"
-                  onError={console.log}
-                  inputFormat="YYYY년 M월 D일 ddd요일"
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                {startDate && (
-                  <MobileDatePicker
-                    value={endDate}
-                    onChange={(state) => setEndDate(state)}
-                    minDate={startDate}
-                    label="종료일"
-                    onError={console.log}
-                    inputFormat="YYYY년 M월 D일 ddd요일"
-                    renderInput={(params) => <TextField {...params} />}
+          {!scheduleData?.done && (
+            <>
+              <DateWrapper>
+                <div className="switch-wrapper">
+                  <label htmlFor="switch-allday">
+                    <IconHistory />
+                    종일
+                    {!startDate && <small>* 시작일을 입력해주세요.</small>}
+                    {startDate && switchChecked && (
+                      <span>({startDate.format('M/D dd')})</span>
+                    )}
+                  </label>
+                  <Switch
+                    id="switch-allday"
+                    color="default"
+                    checked={switchChecked}
+                    onChange={() => {
+                      if (startDate) {
+                        setEndDate(startDate);
+                        setSwitchChecked((state) => !state);
+                      } else {
+                        alert('시작일을 입력해주세요.');
+                      }
+                    }}
                   />
-                )}
-              </>
-            )}
-          </DateWrapper>
+                </div>
 
-          <MemberWrapper>
-            <div className="member-title">
-              <IconMembers />
-              참석자
-            </div>
-            <Select
-              id="member-select"
-              value={selectedMember}
-              onChange={handleMemberChange}
-              multiple
-              required
-            >
-              {familyInfo?.members.map((member) => (
-                <MenuItem key={member.userId} value={member.userId}>
-                  {member.role}({member.name})
-                </MenuItem>
-              ))}
-            </Select>
-          </MemberWrapper>
+                {!switchChecked && (
+                  <>
+                    <MobileDatePicker
+                      value={startDate}
+                      onChange={(state) => {
+                        setStartDate(state);
+                      }}
+                      label="시작일"
+                      onError={console.log}
+                      inputFormat="YYYY년 M월 D일 ddd요일"
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                    {startDate && (
+                      <MobileDatePicker
+                        value={endDate}
+                        onChange={(state) => setEndDate(state)}
+                        minDate={startDate}
+                        label="종료일"
+                        onError={console.log}
+                        inputFormat="YYYY년 M월 D일 ddd요일"
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    )}
+                  </>
+                )}
+              </DateWrapper>
+
+              <MemberWrapper>
+                <div className="member-title">
+                  <IconMembers />
+                  참석자
+                </div>
+                <Select
+                  id="member-select"
+                  value={selectedMember}
+                  onChange={handleMemberChange}
+                  multiple
+                  required
+                >
+                  {familyInfo?.members.map((member) => (
+                    <MenuItem key={member.userId} value={member.userId}>
+                      {member.role}({member.name})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </MemberWrapper>
+            </>
+          )}
 
           <CategoryWrapper>
             <div className="category-top">
@@ -242,7 +255,7 @@ const Schedule = () => {
             />
           </ContentWrapper>
 
-          <Button>등록하기</Button>
+          <Button>{scheduleData ? '수정하기' : '등록하기'}</Button>
         </ScheduleForm>
       </ScheduleSection>
     </>
