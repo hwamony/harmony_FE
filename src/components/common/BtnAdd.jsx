@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconPlus } from '../../assets/icons';
+import { MdAddPhotoAlternate } from 'react-icons/md';
 
-const BtnAdd = ({ link, text }) => {
+const BtnAdd = ({ link, text, photo }) => {
   return (
     <>
       {IconPlus && (
         <Button to={link}>
           <p className="hidden">{text}</p>
-          <IconPlus />
+          {photo ? <span><MdAddPhotoAlternate /></span> : <IconPlus />}
         </Button>
       )}
     </>
@@ -20,6 +21,7 @@ const BtnAdd = ({ link, text }) => {
 BtnAdd.propTypes = {
   link: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  photo: PropTypes.bool,
 };
 
 export default BtnAdd;
@@ -33,4 +35,11 @@ const Button = styled(Link)`
   border-radius: 50%;
   box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
   z-index: 50;
+  span {
+    svg {
+      width: 21px;
+      height: 21px;
+      fill: #fff;
+    }
+  }
 `;

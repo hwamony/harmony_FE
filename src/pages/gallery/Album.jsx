@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import styled from 'styled-components';
 import cn from 'classnames';
@@ -59,7 +59,6 @@ const Album = () => {
   );
 
   useEffect(() => {
-    console.log(params);
     return () => {
       dispatch(setOnSelect(false));
       dispatch(setOnSelectAll(false));
@@ -85,11 +84,36 @@ const Album = () => {
 
   // TODO: 전체 선택 기능 구현하기
 
+  const deleteImg = async (data) => {
+    console.log(data);
+    const res = await api.delete(`/galleries/${galleryId}/images`, {
+      data: data,
+    });
+    return res;
+  };
+
+  const queryClient = useQueryClient();
+  const { mutate: deleteImages } = useMutation(
+    () => deleteImg({ imageIds: [...checkedImgs] }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['albumImages']);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    },
+  );
+
   return (
     <>
       <AlbumSection>
         <HeaderMid text="강릉여행" select={true} />
-        <BtnAdd link="/galleries/posts" text="앨범 추가" />
+        <BtnAdd
+          link={`/galleries/posts/${galleryId}`}
+          text="사진 추가"
+          photo={true}
+        />
 
         <AlbumList>
           {scheduleList.galleries.map((album) => (
@@ -119,7 +143,7 @@ const Album = () => {
         <SelectFooter className={cn(onSelect && 'on')}>
           <IconSave />
           <strong>선택 {size}</strong>
-          <FiTrash2 />
+          <FiTrash2 onClick={deleteImages} />
         </SelectFooter>
       </AlbumSection>
     </>
