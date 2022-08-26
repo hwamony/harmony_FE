@@ -12,15 +12,13 @@ import { IconDate } from '../../assets/icons';
 
 const Gallery = () => {
   const [date, setDate] = useState(dayjs());
-  // FIXME: skeleton UI
-  // const [isLoading, setIsLoading] = useState(true);
 
   const getGallerySchedules = async (year, month) => {
     const res = await api.get(`/galleries?year=${year}&month=${month}`);
     return res.data.data;
   };
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ['gallerySchedules', date.format('YYYY'), date.format('MM')],
     () => getGallerySchedules(date.format('YYYY'), date.format('MM')),
     {
@@ -28,8 +26,6 @@ const Gallery = () => {
       refetchOnWindowFocus: false,
       onSuccess: (data) => {
         console.log(data);
-        // setIsLoading(false);
-        
       },
     },
   );
@@ -48,8 +44,7 @@ const Gallery = () => {
           </button>
         </DateWrapper>
         {/* TODO: data.galleries.length 0일때 화면 추가하기 */}
-        {/* TODO: isLoading 전달 */}
-        <ScheduleItem lists={data.galleries} />
+        <ScheduleItem lists={data.galleries} isLoading={isLoading} />
       </Main>
     </>
   );
