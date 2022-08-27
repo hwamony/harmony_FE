@@ -54,67 +54,7 @@ export const MailDesc = styled.div`
 `;
 
 export const AudioWrap = styled.div`
-  :after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-`;
-
-export const Timeline = styled.div`
-  margin-top: 32px;
-  position: relative;
-`;
-
-export const Timebar = styled.input`
   width: 100%;
-  height: 4px;
-  background: #d9d9d9;
-  cursor: pointer;
-  
-
-  ::-webkit-slider-thumb { 
-    width: 8px;
-    height: 8px;    
-    border-radius: 4px;
-    background: #7D7D7D;
-    -webkit-appearance: none;
-  }
-`;
-
-export const Currenttime = styled.div`
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 14px;
-  color: #898989;
-  float: left;
-`;
-
-export const Duration = styled(Currenttime)`
-  float: right;
-`;
-
-export const AudioBtn = styled.div`
-  text-align: center;
-`;
-
-export const PlayBtn = styled.button`
-  width: 40px;
-  height: 40px;
-  margin-top: 10px;
-
-  &.play {
-    background-image: url(${process.env.PUBLIC_URL}/images/play.png);
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  &.pause {
-    background-image: url(${process.env.PUBLIC_URL}/images/pause.png);
-    background-repeat: no-repeat;
-    background-position: center;
-  }
 `;
 
 export const UserWrap = styled.div`
