@@ -47,7 +47,7 @@ const Album = () => {
     return res.data.data;
   };
 
-  const { data: imagerList } = useQuery(
+  const { data: imageList } = useQuery(
     ['albumImages', galleryId],
     getAlbumImages,
     {
@@ -69,6 +69,10 @@ const Album = () => {
     setCheckedImgs(new Set());
     setSize(0);
   }, [onSelect]);
+
+  useEffect(() => {
+    setCheckedImgs(new Set(imageList.images.map(({ id }) => id)));
+  }, [onSelectAll]);
 
   const handleCheck = (id, isChecked) => {
     if (isChecked) {
@@ -130,7 +134,7 @@ const Album = () => {
         </AlbumList>
 
         <ImageList>
-          {imagerList.images.map((img) =>
+          {imageList.images.map((img) =>
             onSelect ? (
               <ImageItem img={img} handleCheck={handleCheck} key={img.id} />
             ) : (

@@ -4,12 +4,17 @@ import { useSelector } from 'react-redux';
 import { IconCheck } from '../../assets/icons';
 
 const ImageItem = ({ img, handleCheck }) => {
-  const { onSelect } = useSelector((state) => state.gallery);
+  const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     setChecked(false);
   }, [onSelect]);
+
+  useEffect(() => {
+    if (onSelectAll) setChecked(true);
+    else setChecked(false);
+  }, [onSelectAll]);
 
   const handleItemCheck = ({ target }) => {
     setChecked(!checked);
