@@ -57,7 +57,13 @@ const Gallery = () => {
             날짜선택
           </button>
         </DateWrapper>
-        {/* TODO: data.galleries.length 0일때 화면 추가하기 */}
+        {data.galleries.length === 0 && (
+          <NoData>
+            <img src={`${process.env.PUBLIC_URL}/images/nodata.png`} alt="" />
+            <p>아직 생성된 앨범이 없습니다.</p>
+            <p>첫 앨범을 생성해보세요!</p>
+          </NoData>
+        )}
         <ScheduleItem lists={data.galleries} isLoading={isLoading} />
       </Main>
     </>
@@ -101,5 +107,23 @@ const DateWrapper = styled.div`
   }
   fieldset {
     border: none;
+  }
+`;
+
+const NoData = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #adadad;
+  line-height: 19px;
+  font-size: 14px;
+  img {
+    margin-bottom: 20px;
   }
 `;
