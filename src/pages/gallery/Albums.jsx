@@ -32,7 +32,12 @@ const Albums = () => {
       {/* TODO: outlet 고려해보기 */}
       <AlbumsSection>
         {data.galleries.map((album) => (
-          <AlbumItem key={album.id} album={album} isLoading={isLoading} title={data.scheduleTitle}/>
+          <AlbumItem
+            key={album.id}
+            album={album}
+            isLoading={isLoading}
+            title={data.scheduleTitle}
+          />
         ))}
       </AlbumsSection>
     </>

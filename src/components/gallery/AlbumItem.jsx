@@ -1,33 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { MdExpandMore } from 'react-icons/md';
+import api from '../../api/AxiosManager';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import MoreHoriz from './MoreHoriz';
+import CommentItem from './CommentItem';
+import { IconComment } from '../../assets/icons';
+import { MdExpandMore } from 'react-icons/md';
 import {
   Skeleton,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
-import { IconComment } from '../../assets/icons';
-import CommentItem from './CommentItem';
 
 const AlbumItem = ({ album, isLoading, title }) => {
   const navigate = useNavigate();
+  const scheduleId = useParams().scheduleId;
+  const commentInput = useRef();
+  const queryClient = useQueryClient();
+
+  const addComment = async (galleryId) => {
+    const data = {
+      content: commentInput.current.value,
+    };
+    console.log(data);
+    try {
+      const res = await api.post(`/galleries/${galleryId}/comments`, data);
+      console.log(res);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const { mutate: addCommentM } = useMutation(
+    (galleryId) => addComment(galleryId),
+    {
+      onSuccess: (res) => {
+        alert(res.data.msg);
+        commentInput.current.value = '';
+        queryClient.invalidateQueries(['albums', scheduleId]);
+      },
+    },
+  );
 
   return (
     <Item>
-      <ImgContainer
-        onClick={() => navigate(`${album.id}`, { state: title })}
-      >
+      <ImgContainer onClick={() => navigate(`${album.id}`, { state: title })}>
         {isLoading
           ? Array.from(new Array(5)).map((_, i) => (
               <ImgSkeleton key={i} variant="rectangular" />
             ))
           : album.imageUrls.map((url, i) => <img key={i} src={url} alt="" />)}
       </ImgContainer>
+
+      <MoreHoriz album={album} />
+
       <AlbumInfo>
         {isLoading ? (
           <div className="skeleton-wrapper">
@@ -62,12 +94,18 @@ const AlbumItem = ({ album, isLoading, title }) => {
               </strong>
               <ul>
                 {album.comments.map((c) => (
-                  <CommentItem key={c.commentId} comment={c} />
+                  <CommentItem key={c.id} comment={c} />
                 ))}
               </ul>
               <form>
-                <input type="text" placeholder="댓글을 입력하세요." />
-                <button type="button">등록</button>
+                <input
+                  type="text"
+                  placeholder="댓글을 입력하세요."
+                  ref={commentInput}
+                />
+                <button type="button" onClick={() => addCommentM(album.id)}>
+                  등록
+                </button>
               </form>
             </AccordionDetails>
           </Accordion>
@@ -85,13 +123,22 @@ AlbumItem.propTypes = {
 export default AlbumItem;
 
 const Item = styled.article`
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   width: 100%;
   margin-bottom: 20px;
   border-radius: 12px;
   box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.24);
+
+  .MuiIconButton-sizeMedium {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const ImgContainer = styled.div`
