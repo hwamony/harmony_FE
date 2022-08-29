@@ -112,7 +112,12 @@ const AlbumItem = ({ album, isLoading, title }) => {
                   placeholder="댓글을 입력하세요."
                   ref={commentInput}
                 />
-                <button type="button" onClick={() => addCommentM(album.id)}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addCommentM(album.id);
+                  }}
+                >
                   등록
                 </button>
               </form>
