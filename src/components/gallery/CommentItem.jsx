@@ -7,7 +7,7 @@ const CommentItem = ({ comment }) => {
   return (
     <Item>
       <div>
-        <p>{comment.author}</p>
+        <p>{comment.commenter}</p>
       </div>
       <p>{comment.content}</p>
       <small>{dayjs(comment.createdAt).format('YYYY년 M월 D일')}</small>

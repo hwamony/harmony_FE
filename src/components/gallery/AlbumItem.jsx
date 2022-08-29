@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import MoreHoriz from './MoreHoriz';
 import CommentItem from './CommentItem';
 import { IconComment } from '../../assets/icons';
 import { MdExpandMore } from 'react-icons/md';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import {
   Skeleton,
   Accordion,
@@ -89,6 +90,14 @@ const AlbumItem = ({ album, isLoading, title }) => {
               </InfoWrapper>
             </AccordionSummary>
             <AccordionDetails>
+              <Textarea
+                defaultValue={album.content}
+                wrap="hard"
+                spellCheck="false"
+                required
+                className="album-content"
+                readOnly
+              />
               <strong>
                 댓글<span>{album.comments.length}</span>
               </strong>
@@ -268,4 +277,15 @@ const InfoWrapper = styled.div`
       margin-right: 5px;
     }
   }
+`;
+
+const Textarea = styled(TextareaAutosize)`
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  line-height: 1.4em;
+  font-size: 14px;
+  outline: none;
+  resize: none;
 `;
