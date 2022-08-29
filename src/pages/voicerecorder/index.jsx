@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BackButton, Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
+import { useForm } from 'react-hook-form';
+import { Input } from '../../components/Input';
+import { Label } from '../../components/Label';
 import {
   Container,
   Header,
@@ -9,18 +13,23 @@ import {
   InputWrap,
   LabelTitle,
   RecordWrap,
-  WaveImg,
-  Currnettime,
-  RecordBtn,
 } from './style';
-import { Input } from '../../components/Input';
-import { Label } from '../../components/Label';
 
 const Recoder = () => {
+  // State
+  const [blobUrl, setBlobUrl] = useState('');
+
+  // Referance
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+
+  // Function
+  const onSubmit = (data) => {
+    console.log({ ...data, sound: blobUrl });
+  };
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <Header>
         <BackButton
           src={`${process.env.PUBLIC_URL}/images/back.png`}
@@ -32,8 +41,9 @@ const Recoder = () => {
       <Body>
         <InputWrap>
           <Input
-            id="title"
+            name="title"
             placeholder="제목"
+            ref={register({ required: true })}
             style={{ margin: '24px 0' }}
           ></Input>
         </InputWrap>
@@ -50,7 +60,9 @@ const Recoder = () => {
           </Label>
           <Input
             id="from"
+            name="from"
             placeholder="from."
+            ref={register({ required: true })}
             style={{ marginTop: '16px' }}
           ></Input>
         </InputWrap>
@@ -61,14 +73,14 @@ const Recoder = () => {
           </Label>
           <Input
             id="to"
+            name="to"
             placeholder="to."
+            ref={register({ required: true })}
             style={{ marginTop: '16px' }}
           ></Input>
         </InputWrap>
         <RecordWrap>
-          <WaveImg src={`${process.env.PUBLIC_URL}/images/wave.png`} alt="아이콘" />
-          <Currnettime>0:00</Currnettime>
-          <RecordBtn></RecordBtn>
+          <VoiceRecorder setBlobUrl={setBlobUrl} />
         </RecordWrap>
         <Button style={{ marginTop: '36px' }}>등록하기</Button>
       </Body>
