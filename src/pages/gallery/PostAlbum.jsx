@@ -16,6 +16,7 @@ import {
   IconButton,
   Snackbar,
 } from '@mui/material';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
@@ -30,6 +31,7 @@ const PostAlbum = () => {
   const [scheduleNum, setScheduleNum] = useState(-1);
   const [selectedDate, setSelectedDate] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
+  const [albumContent, setAlbumContent] = useState('');
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
@@ -76,19 +78,13 @@ const PostAlbum = () => {
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
-    formData.append('content', 'content');
+    formData.append('content', albumContent);
 
     for (let i = 0; i < files.length; i++) {
       const imageForm = files[i];
       console.log(imageForm);
       formData.append(`imageFiles[${i}]`, imageForm);
     }
-
-    // FIXME: formData 조회. 최종 배포 전 지울 것
-    // for (let key of formData.keys()) {
-    //   console.log(key, ':', formData.get(key));
-    // }
-    // console.log(formData);
 
     try {
       if (galleryId) {
@@ -223,6 +219,18 @@ const PostAlbum = () => {
                 onChange={(e) => setAlbumTitle(e.target.value)}
                 required
               />
+
+              <Textarea
+                placeholder="내용을 3000자 이내로 입력해주세요."
+                wrap="hard"
+                spellCheck="false"
+                maxLength="3000"
+                minRows="3"
+                maxRows="5"
+                value={albumContent}
+                onChange={(e) => setAlbumContent(e.target.value)}
+                required
+              />
             </InputWrapper>
             <hr />
           </>
@@ -334,5 +342,22 @@ const ImageList = styled.div`
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
+  }
+`;
+
+const Textarea = styled(TextareaAutosize)`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b5b5b5;
+  border-radius: 4px;
+  resize: none;
+  font-size: 1em;
+  line-height: 1.4em;
+  transition: border 0.2s ease;
+  outline: none;
+  &::placeholder {
+    font-weight: 300;
+    font-size: 0.9em;
   }
 `;
