@@ -103,7 +103,7 @@ const AlbumItem = ({ album, isLoading, title }) => {
               </strong>
               <ul>
                 {album.comments.map((c) => (
-                  <CommentItem key={c.id} comment={c} />
+                  <CommentItem key={c.id} comment={c} scheduleId={scheduleId} />
                 ))}
               </ul>
               <form>

@@ -34,7 +34,7 @@ const Router = () => {
       <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
       <Route path="/galleries/:scheduleId/:galleryId/:imageId" element={<Image />} />
       <Route path="/galleries/posts" element={<PostAlbum />} />
-      <Route path="/galleries/posts/:galleryId/add" element={<PostAlbum />} />
+      <Route path="/galleries/posts/:galleryId" element={<PostAlbum />} />
       <Route path="/galleries/posts/:scheduleId/:galleryId/edit" element={<EditAlbum />} />
       <Route path="/voice-mails" element={<Voicemail />} />
       <Route path="/voice-recorder" element={<Voicercorder />} />

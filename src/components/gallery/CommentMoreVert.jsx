@@ -8,7 +8,7 @@ import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { MdMoreVert, MdModeEdit, MdDelete } from 'react-icons/md';
 
-const CommentMoreVert = ({ commentId }) => {
+const CommentMoreVert = ({ commentId, setOnEdit }) => {
   const scheduleId = useParams().scheduleId;
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -43,7 +43,7 @@ const CommentMoreVert = ({ commentId }) => {
   // TODO: 삭제 confirm 추가하기
 
   const onClickEdit = () => {
-    // TODO: setter 받기
+    setOnEdit(true);
     handleClose();
   };
 
@@ -82,6 +82,7 @@ const CommentMoreVert = ({ commentId }) => {
 
 CommentMoreVert.propTypes = {
   commentId: PropTypes.number.isRequired,
+  setOnEdit: PropTypes.func,
 };
 
 export default CommentMoreVert;
