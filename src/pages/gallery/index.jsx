@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import api from '../../api/AxiosManager';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
 import styled from 'styled-components';
 
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { TextField } from '@mui/material';
 import PageTitle from '../../components/common/PageTitle';
 import Header from '../../components/common/Header';
 import ScheduleItem from '../../components/gallery/ScheduleItem';
@@ -37,8 +41,18 @@ const Gallery = () => {
       <BtnAdd link="/galleries/posts" text="앨범 추가" />
       <Main>
         <DateWrapper>
-          <strong>2022년 8월</strong>
-          <button type="button">
+          <MobileDatePicker
+            id="date-picker"
+            views={['year', 'month']}
+            value={date}
+            onChange={(state) => {
+              setDate(state);
+            }}
+            onError={console.log}
+            inputFormat="YYYY년 M월"
+            renderInput={(params) => <TextField {...params} />}
+          />
+          <button type="button" htmlFor="date-picker">
             <IconDate />
             날짜선택
           </button>
@@ -53,29 +67,39 @@ const Gallery = () => {
 export default Gallery;
 
 const Main = styled.main`
-  position: relative;
   overflow-y: auto;
   height: calc(100vh - 70px - 65px);
   margin-top: 70px;
   padding: 20px;
+  button {
+    position: absolute;
+    right: 20px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: -1;
+    svg {
+      margin-right: 6px;
+    }
+  }
 `;
 
 const DateWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  strong {
+  margin-bottom: 20px;
+  .MuiTextField-root {
+    width: 100%;
+  }
+  .MuiOutlinedInput-input {
+    padding: 0;
     color: #18191f;
     font-size: 18px;
+    font-weight: 700;
   }
-  button {
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    svg {
-      margin-right: 6px;
-    }
+  fieldset {
+    border: none;
   }
 `;
