@@ -10,7 +10,7 @@ const Widget = () => {
   return (
     <FamilyWidget>
       <LeftWrapper>
-        <Circle>화목등급 이미지</Circle>
+        <Circle><img src="/images/grade_seed.png" alt="씨앗등급" /></Circle>
         <div>
           {/* TODO: 가족 정보 페이지 링크 추가 */}
           <strong>{familyInfo.familyName}<IconDetail /></strong>
