@@ -98,6 +98,7 @@ const Album = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['albumImages']);
+        setCheckedImgs(new Set());
       },
       onError: (err) => {
         console.log(err);

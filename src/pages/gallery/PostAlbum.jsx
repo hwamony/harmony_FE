@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
@@ -24,6 +24,7 @@ import { MdAddPhotoAlternate } from 'react-icons/md';
 
 const PostAlbum = () => {
   const navigate = useNavigate();
+  const galleryId = useParams().galleryId;
   const [date, setDate] = useState(dayjs());
   const [schedule, setSchedule] = useState('');
   const [scheduleNum, setScheduleNum] = useState(-1);
@@ -63,7 +64,7 @@ const PostAlbum = () => {
     }
 
     return new Promise((resolve) => {
-      setFiles([...files, ...newFiles]);
+      setFiles([...files, ...newFiles].slice(0, 30));
       setPreviewUrls(urlList);
       resolve();
     });
@@ -90,13 +91,23 @@ const PostAlbum = () => {
     // console.log(formData);
 
     try {
-      const res = await formdataApi.post(
-        `/schedules/${data.schedules[scheduleNum].id}/galleries`,
-        formData,
-      );
-      console.log(res);
-      alert('앨범이 생성되었습니다!');
-      navigate('/galleries');
+      if (galleryId) {
+        const res = await formdataApi.post(
+          `/galleries/${galleryId}/images`,
+          formData,
+        );
+        console.log(res);
+        alert('사진이 추가되었습니다!');
+        navigate(-1);
+      } else {
+        const res = await formdataApi.post(
+          `/schedules/${data.schedules[scheduleNum].id}/galleries`,
+          formData,
+        );
+        console.log(res);
+        alert('앨범이 생성되었습니다!');
+        navigate('/galleries');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -104,100 +115,118 @@ const PostAlbum = () => {
 
   return (
     <>
-      <PageTitle title="앨범생성 - 갤러리" />
-      <HeaderMid text="앨범생성" />
+      {galleryId ? (
+        <>
+          <PageTitle title="사진추가 - 갤러리" />
+          <HeaderMid text="사진추가" />
+        </>
+      ) : (
+        <>
+          <PageTitle title="앨범생성 - 갤러리" />
+          <HeaderMid text="앨범생성" />
+        </>
+      )}
+
       <AlbumForm onSubmit={(e) => createAlbum(e)} encType="multipart/form-data">
-        <InputWrapper>
-          {!selectedDate && (
-            <MobileDatePicker
-              style={{ width: '50%' }}
-              views={['year', 'month']}
-              value={date}
-              onChange={(state) => {
-                setDate(state);
-                setSchedule('');
-                setScheduleNum(-1);
-              }}
-              label="연도/월 선택"
-              onError={console.log}
-              inputFormat="YYYY년 M월"
-              renderInput={(params) => <TextField {...params} />}
-            />
-          )}
-
-          <FormControl variant="outlined">
-            <InputLabel id="schedule-label">일정 선택</InputLabel>
-            <Select
-              style={{ width: '100%' }}
-              variant="outlined"
-              value={schedule}
-              onChange={(e) => setSchedule(e.target.value)}
-              labelId="schedule-label"
-              label={'일정 선택'}
-              required
-            >
-              {data?.schedules.length > 0 ? (
-                data?.schedules.map((v, i) => (
-                  <MenuItem
-                    key={i}
-                    value={v.title}
-                    onClick={() => setScheduleNum(i)}
-                  >
-                    {v.title}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>선택할 일정이 없습니다.</MenuItem>
+        {!galleryId && (
+          <>
+            <InputWrapper>
+              {!selectedDate && (
+                <MobileDatePicker
+                  style={{ width: '50%' }}
+                  views={['year', 'month']}
+                  value={date}
+                  onChange={(state) => {
+                    setDate(state);
+                    setSchedule('');
+                    setScheduleNum(-1);
+                  }}
+                  label="연도/월 선택"
+                  onError={console.log}
+                  inputFormat="YYYY년 M월"
+                  renderInput={(params) => <TextField {...params} />}
+                />
               )}
-            </Select>
-          </FormControl>
 
-          <FormControl variant="outlined">
-            {scheduleNum > -1 && (
-              <>
-                <InputLabel id="selected-date-label">날짜 선택</InputLabel>
+              <FormControl variant="outlined">
+                <InputLabel id="schedule-label">일정 선택</InputLabel>
                 <Select
                   style={{ width: '100%' }}
                   variant="outlined"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  labelId="selected-date-label"
-                  label={'날짜 선택'}
+                  value={schedule}
+                  onChange={(e) => setSchedule(e.target.value)}
+                  labelId="schedule-label"
+                  label={'일정 선택'}
                   required
                 >
-                  {data?.schedules[scheduleNum].dates.map((v, i) => (
-                    <MenuItem key={v.date} value={v.date} disabled={!v.enable}>
-                      {v.date}
-                    </MenuItem>
-                  ))}
+                  {data?.schedules.length > 0 ? (
+                    data?.schedules.map((v, i) => (
+                      <MenuItem
+                        key={i}
+                        value={v.title}
+                        onClick={() => setScheduleNum(i)}
+                      >
+                        {v.title}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem disabled>선택할 일정이 없습니다.</MenuItem>
+                  )}
                 </Select>
-              </>
-            )}
-          </FormControl>
-          <button
-            type="button"
-            onClick={() => {
-              setScheduleNum(-1);
-              setSelectedDate('');
-            }}
-          >
-            다시 선택
-          </button>
-        </InputWrapper>
-        <hr />
+              </FormControl>
 
-        <InputWrapper>
-          <TextField
-            id="input-albumtitle"
-            label="앨범명"
-            variant="outlined"
-            autoComplete="off"
-            value={albumTitle}
-            onChange={(e) => setAlbumTitle(e.target.value)}
-            required
-          />
-        </InputWrapper>
-        <hr />
+              <FormControl variant="outlined">
+                {scheduleNum > -1 && (
+                  <>
+                    <InputLabel id="selected-date-label">날짜 선택</InputLabel>
+                    <Select
+                      style={{ width: '100%' }}
+                      variant="outlined"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      labelId="selected-date-label"
+                      label={'날짜 선택'}
+                      required
+                    >
+                      {data?.schedules[scheduleNum].dates.map((v, i) => (
+                        <MenuItem
+                          key={v.date}
+                          value={v.date}
+                          disabled={!v.enable}
+                        >
+                          {v.date}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </>
+                )}
+              </FormControl>
+              <button
+                type="button"
+                onClick={() => {
+                  setScheduleNum(-1);
+                  setSelectedDate('');
+                }}
+              >
+                다시 선택
+              </button>
+            </InputWrapper>
+            <hr />
+
+            <InputWrapper>
+              <TextField
+                id="input-albumtitle"
+                label="앨범명"
+                variant="outlined"
+                autoComplete="off"
+                value={albumTitle}
+                onChange={(e) => setAlbumTitle(e.target.value)}
+                required
+              />
+            </InputWrapper>
+            <hr />
+          </>
+        )}
 
         <UploadTitle>
           <strong>사진 업로드 (추후 변경 가능)</strong>
@@ -221,7 +250,7 @@ const PostAlbum = () => {
           ))}
         </ImageList>
 
-        <Button>생성하기</Button>
+        <Button>{galleryId ? <>추가하기</> : <>생성하기</>}</Button>
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
