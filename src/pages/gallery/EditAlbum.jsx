@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
 import api from '../../api/AxiosManager';
 
@@ -11,11 +11,13 @@ import HeaderMid from '../../components/common/HeaderMid';
 import { Button } from '../../components/Button';
 
 const EditAlbum = () => {
+  const navigate = useNavigate();
   const { scheduleId, galleryId } = useParams();
   const location = useLocation();
   const album = location.state;
   const [albumTitle, setAlbumTitle] = useState('');
   const [albumContent, setAlbumContent] = useState('');
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setAlbumTitle(album.title);
@@ -42,7 +44,8 @@ const EditAlbum = () => {
     onSuccess: (res) => {
       console.log(res);
       alert('앨범이 수정되었습니다!');
-      window.location.href = `/galleries/${scheduleId}`;
+      navigate(`/galleries/${scheduleId}`);
+      return queryClient.invalidateQueries(['albums', scheduleId]);
     },
   });
 

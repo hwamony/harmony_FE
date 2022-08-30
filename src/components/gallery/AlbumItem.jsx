@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -23,6 +23,11 @@ const AlbumItem = ({ album, isLoading, title }) => {
   const scheduleId = useParams().scheduleId;
   const commentInput = useRef();
   const queryClient = useQueryClient();
+  const [albumContent, setAlbumContent] = useState();
+
+  useEffect(() => {
+    setAlbumContent(album.content);
+  }, [album]);
 
   const addComment = async (galleryId) => {
     const data = {
@@ -91,7 +96,7 @@ const AlbumItem = ({ album, isLoading, title }) => {
             </AccordionSummary>
             <AccordionDetails>
               <Textarea
-                defaultValue={album.content}
+                defaultValue={albumContent}
                 wrap="hard"
                 spellCheck="false"
                 required
