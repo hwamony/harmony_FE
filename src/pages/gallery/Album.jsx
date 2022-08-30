@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
 import HeaderMid from '../../components/common/HeaderMid';
 import BtnAdd from '../../components/common/BtnAdd';
 import ImageItem from '../../components/gallery/ImageItem';
+import ImageModal from '../../components/gallery/ImageModal';
 import { IconSave } from '../../assets/icons';
 import { FiTrash2 } from 'react-icons/fi';
 
@@ -21,10 +22,9 @@ const Album = () => {
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checkedImgs, setCheckedImgs] = useState(new Set());
   const [size, setSize] = useState(0);
-  const location = useLocation();
-  const albumTitle = location.state;
-  // FIXME: state로 받지 말고 밖에서 outlet으로 헤더 처리
-  // console.log('albumTitle', albumTitle);
+  // FIXME: state로 받지 말고 밖에서 outlet으로 헤더 스케줄 이름 처리!
+  const [isVisible, setIsVisible] = useState(false);
+  const [curImage, setCurImage] = useState('');
 
   const getAlbumSchedules = async () => {
     const res = await api.get(`/schedules/${scheduleId}/galleryList`);
@@ -134,16 +134,25 @@ const Album = () => {
         </AlbumList>
 
         <ImageList>
-          {imageList.images.map((img) =>
-            onSelect ? (
-              <ImageItem img={img} handleCheck={handleCheck} key={img.id} />
-            ) : (
-              <Link to={img.id + ''} state={{ url: img.url }} key={img.id}>
-                <ImageItem img={img} handleCheck={handleCheck} />
-              </Link>
-            ),
-          )}
+          {imageList.images.map((img) => (
+            <ImageItem
+              key={img.id}
+              img={img}
+              handleCheck={handleCheck}
+              setIsVisible={setIsVisible}
+              setCurImage={setCurImage}
+            />
+          ))}
         </ImageList>
+
+        {isVisible === true && (
+          <ImageModal
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+            url={curImage}
+            date={imageList.date}
+          />
+        )}
 
         <SelectFooter className={cn(onSelect && 'on')}>
           <IconSave />
