@@ -160,8 +160,8 @@ export default Album;
 const AlbumSection = styled.section`
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 55px - 65px);
-  margin-top: 55px;
+  min-height: calc(100vh - 55px - 65px);
+  margin: 55px 0 65px;
   padding: 20px;
 `;
 

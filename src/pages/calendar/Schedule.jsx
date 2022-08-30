@@ -266,12 +266,12 @@ export default Schedule;
 
 const ScheduleSection = styled.section`
   position: relative;
-  margin-top: 55px;
+  margin: 55px 0 65px;
 `;
 
 const ScheduleForm = styled.form`
   overflow-y: auto;
-  height: calc(100vh - 55px - 90px);
+  min-height: calc(100vh - 55px - 90px);
   #input-title {
     font-size: 20px;
     font-weight: 700;

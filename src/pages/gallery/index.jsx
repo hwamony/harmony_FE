@@ -74,7 +74,7 @@ export default Gallery;
 
 const Main = styled.main`
   overflow-y: auto;
-  height: calc(100vh - 70px - 65px);
+  min-height: calc(100vh - 70px - 65px);
   margin-top: 70px;
   padding: 20px;
   button {

@@ -22,8 +22,8 @@ const ImageSection = styled.section`
   position: relative;
   display: flex;
   justify-content: center;
-  height: calc(100vh - 55px - 65px);
-  margin-top: 55px;
+  min-height: calc(100vh - 55px - 65px);
+  margin: 55px 0 65px;
   img {
     /* width: 100%; */
     /* max-width: 820px; */

@@ -93,8 +93,8 @@ export default EditAlbum;
 
 const AlbumForm = styled.form`
   overflow-y: auto;
-  height: calc(100vh - 55px - 90px);
-  margin-top: 55px;
+  min-height: calc(100vh - 55px - 90px);
+  margin: 55px 0 65px;
   padding: 0 20px;
   label {
     color: #000;
