@@ -26,7 +26,8 @@ const getValidInfo = async () => {
     const res = await apis.getValidUser();
     return res.data.data;
   } catch (err) {
-    console.log(err.response.data);
+    localStorage.removeItem('TOKEN');
+    window.location.href('/');
   }
 };
 
