@@ -8,10 +8,9 @@ const AudioPlayer = (props) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   // Referance
-  const { voiceMailId, title, from, to, createdAt, soundUrl } = props;
+  const { soundUrl } = props;
   const audioplayer = useRef();
   const progressBar = useRef();
-  const animationRef = useRef();
 
   // Function
   const toglePlayPause = () => {
@@ -33,9 +32,10 @@ const AudioPlayer = (props) => {
   };
 
   const loadedMetadata = () => {
-    const seconds = Math.floor(audioplayer.current.duration);
-    setDuration(seconds);
-    progressBar.current.max = seconds;
+    console.log(audioplayer)
+    // const seconds = Math.floor(audioplayer.current.duration);
+    // setDuration(seconds);
+    // progressBar.current.max = seconds;
   };
 
   const whilePlaying = () => {
@@ -60,7 +60,6 @@ const AudioPlayer = (props) => {
     <Audioplayer>
       <audio
         src={soundUrl}
-        preload="metadata"
         ref={audioplayer}
         onLoadedMetadata={loadedMetadata}
         onTimeUpdate={whilePlaying}

@@ -29,6 +29,7 @@ const VoiceRecorder = (props) => {
       setIsRecording(!prevValue);
     }
   };
+
   return (
     <>
       <RecordBtn type="button" onClick={togleStartStop}>
@@ -37,11 +38,21 @@ const VoiceRecorder = (props) => {
         ) : (
           <>
             <div
-              style={{ width: '80px', height: '80px', margin: '-1px -6px', background: 'red' }}
+              style={{
+                width: '80px',
+                height: '80px',
+                margin: '-1px -6px',
+                background: '#3EC192',
+              }}
             ></div>
             <img
-              src={`${process.env.PUBLIC_URL}/images/record.png`}
-              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+              src={`${process.env.PUBLIC_URL}/images/record_white.png`}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
             ></img>
           </>
         )}

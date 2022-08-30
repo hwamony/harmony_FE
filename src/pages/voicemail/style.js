@@ -25,6 +25,25 @@ export const Body = styled.div`
   background: #efefef;
 `;
 
+export const EmptyWrap = styled.div`
+  margin-top: 242px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyIcon = styled.img``;
+
+export const EmptyDesc = styled.div`
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 1px;
+  color: #838383;
+`;
+
 export const MailWrap = styled.div`
   height: 210px;
   padding: 18px;
