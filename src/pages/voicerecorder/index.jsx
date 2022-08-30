@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BackButton, Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../components/Input';
 import { Label } from '../../components/Label';
+import api from '../../api/AxiosManager';
+import axios from '../../../node_modules/axios/index';
 import {
   Container,
   Header,
@@ -24,12 +26,26 @@ const Recoder = () => {
   const { register, handleSubmit } = useForm();
 
   // Function
-  const onSubmit = (data) => {
-    console.log({ ...data, sound: blobUrl });
+  const onSubmit = async (data) => {
+    const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
+    const file = new File([audioBlob], 'file'); // blob을 데이터로 하는 파일 생성
+
+    const formData = new FormData(); // formdata 를 생성하여 값과 파일을 넣기
+    formData.append('title', data.title);
+    formData.append('from', data.from);
+    formData.append('to', data.to);
+    formData.append('sound', file);
+
+    try {
+      const res = await api.post('/voice-mails', formData);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <Container onSubmit={handleSubmit(onSubmit)}>
+    <Container onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <Header>
         <BackButton
           src={`${process.env.PUBLIC_URL}/images/back.png`}
