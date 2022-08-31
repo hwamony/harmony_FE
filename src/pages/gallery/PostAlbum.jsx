@@ -47,7 +47,6 @@ const PostAlbum = () => {
     {
       enabled: !!date,
       refetchOnWindowFocus: false,
-      onSuccess: (data) => console.log(data),
     },
   );
 
@@ -111,17 +110,10 @@ const PostAlbum = () => {
 
   return (
     <>
-      {galleryId ? (
-        <>
-          <PageTitle title="사진추가 - 갤러리" />
-          <HeaderMid text="사진추가" />
-        </>
-      ) : (
-        <>
-          <PageTitle title="앨범생성 - 갤러리" />
-          <HeaderMid text="앨범생성" />
-        </>
-      )}
+      <PageTitle
+        title={galleryId ? '사진추가 - 갤러리' : '앨범생성 - 갤러리'}
+      />
+      <HeaderMid text={galleryId ? '사진추가' : '앨범생성'} />
 
       <AlbumForm onSubmit={(e) => createAlbum(e)} encType="multipart/form-data">
         {!galleryId && (

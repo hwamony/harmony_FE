@@ -7,7 +7,6 @@ import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
 
-import HeaderMid from '../../components/common/HeaderMid';
 import BtnAdd from '../../components/common/BtnAdd';
 import ImageItem from '../../components/gallery/ImageItem';
 import ImageModal from '../../components/gallery/ImageModal';
@@ -22,7 +21,6 @@ const Album = () => {
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checkedImgs, setCheckedImgs] = useState(new Set());
   const [size, setSize] = useState(0);
-  // FIXME: state로 받지 말고 밖에서 outlet으로 헤더 스케줄 이름 처리!
   const [isVisible, setIsVisible] = useState(false);
   const [curImage, setCurImage] = useState('');
 
@@ -36,9 +34,6 @@ const Album = () => {
     getAlbumSchedules,
     {
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
 
@@ -52,9 +47,6 @@ const Album = () => {
     getAlbumImages,
     {
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
 
@@ -88,7 +80,6 @@ const Album = () => {
   };
 
   const deleteImg = async (data) => {
-    console.log(data);
     const res = await api.delete(`/galleries/${galleryId}/images`, {
       data: data,
     });
@@ -102,6 +93,8 @@ const Album = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['albumImages']);
         setCheckedImgs(new Set());
+        setSize(0);
+        dispatch(setOnSelect(false));
       },
       onError: (err) => {
         console.log(err);
@@ -114,75 +107,63 @@ const Album = () => {
       (id) => imageList.images.filter((img) => img.id === id)[0].url,
     );
 
-    // 기본 설정이 _blank가 아니라 _parent라서 마지막 이미지 하나만 받아지는 문제
-    // const downloadImage = (src) => {
-    //   const a = document.createElement('a');
-    //   a.href = src;
-    //   a.click();
-    //   a.remove();
-    // };
-
     for (let src of srcs) {
-      // downloadImage(src);
       window.open(src);
     }
   };
 
   return (
-    <>
-      <AlbumSection>
-        <HeaderMid text="강릉여행" select={true} />
-        <BtnAdd
-          link={`/galleries/posts/${galleryId}`}
-          text="사진 추가"
-          photo={true}
-        />
+    <AlbumSection>
+      <BtnAdd
+        link={`/galleries/posts/${galleryId}`}
+        text="사진 추가"
+        photo={true}
+      />
 
-        <AlbumList>
-          {scheduleList.galleries.map((album) => (
-            <li
-              key={album.id}
-              className={cn(parseInt(galleryId) === album.id && 'selected')}
-            >
-              <Link to={`/galleries/${scheduleId}/${album.id}`} replace="true">
-                {album.title}
-              </Link>
-            </li>
-          ))}
-        </AlbumList>
+      <AlbumList>
+        {scheduleList.galleries.map((album) => (
+          <li
+            key={album.id}
+            className={cn(parseInt(galleryId) === album.id && 'selected')}
+          >
+            <Link to={`/galleries/${scheduleId}/${album.id}`} replace="true">
+              {album.title}
+            </Link>
+          </li>
+        ))}
+      </AlbumList>
 
-        <ImageList>
-          {imageList.images.map((img) => (
-            <ImageItem
-              key={img.id}
-              img={img}
-              handleCheck={handleCheck}
-              setIsVisible={setIsVisible}
-              setCurImage={setCurImage}
-            />
-          ))}
-        </ImageList>
-
-        {isVisible === true && (
-          <ImageModal
-            isVisible={isVisible}
+      <ImageList>
+        {imageList.images.map((img) => (
+          <ImageItem
+            key={img.id}
+            img={img}
+            handleCheck={handleCheck}
             setIsVisible={setIsVisible}
-            url={curImage}
-            date={imageList.date}
+            setCurImage={setCurImage}
           />
-        )}
+        ))}
+      </ImageList>
 
-        <SelectFooter className={cn(onSelect && 'on')}>
-          <button onClick={downloadMultipleImages}>
-            <IconSave />
-          </button>
-          <strong>선택 {size}</strong>
-          <button onClick={deleteImages}>
-            <FiTrash2 />
-          </button>
-        </SelectFooter>
-      </AlbumSection>
-    </>
+      {isVisible === true && (
+        <ImageModal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          url={curImage}
+          date={imageList.date}
+        />
+      )}
+
+      <SelectFooter className={cn(onSelect && 'on')}>
+        <button onClick={downloadMultipleImages}>
+          <IconSave />
+        </button>
+        <strong>선택 {size}</strong>
+        <button onClick={deleteImages}>
+          <FiTrash2 />
+        </button>
+      </SelectFooter>
+    </AlbumSection>
   );
 };
 

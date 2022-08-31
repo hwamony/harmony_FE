@@ -6,6 +6,7 @@ const Login = React.lazy(() => import('./pages/login'));
 const Signup = React.lazy(() => import('./pages/signup'));
 const Schedule = React.lazy(() => import('./pages/calendar/Schedule'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
+const AlbumLayout = React.lazy(() => import('./pages/gallery/AlbumLayout'));
 const Albums = React.lazy(() => import('./pages/gallery/Albums'));
 const Album = React.lazy(() => import('./pages/gallery/Album'));
 const EditAlbum = React.lazy(() => import('./pages/gallery/EditAlbum'));
@@ -30,8 +31,10 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/schedules/*" element={<Schedule />} />
       <Route path="/galleries" element={<Gallery />} />
-      <Route path="/galleries/:scheduleId" element={<Albums />} />
-      <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+      <Route path="/galleries/:scheduleId" element={<AlbumLayout />}>
+        <Route index element={<Albums />} />
+        <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+      </Route>
       <Route path="/galleries/:scheduleId/:galleryId/:imageId" element={<Image />} />
       <Route path="/galleries/posts" element={<PostAlbum />} />
       <Route path="/galleries/posts/:galleryId" element={<PostAlbum />} />

@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
-import cn from 'classnames';
-import styled from 'styled-components';
 import { IconBack, IconClose } from '../../assets/icons';
 
-const HeaderMid = ({ text, select }) => {
+const HeaderMid = ({ text }) => {
+  const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
+  const [isAlbumPage, setIsAlbumPage] = useState(false);
+
+  useEffect(() => {
+    if (params.scheduleId && params.galleryId) {
+      setIsAlbumPage(true);
+    } else {
+      setIsAlbumPage(false);
+    }
+  }, [params]);
 
   return (
     <HeaderContainer>
@@ -33,7 +43,7 @@ const HeaderMid = ({ text, select }) => {
         </>
       )}
 
-      {select &&
+      {isAlbumPage &&
         (onSelect ? (
           <BtnSelect
             type="button"
@@ -53,7 +63,6 @@ const HeaderMid = ({ text, select }) => {
 
 HeaderMid.propTypes = {
   text: PropTypes.string.isRequired,
-  select: PropTypes.bool,
 };
 
 export default HeaderMid;

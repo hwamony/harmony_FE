@@ -28,9 +28,6 @@ const Gallery = () => {
     {
       enabled: !!date,
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
 
