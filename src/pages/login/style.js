@@ -36,11 +36,6 @@ export const LoginDesc = styled.span`
   line-height: 17px;
 `;
 
-export const ForgotLink = styled.div`
-  margin-top: 24px;
-  text-align: center;
-`;
-
 export const SignupLink = styled.div`
   margin: 120px 0 50px 0;
   text-align: center;

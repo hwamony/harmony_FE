@@ -94,7 +94,7 @@ const Login = () => {
                   src={`${process.env.PUBLIC_URL}/images/kakao.png`}
                   alt="카카오"
                 />
-                <LoginDesc>카카오</LoginDesc>
+                <LoginDesc>카카오 로그인</LoginDesc>
               </OutlineButton>
             </SocialLogin>
             <SocialLogin style={{ paddingRight: '0' }}>
@@ -103,17 +103,14 @@ const Login = () => {
                   src={`${process.env.PUBLIC_URL}/images/google.png`}
                   alt="구글"
                 />
-                <LoginDesc>구글</LoginDesc>
+                <LoginDesc>구글 로그인</LoginDesc>
               </OutlineButton>
             </SocialLogin>
           </SocialLoginWrap>
-          <ForgotLink>
-            계정을 잊으셨나요?{' '}
-            <strong onClick={() => navigate()}>ID찾기</strong> 또는{' '}
-            <strong onClick={() => navigate()}>비밀번호 찾기</strong>
-          </ForgotLink>
           <SignupLink onClick={() => navigate('/signup')}>
-            아직 회원이 아니신가요? 회원가입
+            <>
+              아직 회원이 아니신가요? <strong>회원가입</strong>
+            </>
           </SignupLink>
         </BtnWrap>
       </Container>
