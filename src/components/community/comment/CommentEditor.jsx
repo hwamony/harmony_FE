@@ -2,42 +2,37 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 const CommentEditor = ({onCreate}) => {
-  const [state, setState] = useState({
-    comment: '',
-  })
+  const [comment, setComment] = useState('');
 
   const commentInput = useRef();
 
   const handleChangeState = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    setComment(e.target.value);
   }
 
-  const handleSubmit = () => {
-    if(state.comment.length < 5) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('error');
+    if(comment.length < 5) {
       commentInput.current.focus();
     }
-    onCreate(state.comment);
+    onCreate(comment);
     alert('댓글이 등록되었습니다!');
-    setState({
-      comment: '',
-    });
+    setComment(e.target.value);
   };
 
   return (
     <>
-    <CommentBar>
+    <CommentBar onSubmit={(e) => handleSubmit(e)}>
       <CommentP className='CommentEditor'>
         <input
           ref={commentInput}
           name='comment'
-          value={state.comment}
+          value={comment}
           placeholder='댓글을 입력하세요.'
-          onChange={handleChangeState}
+          onChange={(e) => handleChangeState(e)}
         />
-        <button type='submit' onClick={handleSubmit}>입력</button>
+        <button type='submit'>입력</button>
       </CommentP>
     </CommentBar>
     </>
@@ -46,7 +41,7 @@ const CommentEditor = ({onCreate}) => {
 
 export default CommentEditor;
 
-const CommentBar = styled.div`
+const CommentBar = styled.form`
   border-top: 2px solid white;
   padding-bottom: 5px;
   position: fixed;
@@ -64,6 +59,7 @@ const CommentP = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   input{
     width: 85vw;
     max-width: 600px;
@@ -79,7 +75,8 @@ const CommentP = styled.div`
     };
   };
   button{
-    width: 60px;
+    padding: 10px;
+    width: 130px;
     height: 43px;
     border: 1px solid #3EC192;
     background-color: white;

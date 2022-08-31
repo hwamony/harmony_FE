@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageTitle from '../../components/common/PageTitle';
 import {
@@ -7,7 +7,6 @@ import {
 } from './style';
 import ShortCard from '../../components/community/ShortCard';
 import { BiSearch, BiPencil } from 'react-icons/bi'
-// import {Box, Tabs, Tab } from '@mui/material'
 
 const Community = () => {
     const navigate = useNavigate();
