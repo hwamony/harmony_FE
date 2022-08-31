@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useFamilyData } from '../../hooks/useData';
 import { IconAlert, IconDetail } from '../../assets/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Widget = () => {
+  const navigate = useNavigate();
+
   // FIXME: 랭킹 api 완성 후 교체 - 방울 정보 및 화목 등급 필요
   const { data: familyInfo } = useFamilyData();
 
@@ -13,15 +16,19 @@ const Widget = () => {
         <Circle>화목등급 이미지</Circle>
         <div>
           {/* TODO: 가족 정보 페이지 링크 추가 */}
-          <strong>{familyInfo.familyName}<IconDetail /></strong>
+          <strong>
+            {familyInfo.familyName}
+            <IconDetail />
+          </strong>
           <p>
             33방울 <span>| 140방울</span>
             <span className="level">씨앗</span>
           </p>
         </div>
       </LeftWrapper>
-      {/* TODO: 알림 페이지 링크 추가 */}
-      <IconAlert />
+      <AlertBtn onClick={() => navigate('/notice')}>
+        <IconAlert />
+      </AlertBtn>
     </FamilyWidget>
   );
 };
@@ -73,3 +80,7 @@ const Circle = styled.div`
   background: #e4efd5;
   font-size: 0.5em;
 `;
+
+const AlertBtn = styled.div`
+  cursor: pointer;
+`
