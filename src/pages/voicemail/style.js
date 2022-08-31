@@ -45,7 +45,7 @@ export const EmptyDesc = styled.div`
 `;
 
 export const MailWrap = styled.div`
-  height: 210px;
+  height: 220px;
   padding: 18px;
   margin-top: 14px;
   border-radius: 12px;
@@ -70,6 +70,41 @@ export const MailDesc = styled.div`
   line-height: 14px;
   letter-spacing: 0.75px;
   color: #adadad;
+`;
+
+export const DropdownWrap = styled.div``
+
+export const DropdownmenuBtn = styled.button`
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 12px;
+`;
+
+export const Dropdown = styled.div`
+  position: absolute;
+  top: 46px;
+  right: 20px;
+  background: #ffffff;
+  width: 10vw;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+`;
+
+export const DropdownContent = styled.div`
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const DropdownTitle = styled.div`
+  padding-left: 6px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.0333333px;
 `;
 
 export const AudioWrap = styled.div`

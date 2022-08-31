@@ -4,13 +4,16 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../components/common/PageTitle';
 
-import { Button } from '../../components/Button';
+import { Button, OutlineButton } from '../../components/Button';
 import { Input } from '../../components/Input';
 import {
   Container,
   LogoWrap,
   InputWrap,
   BtnWrap,
+  SocialLoginWrap,
+  SocialLogin,
+  LoginDesc,
   ForgotLink,
   SignupLink,
   ErrorMsg,
@@ -35,6 +38,22 @@ const Login = () => {
       console.log(err.response.data);
       setErrMsg(err.response.data.message);
     }
+  };
+
+  const socialKakao = async () => {
+    alert('소셜로그인 - 카카오');
+
+    // 추후 엔드포인트 연결
+    const res = api.get('');
+    console.log(res);
+  };
+
+  const socialGoogle = async () => {
+    alert('소셜로그인 - 구글');
+
+    // 추후 엔드포인트 연결
+    const res = api.get('');
+    console.log(res);
   };
 
   return (
@@ -68,6 +87,26 @@ const Login = () => {
           <Button style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.1)' }}>
             로그인
           </Button>
+          <SocialLoginWrap>
+            <SocialLogin style={{ paddingLeft: '0' }}>
+              <OutlineButton onClick={socialKakao}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/kakao.png`}
+                  alt="카카오"
+                />
+                <LoginDesc>카카오</LoginDesc>
+              </OutlineButton>
+            </SocialLogin>
+            <SocialLogin style={{ paddingRight: '0' }}>
+              <OutlineButton onClick={socialGoogle}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/google.png`}
+                  alt="구글"
+                />
+                <LoginDesc>구글</LoginDesc>
+              </OutlineButton>
+            </SocialLogin>
+          </SocialLoginWrap>
           <ForgotLink>
             계정을 잊으셨나요?{' '}
             <strong onClick={() => navigate()}>ID찾기</strong> 또는{' '}
