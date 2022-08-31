@@ -16,12 +16,12 @@ const AuthProvider = ({ children }) => {
         setisLoggedIn(false);
       },
     }),
-    [isLoggedIn],
+    [],
   );
 
   return (
     <AuthActionsContext.Provider value={actions}>
-      <AuthValueContext.Provider value={{hasToken, isLoggedIn}}>
+      <AuthValueContext.Provider value={{ hasToken, isLoggedIn }}>
         {children}
       </AuthValueContext.Provider>
     </AuthActionsContext.Provider>

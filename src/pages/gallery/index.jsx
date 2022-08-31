@@ -96,6 +96,9 @@ const DateWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  input {
+    cursor: pointer;
+  }
   .MuiTextField-root {
     width: 100%;
   }

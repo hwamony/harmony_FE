@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
   a {
-    color: inherit;
+    color: #000;
     text-decoration: none;
   }
 

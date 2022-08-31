@@ -171,6 +171,7 @@ const ImgContainer = styled.div`
   cursor: pointer;
   img {
     display: block;
+    height: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
     transition: transform 0.2s ease;
@@ -178,6 +179,7 @@ const ImgContainer = styled.div`
       transform: scale(105%);
     }
     &:first-child {
+      height: 100%;
       aspect-ratio: 4 / 3.55;
       grid-area: 1 / 1 / 3 / 4;
     }
@@ -186,11 +188,11 @@ const ImgContainer = styled.div`
 
 const ImgSkeleton = styled(Skeleton)`
   display: block;
-  width: 100%;
   height: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   &:first-child {
+    height: 100%;
     aspect-ratio: 4 / 3.55;
     grid-area: 1 / 1 / 3 / 4;
   }

@@ -77,9 +77,11 @@ const Navigation = styled.nav`
   bottom: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
-  color: #868686;
   font-size: 12px;
   z-index: 100;
+  a {
+    color: #868686;
+  }
 `;
 
 const Lists = styled.ul`
