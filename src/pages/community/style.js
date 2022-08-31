@@ -14,26 +14,13 @@ export const CommunityColor = styled.article`
 `;
 
 export const CommunityContainer = styled.div`
-  border-bottom: 1px solid #e7e7e7;
   position: fixed;
+  top: 60px;
   left: 0;
   right: 0;
-  top: 0;
-  height: 110px;
-  text-align: center;
+  height: 40px;
   background-color: white;
-`;
-
-export const TitleContainer = styled.div`
-  border-bottom: 1px solid #e7e7e7;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  h1 {
-    margin-left: 20px;
-  }
+  z-index: 200;
 `;
 
 export const ToolContainer = styled.div`
@@ -53,18 +40,27 @@ export const Space = styled.div`
 `;
 
 export const Category = styled.div`
-  height: 40px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  border-bottom: 2px solid white;
+  width: 100vw;
+  height: 44px;
+  padding: 0 10px;
   h3 {
-    color: #ababab;
-    padding: 2px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 49px;
+    height: 100%;
+    margin-right: 10px;
+    border-bottom: 2px solid transparent;
+    color: #545454;
     text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    word-break: keep-all;
     :hover {
-      color: black;
+      border-bottom: 2px solid #3ec192;
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-weight: 700;
       cursor: pointer;
     }
   }
