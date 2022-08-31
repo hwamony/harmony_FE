@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import styled from 'styled-components';
@@ -16,8 +16,8 @@ import { FiTrash2 } from 'react-icons/fi';
 
 const Album = () => {
   const params = useParams();
-  const scheduleId = params.scheduleId;
-  const galleryId = params.galleryId;
+  const { scheduleId, galleryId } = params;
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checkedImgs, setCheckedImgs] = useState(new Set());
@@ -63,7 +63,7 @@ const Album = () => {
       dispatch(setOnSelect(false));
       dispatch(setOnSelectAll(false));
     };
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setCheckedImgs(new Set());
@@ -72,6 +72,7 @@ const Album = () => {
 
   useEffect(() => {
     setCheckedImgs(new Set(imageList.images.map(({ id }) => id)));
+    setSize(imageList.images.length);
   }, [onSelectAll]);
 
   const handleCheck = (id, isChecked) => {
@@ -85,8 +86,6 @@ const Album = () => {
       setSize(checkedImgs.size);
     }
   };
-
-  // TODO: 전체 선택 기능 구현하기
 
   const deleteImg = async (data) => {
     console.log(data);
@@ -109,6 +108,25 @@ const Album = () => {
       },
     },
   );
+
+  const downloadMultipleImages = async () => {
+    const srcs = [...checkedImgs].map(
+      (id) => imageList.images.filter((img) => img.id === id)[0].url,
+    );
+
+    // 기본 설정이 _blank가 아니라 _parent라서 마지막 이미지 하나만 받아지는 문제
+    // const downloadImage = (src) => {
+    //   const a = document.createElement('a');
+    //   a.href = src;
+    //   a.click();
+    //   a.remove();
+    // };
+
+    for (let src of srcs) {
+      // downloadImage(src);
+      window.open(src);
+    }
+  };
 
   return (
     <>
@@ -155,9 +173,13 @@ const Album = () => {
         )}
 
         <SelectFooter className={cn(onSelect && 'on')}>
-          <IconSave />
+          <button onClick={downloadMultipleImages}>
+            <IconSave />
+          </button>
           <strong>선택 {size}</strong>
-          <FiTrash2 onClick={deleteImages} />
+          <button onClick={deleteImages}>
+            <FiTrash2 />
+          </button>
         </SelectFooter>
       </AlbumSection>
     </>
@@ -185,7 +207,9 @@ const AlbumList = styled.ul`
     &.selected {
       font-weight: 700;
       border-color: ${({ theme }) => theme.palette.primary.main};
-      color: ${({ theme }) => theme.palette.primary.main};
+      a {
+        color: ${({ theme }) => theme.palette.primary.main};
+      }
     }
     a {
       display: block;
@@ -204,6 +228,8 @@ const ImageList = styled.div`
     position: relative;
   }
   img {
+    width: 100%;
+    height: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
@@ -246,15 +272,22 @@ const SelectFooter = styled.footer`
     bottom: 0;
   }
   strong {
-    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    height: 100%;
     color: #18191f;
     font-size: 14px;
     font-weight: 700;
   }
+  button {
+    svg {
+      margin: 0;
+    }
+  }
   svg {
     width: 24px;
     height: 24px;
-    margin-top: 10px;
     color: ${({ theme }) => theme.palette.primary.main};
+    cursor: pointer;
   }
 `;
