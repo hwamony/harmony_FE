@@ -25,6 +25,7 @@ const Community = () => {
                       </ToolContainer>
                   </TitleContainer>
                   <Category>
+                    {/* arr.filter((elm => elm.category === '카테고리명')) */}
                       <h3>아빠</h3>
                       <h3>엄마</h3>
                       <h3>외동</h3>

@@ -1,46 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../../components/common/PageTitle';
 import LongCard from '../../../components/community/LongCard';
 import { IoIosArrowBack } from 'react-icons/io';
-import { GiFlowerTwirl } from 'react-icons/gi'
-import { RiPlantLine } from 'react-icons/ri';
-import { FaHeart } from 'react-icons/fa'
+import CommentEditor from '../../../components/community/comment/CommentEditor';
+import CommentList from '../../../components/community/comment/CommentList';
+// import { GiFlowerTwirl } from 'react-icons/gi'
+// import { RiPlantLine } from 'react-icons/ri';
 
 const Comment = () => {
   const navigate = useNavigate();
-  const [userName] = useState('');
-  const [comment, setComment] = useState('');
-  const [feedComments, setFeedComments] = useState([]);
-  const [isValid, setIsValid] = useState(false);
 
-  const post = e => {
-    const copyFeedComments = [...feedComments];
-    copyFeedComments.push(comment);
-    setFeedComments(copyFeedComments);
-    setComment('');
+  const [data, setData] = useState([]);
+  const dataId = useRef(0);
 
-    {feedComments.map((comment, i) => {
-      return (
-        <CommentList
-        userName={userName}
-        userComment={Comment}
-        key={i}
-        />
-      );
-    })}
+  const onCreate = (comment) => {
+    const newItem = {
+      comment,
+      id: dataId.current
+    };
+    dataId.current += 1;
+    setData([newItem, ...data])
+  }
 
-    const CommentList = props => {
-      return (
-        <div className='userCommentBox'>
-          <p className="userName">{props.userName}</p>
-          <div className='userComment'></div>
-          <p className='userHeart'><FaHeart /></p>
-        </div>
-      )
-    }
-  };
+  const onRemove = (targetId) => {
+    console.log(`${targetId}번째 댓글이 삭제되었습니다.`)
+    const newCommentList = data.filter((it) => it.id !== targetId);
+    setData(newCommentList);
+  }
+
+  const onEdit = (targetId, newComment) => {
+    setData(
+      data.map((it) => it.id === targetId ? {...it, comment:newComment} : it)
+    )
+  }
 
   return (
     <>
@@ -54,15 +48,8 @@ const Comment = () => {
             <LongCard />
           </TitleC>
           <Repl>
-              <h3>댓글 1</h3>
-                <div>
-                  <h5><RiPlantLine /> <span> nick1</span></h5>
-                  <p>댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요.</p>
-                  </div>
-                  <div>
-                    <h5><GiFlowerTwirl /> <span> nick2</span></h5>
-                    <p>댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요. 댓글을 입력해주세요.</p>
-                </div>
+            <CommentEditor onCreate={onCreate} />
+            <CommentList onEdit={onEdit} onRemove={onRemove} commentList={data} />
           </Repl>
           <CommentBar>
             <CommentP>
@@ -70,32 +57,17 @@ const Comment = () => {
               type='text'
               className='inputComment'
               placeholder='댓글을 입력하세요.'
-              onChange={e => {
-                setComment(e.target.value)
-              }}
-              onKeyUp={e => {
-                e.target.value.length > 0
-                ? setIsValid(true)
-                : setIsValid(false);
-              }}
-              value={comment}
               />
               <button
               type="button"
-              className={
-                comment.length > 0
-                ? 'submitCommentActive'
-                : 'submitCommentInactive'
-              }
-              onClick={post}
-              disabled={isValid ? false : true}
               >입력</button>
             </CommentP>
           </CommentBar>
         </Pagecolor>
     </>
   )
-}
+
+};
 
 export default Comment;
 
@@ -146,7 +118,7 @@ const Arrow = styled.div`
 
 const Repl = styled.div`
   width: 670px;
-  height: 150px;
+  height: 300px;
   margin: 545px auto 0 auto;
   background-color: white;
   border-radius: 5px;
@@ -167,7 +139,7 @@ const Repl = styled.div`
   h5{
     width: 120px;
     color: #3EC192;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bolder;
   }
   span{
