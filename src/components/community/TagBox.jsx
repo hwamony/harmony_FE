@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TagList from './TagList';
 
-const TagBox = () => {
+const TagBox = ({ localTags, setLocalTags }) => {
   const [input, setInput] = useState('');
-  const [localTags, setLocalTags] = useState([]);
   const [isShowing, setIsShowing] = useState(false);
   const tagInput = useRef();
 
@@ -47,6 +47,7 @@ const TagBox = () => {
       <TagList tags={localTags} onRemove={onRemove} />
       {localTags.length < 3 && (
         <button
+          type="button"
           className="tag-item tag-button"
           onClick={() => setIsShowing(!isShowing)}
         >
@@ -55,7 +56,7 @@ const TagBox = () => {
       )}
 
       {isShowing && (
-        <TagForm onSubmit={(e) => addTag(e)}>
+        <TagWrapper>
           <input
             placeholder="태그를 입력하세요 (최대 3개)"
             value={input}
@@ -63,11 +64,18 @@ const TagBox = () => {
             className="input-tag"
             ref={tagInput}
           />
-          <button>추가</button>
-        </TagForm>
+          <button type="button" onClick={(e) => addTag(e)}>
+            추가
+          </button>
+        </TagWrapper>
       )}
     </TagBoxBlock>
   );
+};
+
+TagBox.propTypes = {
+  localTags: PropTypes.array,
+  setLocalTags: PropTypes.func,
 };
 
 export default TagBox;
@@ -96,7 +104,7 @@ const TagBoxBlock = styled.div`
   }
 `;
 
-const TagForm = styled.form`
+const TagWrapper = styled.div`
   display: flex;
   border: 1px solid #ccc;
   border-radius: 5px;

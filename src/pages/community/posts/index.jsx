@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,19 +9,18 @@ import HeaderMid from '../../../components/common/HeaderMid';
 import { Button } from '../../../components/Button';
 import { IconCamera } from '../../../assets/icons';
 import { communityRoles } from '../../../utils/data';
+import { formdataApi } from '../../../api/AxiosManager';
 
 const Post = () => {
   const navigate = useNavigate();
-
-  const titleInput = useRef();
-  const contentInput = useRef();
+  const [localTags, setLocalTags] = useState([]);
+  const [previewSrc, setPreviewSrc] = useState();
+  const [file, setFile] = useState();
 
   const [state, setState] = useState({
     category: '',
     title: '',
     content: '',
-    tags: [],
-    photo: '',
   });
 
   const handleChangeState = (e) => {
@@ -31,18 +30,52 @@ const Post = () => {
     });
   };
 
-  const handleSubmit = () => {
-    // if(state.category.)
+  const handleUploadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
 
-    if (state.title.length < 1) {
-      titleInput.current.focus();
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setPreviewSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!state.category) {
+      alert('카테고리를 선택해주세요.');
       return;
     }
 
-    if (state.content.length < 5) {
-      contentInput.current.focus();
+    let formData = new FormData();
+    const request = {
+      category: state.category,
+      title: state.title,
+      content: state.content,
+      tags: localTags,
+    };
+    formData.append('request', JSON.stringify(request));
+    formData.append('image', file);
+
+    // FIXME: 배포 전 지우기
+    for (let key of formData.keys()) {
+      console.log(key, ':', formData.get(key));
     }
-    alert('포스팅성공!');
+    console.log(formData);
+
+    try {
+      const res = await formdataApi.post(`/posts`, formData);
+      console.log(res);
+      alert('포스팅 성공!');
+      navigate('/community');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -50,18 +83,19 @@ const Post = () => {
       <PageTitle title="포스팅" />
       <HeaderMid text="게시물 작성" />
 
-      <PageColor>
+      <PostForm onSubmit={(e) => handleSubmit(e)}>
         <BoxP>
           <PostCategory>
             {communityRoles.map((role) => (
               <React.Fragment key={role}>
                 <input
                   id={role}
-                  value={state.category[role]}
+                  value={role}
                   type="radio"
                   name="category"
                   onChange={handleChangeState}
                   className="hidden"
+                  checked={state.category === role}
                 />
                 <label htmlFor={role}>{role}</label>
               </React.Fragment>
@@ -78,8 +112,8 @@ const Post = () => {
               maxLength="20"
               required
             />
+            <span>{state.title.length}/20</span>
           </PostTitle>
-          {/* TODO: 0/20 추가 */}
 
           <PostContent>
             <Textarea
@@ -98,39 +132,46 @@ const Post = () => {
           </PostContent>
 
           <TagWrapper>
-            {/* <input type='text' placeholder='#해시태그, #최대5개, #쉼표필수' /> */}
-            <TagBox name="tags" value={state.tags} />
+            <TagBox localTags={localTags} setLocalTags={setLocalTags} />
           </TagWrapper>
 
           <AddPhoto>
-            <label htmlFor="input-photo">
-              <IconCamera />
-              사진 올리기
-            </label>
+            {/* TODO: 첨부한 이미지 삭제 기능 추가 */}
+            {previewSrc ? (
+              <label>
+                <img src={previewSrc} alt="" />
+              </label>
+            ) : (
+              <label htmlFor="input-photo">
+                <IconCamera />
+                사진 올리기
+              </label>
+            )}
+
             <input
               id="input-photo"
               name="photo"
-              // value={state.photo}
-              onChange={handleChangeState}
               type="file"
+              accept="image/*"
+              onChange={(e) => handleUploadImage(e)}
               className="hidden"
             />
           </AddPhoto>
         </BoxP>
 
-        {/* TODO: 추후 교체 */}
+        {/* FIXME: 추후 교체 */}
         {/* <Button>{postId ? '수정하기' : '등록하기'}</Button> */}
         <SubmitBtnWrapper>
           <Button>등록하기</Button>
         </SubmitBtnWrapper>
-      </PageColor>
+      </PostForm>
     </>
   );
 };
 
 export default Post;
 
-const PageColor = styled.article`
+const PostForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,6 +231,7 @@ const PostCategory = styled.div`
 `;
 
 const PostTitle = styled.div`
+  position: relative;
   display: flex;
   border-bottom: 1px solid #dfdfdf;
   input {
@@ -202,6 +244,13 @@ const PostTitle = styled.div`
       font-size: 15px;
       color: #ababab;
     }
+  }
+  span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    color: #ababab;
   }
 `;
 
@@ -250,6 +299,11 @@ const AddPhoto = styled.div`
     cursor: pointer;
     svg {
       margin-bottom: 5px;
+    }
+    img {
+      min-width: 85px;
+      min-height: 85px;
+      object-fit: cover;
     }
   }
 `;
