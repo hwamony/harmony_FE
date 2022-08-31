@@ -109,6 +109,13 @@ export const IconDate = () => (
   </svg>
 );
 
+export const IconMoreHoriz = () => (
+  <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="2" r="2" transform="rotate(180 16 2)" fill="white"/>
+    <circle cx="9" cy="2" r="2" transform="rotate(180 9 2)" fill="white"/>
+    <circle cx="2" cy="2" r="2" transform="rotate(180 2 2)" fill="white"/>
+  </svg>
+);
 
 // Settings
 export const IconNext = () => (

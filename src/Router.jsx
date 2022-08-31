@@ -6,11 +6,11 @@ const Login = React.lazy(() => import('./pages/login'));
 const Signup = React.lazy(() => import('./pages/signup'));
 const Schedule = React.lazy(() => import('./pages/calendar/Schedule'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
+const AlbumLayout = React.lazy(() => import('./pages/gallery/AlbumLayout'));
 const Albums = React.lazy(() => import('./pages/gallery/Albums'));
 const Album = React.lazy(() => import('./pages/gallery/Album'));
-const Image = React.lazy(() => import('./pages/gallery/Image'));
+const EditAlbum = React.lazy(() => import('./pages/gallery/EditAlbum'));
 const PostAlbum = React.lazy(() => import('./pages/gallery/PostAlbum'));
-const PostImages = React.lazy(() => import('./pages/gallery/PostImages'));
 const Voicemail = React.lazy(() => import('./pages/voicemail'));
 const Voicercorder = React.lazy(() => import('./pages/voicerecorder'));
 const Community = React.lazy(() => import('./pages/community'));
@@ -30,14 +30,13 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/schedules/*" element={<Schedule />} />
       <Route path="/galleries" element={<Gallery />} />
-      <Route path="/galleries/:scheduleId" element={<Albums />} />
-      <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
-      <Route
-        path="/galleries/:scheduleId/:galleryId/:imageId"
-        element={<Image />}
-      />
+      <Route path="/galleries/:scheduleId" element={<AlbumLayout />}>
+        <Route index element={<Albums />} />
+        <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+      </Route>
       <Route path="/galleries/posts" element={<PostAlbum />} />
-      <Route path="/galleries/posts/:galleryId" element={<PostImages />} />
+      <Route path="/galleries/posts/:galleryId" element={<PostAlbum />} />
+      <Route path="/galleries/posts/:scheduleId/:galleryId/edit" element={<EditAlbum />} />
       <Route path="/voice-mails" element={<Voicemail />} />
       <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />

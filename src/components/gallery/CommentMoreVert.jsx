@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
@@ -8,8 +8,8 @@ import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { MdMoreVert, MdModeEdit, MdDelete } from 'react-icons/md';
 
-const MoreVert = ({ schedule }) => {
-  const navigate = useNavigate();
+const CommentMoreVert = ({ commentId, setOnEdit }) => {
+  const scheduleId = useParams().scheduleId;
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -22,27 +22,28 @@ const MoreVert = ({ schedule }) => {
     setAnchorEl(null);
   };
 
-  const deleteSchedule = async () => {
+  const deleteComment = async () => {
     try {
-      const res = await api.delete(`/schedules/${schedule.scheduleId}`);
+      const res = await api.delete(`/gallery-comments/${commentId}`);
       return res;
     } catch (err) {
       console.log(err);
+      alert(err.response.data.message);
+      handleClose();
     }
   };
 
-  const { mutate: deleteData } = useMutation(deleteSchedule, {
+  const { mutate: deleteCommentM } = useMutation(deleteComment, {
     onSuccess: (res) => {
       alert(res.data.msg);
-      queryClient.invalidateQueries(['schedule']);
+      queryClient.invalidateQueries(['albums', scheduleId]);
     },
   });
 
   // TODO: 삭제 confirm 추가하기
 
   const onClickEdit = () => {
-    console.log(schedule.scheduleId);
-    navigate('/schedules/edit', { state: schedule });
+    setOnEdit(true);
     handleClose();
   };
 
@@ -68,22 +69,23 @@ const MoreVert = ({ schedule }) => {
       >
         <MenuItem onClick={onClickEdit} disableRipple>
           <MdModeEdit />
-          수정
+          댓글수정
         </MenuItem>
-        <MenuItem onClick={deleteData} disableRipple>
+        <MenuItem onClick={deleteCommentM} disableRipple>
           <MdDelete />
-          삭제
+          댓글삭제
         </MenuItem>
       </StyledMenu>
     </>
   );
 };
 
-MoreVert.propTypes = {
-  schedule: PropTypes.object.isRequired,
+CommentMoreVert.propTypes = {
+  commentId: PropTypes.number.isRequired,
+  setOnEdit: PropTypes.func,
 };
 
-export default MoreVert;
+export default CommentMoreVert;
 
 const IconBtn = styled(IconButton)`
   svg {
