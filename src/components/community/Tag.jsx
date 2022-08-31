@@ -49,6 +49,8 @@ const Tag = () => {
   )
 }
 
+export default Tag
+
 const WholeBox = styled.div`
   padding: 10px;
   height: 100vh;
@@ -103,5 +105,3 @@ const TagInput = styled.input`
   outline: none;
   cursor: text;
 `
-
-export default Tag

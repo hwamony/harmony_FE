@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const WriteActionButtons = ({onPublish}) => {
+const WriteActionButtons = ({handleSubmit}) => {
     return (
-      <WriteBtn onClick={onPublish}>
+      <WriteBtn onClick={handleSubmit}>
         <button></button>
       </WriteBtn>
     )
