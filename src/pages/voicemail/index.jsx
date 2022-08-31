@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Container,
   Header,
@@ -10,6 +10,11 @@ import {
   MailWrap,
   MailTitle,
   MailDesc,
+  DropdownWrap,
+  DropdownmenuBtn,
+  Dropdown,
+  DropdownContent,
+  DropdownTitle,
   AudioWrap,
   UserWrap,
   From,
@@ -21,10 +26,13 @@ import PageTitle from '../../components/common/PageTitle';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import api from '../../api/AxiosManager';
 import { useQuery } from '@tanstack/react-query';
+import { MdDeleteOutline } from "react-icons/md";
+
 
 const Voicemail = () => {
   // Referance
   const navigate = useNavigate();
+  const dropdownRef = useRef();
 
   const getVoicemails = async () => {
     const res = await api.get('/voice-mails');
@@ -46,8 +54,15 @@ const Voicemail = () => {
     },
   });
 
+  const showDropdown = (e) => {
+    const dropdown = e.target.parentElement.nextSibling;
+    {
+      dropdown.hidden ? (dropdown.hidden = false) : (dropdown.hidden = true);
+    }
+  };
+
   const deleteVoicemails = async (e) => {
-    console.log(e.target.id);
+    console.log(e.target.id)
     try {
       const res = await api.delete(`/voice-mails/${e.target.id}`);
       console.log(res);
@@ -85,7 +100,23 @@ const Voicemail = () => {
               <MailWrap key={item.voiceMailId}>
                 <MailTitle>{item.title}</MailTitle>
                 <MailDesc>{item.createdAt}</MailDesc>
-                <div id={item.voiceMailId} style={{ width: '20px', height: '20px', background: 'grey', cursor: 'pointer', position: 'absolute', top: '20px', right: '20px'}} onClick={deleteVoicemails}></div>
+                <DropdownWrap>
+                  <DropdownmenuBtn onClick={showDropdown}>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
+                      alt="아이콘"
+                    />
+                  </DropdownmenuBtn>
+                  <Dropdown hidden={true}>
+                    <DropdownContent
+                      id={item.voiceMailId}
+                      onClick={deleteVoicemails}
+                    >
+                      <MdDeleteOutline color='#000000'></MdDeleteOutline>
+                      <DropdownTitle>삭제</DropdownTitle>
+                    </DropdownContent>
+                  </Dropdown>
+                </DropdownWrap>
                 <AudioWrap>
                   <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
                 </AudioWrap>

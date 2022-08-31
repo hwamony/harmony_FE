@@ -39,6 +39,7 @@ const Recoder = () => {
     try {
       const res = await api.post('/voice-mails', formData);
       console.log(res);
+      navigate('/voice-mails')
     } catch (err) {
       console.log(err);
     }

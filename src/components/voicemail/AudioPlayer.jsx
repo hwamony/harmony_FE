@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 const AudioPlayer = (props) => {
   // State
@@ -32,10 +33,10 @@ const AudioPlayer = (props) => {
   };
 
   const loadedMetadata = () => {
-    console.log(audioplayer)
-    // const seconds = Math.floor(audioplayer.current.duration);
-    // setDuration(seconds);
-    // progressBar.current.max = seconds;
+    console.log(audioplayer);
+    const seconds = Math.floor(audioplayer.current.duration);
+    setDuration(seconds);
+    progressBar.current.max = seconds;
   };
 
   const whilePlaying = () => {
@@ -84,14 +85,7 @@ const AudioPlayer = (props) => {
 
       {/* play btn */}
       <PlayPause onClick={toglePlayPause}>
-        {isPlaying ? (
-          <img
-            src={`${process.env.PUBLIC_URL}/images/pause.png`}
-            alt="아이콘"
-          />
-        ) : (
-          <img src={`${process.env.PUBLIC_URL}/images/play.png`} alt="아이콘" />
-        )}
+        {isPlaying ? <FaPause size='1.4em'/> : <FaPlay size='1.4em'/>}
       </PlayPause>
     </Audioplayer>
   );
