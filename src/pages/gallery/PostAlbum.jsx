@@ -176,7 +176,7 @@ const PostAlbum = () => {
                       label={'날짜 선택'}
                       required
                     >
-                      {data?.schedules[scheduleNum].dates.map((v, i) => (
+                      {data?.schedules[scheduleNum].dates.map((v) => (
                         <MenuItem
                           key={v.date}
                           value={v.date}
