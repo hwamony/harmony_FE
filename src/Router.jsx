@@ -14,8 +14,8 @@ const PostAlbum = React.lazy(() => import('./pages/gallery/PostAlbum'));
 const Voicemail = React.lazy(() => import('./pages/voicemail'));
 const Voicercorder = React.lazy(() => import('./pages/voicerecorder'));
 const Community = React.lazy(() => import('./pages/community'));
-const Comment = React.lazy(() => import('./pages/community/comment'));
-const Post = React.lazy(() => import('./pages/community/write'));
+const Post = React.lazy(() => import('./pages/community/posts'));
+const PostDetail = React.lazy(() => import('./pages/community/detail'));
 const Setting = React.lazy(() => import('./pages/setting'));
 const Ranking = React.lazy(() => import('./pages/ranking'));
 const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
@@ -42,8 +42,8 @@ const Router = () => {
       <Route path="/voice-mails" element={<Voicemail />} />
       <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />
-      <Route path="/posts/comments" element={<Comment />} />
-      <Route path="/posts" element={<Post />} />
+      <Route path="/community/posts" element={<Post />} />
+      <Route path="/community/posts/:postId" element={<PostDetail />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/rankings" element={<Ranking />} />
       <Route path="/signupcomplete" element={<SignupComplete />} />

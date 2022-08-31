@@ -9,7 +9,7 @@ import CommentList from '../../../components/community/comment/CommentList';
 // import { GiFlowerTwirl } from 'react-icons/gi'
 // import { RiPlantLine } from 'react-icons/ri';
 
-const Comment = () => {
+const PostDetail = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
@@ -57,7 +57,7 @@ const Comment = () => {
 
 };
 
-export default Comment;
+export default PostDetail;
 
 const Pagecolor = styled.article`
   display: flex;
