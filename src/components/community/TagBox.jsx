@@ -14,7 +14,9 @@ const TagList = React.memo(({ tags, onRemove }) => (
     </TagListBlock>
 ));
 
-const TagBox = ({tags, onChangeTags}) => {
+const TagBox = () => {
+// useEffect 적용
+// const TagBox = ({tags, onChangeTags}) => {
     const [input, setInput] = useState('');
     const [localTags, setLocalTags] = useState([]);
 
@@ -22,28 +24,36 @@ const TagBox = ({tags, onChangeTags}) => {
         tag => {
             if (!tag) return;
             if (localTags.includes(tag)) return;
+            setLocalTags([...localTags, tag]);
+            // useEffect 사용 시 위의 코드 주석처리
 
-            const nextTags = [...localTags, tag];
-            setLocalTags(nextTags);
-            onChangeTags(nextTags);
+            // const nextTags = [...localTags, tag];
+            // setLocalTags(nextTags);
+            // onChangeTags(nextTags);
         },
-        [localTags, onChangeTags],
+        [localTags],
+        // useEffect 사용 시 위의 코드 주석처리
+
+        // [localTags, onChangeTags],
     );
 
     const onRemove = useCallback(
         tag => {
-            const nextTags = localTags.filter(t => t !== tag);
-            setLocalTags(nextTags);
-            onChangeTags(nextTags);
+            setLocalTags(localTags.filter(t => t !== tag));
+
+            // const nextTags = localTags.filter(t => t !== tag);
+            // setLocalTags(nextTags);
+            // onChangeTags(nextTags);
         },
-        [localTags, onChangeTags],
+        [localTags],
+        // [localTags, onChangeTags],
     );
 
     const onChange = useCallback(e => {
         setInput(e.target.value);
     }, []);
 
-    const onSubmit = useCallback(
+    const addTag = useCallback(
         e => {
             e.preventDefault();
             // preventDefault를 했는데 왜 계속 새로고침이 되어서 다 날아가지...?
@@ -53,19 +63,19 @@ const TagBox = ({tags, onChangeTags}) => {
         [input, insertTag],
     );
 
-    useEffect(() => {
-        setLocalTags(tags);
-    }, [tags]);
+    // useEffect(() => {
+    //     setLocalTags(tags);
+    // }, [tags]);
 
     return (
     <TagBoxBlock>
-        <TagForm onSubmit={onSubmit}>
+        <TagForm >
             <input
             placeholder="태그를 입력하세요"
             value={input}
             onChange={onChange}
             />
-            <button type="submit">추가</button>
+            <button type="button" onClick={addTag}>추가</button>
         </TagForm>
         <TagList tags={localTags} onRemove={onRemove} />
     </TagBoxBlock>
@@ -80,12 +90,15 @@ const TagBoxBlock = styled.div`
   padding: 1rem 0;
   display: flex;
   flex-direction: row;
-`;
+  margin-bottom: 50px;
+`
 
 const TagForm = styled.form`
 overflow: hidden;
 display: flex;
 width: 256px;
+border: 1px solid gray;
+border-radius: 5px;
 
 input, button {
     outline: none;
@@ -110,12 +123,12 @@ button {
 `
 
 const Tag = styled.div`
-margin: 0 0.5rem;
+margin: 1px 0.5rem;
 color: gray;
 cursor: pointer;
-&:hover {
+/* :hover {
     opacity: 0.5;
-};
+}; */
 `
 
 const TagListBlock = styled.div`
