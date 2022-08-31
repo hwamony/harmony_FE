@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import axios from "axios";
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../../../components/common/PageTitle';
@@ -16,6 +15,7 @@ const Post = () => {
     category: '',
     title: '',
     content: '',
+    tags: [],
     photo: '',
   });
 
@@ -37,8 +37,10 @@ const Post = () => {
     if(state.content.length < 5){
       contentInput.current.focus();
     }
-    
     alert('포스팅성공!')
+    setState({
+
+    })
   }
 
   return (
@@ -55,16 +57,16 @@ const Post = () => {
             <form>
               <PostCategory>
                 <span>카테고리</span>
-                <label><input type='radio' name='category'/> 아빠</label>
-                <label><input type='radio' name='category' /> 엄마</label>
-                <label><input type='radio' name='category' /> 외동</label>
-                <label><input type='radio' name='category' /> 첫째</label>
-                <label><input type='radio' name='category' /> N째</label>
-                <label><input type='radio' name='category' /> 막내</label>
-                <label><input type='radio' name='category'/> 동거인</label>
+                <label><input value={state.category.dad} type='radio' name='category' onChange={handleChangeState} /> 아빠</label>
+                <label><input value={state.category.mom} type='radio' name='category' onChange={handleChangeState} /> 엄마</label>
+                <label><input value={state.category.only} type='radio' name='category' onChange={handleChangeState} /> 외동</label>
+                <label><input value={state.category.first} type='radio' name='category' onChange={handleChangeState} /> 첫째</label>
+                <label><input value={state.category.nth} type='radio' name='category' onChange={handleChangeState} /> N째</label>
+                <label><input value={state.category.last} type='radio' name='category' onChange={handleChangeState} /> 막내</label>
+                <label><input value={state.category.mate} type='radio' name='category' onChange={handleChangeState} /> 동거인</label>
               </PostCategory>
               <PostTitle>
-              <input
+                <input
                   name='title'
                   value={state.title}
                   onChange={handleChangeState}
@@ -73,7 +75,7 @@ const Post = () => {
                 />
               </PostTitle>
               <PostContent>
-              <textarea
+                <textarea
                   name='content'
                   value={state.content}
                   onChange={handleChangeState}
@@ -83,17 +85,26 @@ const Post = () => {
             </PostContent>
             <PostTitle>
               {/* <input type='text' placeholder='#해시태그, #최대5개, #쉼표필수' /> */}
-              <TagBox />
+              <TagBox
+                name='tags'
+                value={state.tags}
+              />
             </PostTitle>
             <AddPhoto>
-              <input type='file' placeholder='사진등록' />
+              <input
+                name='photo'
+                value={state.photo}
+                onChange={handleChangeState}
+                type='file'
+                placeholder='사진등록'
+              />
             </AddPhoto>
             </form>
           </BoxP>
           <PostBar>
-          <WriteBtn onClick={handleSubmit}>
-            <button></button>
-          </WriteBtn>
+            <WriteBtn>
+              <button type='submit' onClick={handleSubmit}></button>
+            </WriteBtn>
           </PostBar>
         </PageColor>
     </>
@@ -151,7 +162,7 @@ const ArrowP = styled.div`
 
 const BoxP = styled.div`
   width: calc(25% + 400px);
-  height: calc(25% + 350px);
+  height: calc(25% + 250px);
   padding-top: 20px;
   border-radius: 5px;
   background-color: white;
@@ -173,7 +184,7 @@ const PostCategory = styled.div`
   input{
     padding: 10px 0;
     text-align: left;
-  };
+    }
   label:last-child {
     padding-right: 15px;
   };
@@ -221,7 +232,7 @@ const PostContent = styled.div`
 `
 
 const AddPhoto = styled.div`
-  height: 90px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa'
 import {
@@ -9,7 +8,6 @@ import {
 
 const LongCard = () => {
   const [like, setLike] = useState(0);
-  const navigate = useNavigate();
   return (
     <>
       <CardContainer>
@@ -31,19 +29,19 @@ const LongCard = () => {
               <div/>
             </WideImage>
             <LongTag>
+              <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요 {like}</h5>
               <h3>#일상</h3>
               <h3>#고민</h3>
               <h3>#아무말</h3>
-              <h3>#이거왜검색할때마다달라</h3>
             </LongTag>
           </LongContent>
           <LongGood>
-            <LongCount>
+            {/* <LongCount>
               <p>좋아요 {like}개</p>
               <p>﹒</p>
               <p>댓글 1개</p>
             </LongCount>
-            <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요</h5>
+            <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요 {like}</h5> */}
           </LongGood>
         </LongInventory>
     </CardContainer>
@@ -64,7 +62,6 @@ const LongInventory = styled.div`
 `
 
 const LongContent = styled.div`
-  border-top: 0.01px solid #D9D9D9;
   width: 660px;
   height: 395px;
   display: flex;
@@ -118,6 +115,14 @@ const LongTag = styled.div`
     color: gray;
     font-size: 13px;
     text-align: left;
+  }
+  h5{
+    padding: 0 15px;
+    font-size: 15px;
+    color: #3EC192;
+      :hover{
+      cursor: pointer;
+    }
   }
 `
 

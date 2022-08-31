@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, {useState, useCallback, useEffect} from "react";
+import React, {useState, useCallback} from "react";
 import styled from "styled-components";
 
 const TagItem = React.memo(({ tag, onRemove }) => (
@@ -15,8 +15,6 @@ const TagList = React.memo(({ tags, onRemove }) => (
 ));
 
 const TagBox = () => {
-// useEffect 적용
-// const TagBox = ({tags, onChangeTags}) => {
     const [input, setInput] = useState('');
     const [localTags, setLocalTags] = useState([]);
 
@@ -25,28 +23,16 @@ const TagBox = () => {
             if (!tag) return;
             if (localTags.includes(tag)) return;
             setLocalTags([...localTags, tag]);
-            // useEffect 사용 시 위의 코드 주석처리
 
-            // const nextTags = [...localTags, tag];
-            // setLocalTags(nextTags);
-            // onChangeTags(nextTags);
         },
         [localTags],
-        // useEffect 사용 시 위의 코드 주석처리
-
-        // [localTags, onChangeTags],
     );
 
     const onRemove = useCallback(
         tag => {
             setLocalTags(localTags.filter(t => t !== tag));
-
-            // const nextTags = localTags.filter(t => t !== tag);
-            // setLocalTags(nextTags);
-            // onChangeTags(nextTags);
         },
         [localTags],
-        // [localTags, onChangeTags],
     );
 
     const onChange = useCallback(e => {
@@ -56,16 +42,11 @@ const TagBox = () => {
     const addTag = useCallback(
         e => {
             e.preventDefault();
-            // preventDefault를 했는데 왜 계속 새로고침이 되어서 다 날아가지...?
             insertTag(input.trim());
             setInput('');
         },
         [input, insertTag],
     );
-
-    // useEffect(() => {
-    //     setLocalTags(tags);
-    // }, [tags]);
 
     return (
     <TagBoxBlock>
@@ -94,45 +75,45 @@ const TagBoxBlock = styled.div`
 `
 
 const TagForm = styled.form`
-overflow: hidden;
-display: flex;
-width: 256px;
-border: 1px solid gray;
-border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  width: 256px;
+  border: 1px solid gray;
+  border-radius: 5px;
 
-input, button {
+  input, button {
     outline: none;
     border: none;
     font-size: 1rem;
-};
+  };
 
-input {
+  input {
     padding: 0.5rem;
     flex: 1;
     min-width: 0;
-};
+  };
 
-button {
+  button {
     cursor: pointer;
     padding-right: 1rem;
     padding-left: 1rem;
     border: none;
     background: gray;
     color: white;
-};
+  };
 `
 
 const Tag = styled.div`
-margin: 1px 0.5rem;
-color: gray;
-cursor: pointer;
-/* :hover {
+  margin: 1px 0.5rem;
+  color: gray;
+  cursor: pointer;
+  :hover {
     opacity: 0.5;
-}; */
+  };
 `
 
 const TagListBlock = styled.div`
-display: flex;
-margin-top: 0.5rem;
-color: gray;
+  display: flex;
+  margin-top: 0.5rem;
+  color: gray;
 `
