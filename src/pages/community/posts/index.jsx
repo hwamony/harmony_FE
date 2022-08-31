@@ -46,27 +46,21 @@ const Post = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!state.category) {
       alert('카테고리를 선택해주세요.');
       return;
     }
 
     let formData = new FormData();
-    const request = {
-      category: state.category,
-      title: state.title,
-      content: state.content,
-      tags: localTags,
-    };
-    formData.append('request', JSON.stringify(request));
-    formData.append('image', file);
-
-    // FIXME: 배포 전 지우기
-    for (let key of formData.keys()) {
-      console.log(key, ':', formData.get(key));
+    formData.append('category', state.category);
+    formData.append('title', state.title);
+    formData.append('content', state.content);
+    for (let i = 0; i < localTags.length; i++) {
+      const tagForm = localTags[i];
+      formData.append(`tags[${i}]`, tagForm);
     }
-    console.log(formData);
+    formData.append('image', file);
 
     try {
       const res = await formdataApi.post(`/posts`, formData);
