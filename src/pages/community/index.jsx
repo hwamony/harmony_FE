@@ -11,12 +11,18 @@ import {
 import { communityRoles } from '../../utils/data';
 import ShortCard from '../../components/community/ShortCard';
 import Header from '../../components/common/Header';
+import BtnAdd from '../../components/common/BtnAdd';
 
 const Community = () => {
   const navigate = useNavigate();
   return (
     <>
       <PageTitle title="커뮤니티" />
+      <BtnAdd
+        link={'posts'}
+        text="게시글 작성"
+        community={true}
+      />
       <CommunityColor>
         <CommunityContainer>
           <Header title="커뮤니티" link="/community" />

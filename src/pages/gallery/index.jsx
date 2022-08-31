@@ -35,7 +35,7 @@ const Gallery = () => {
     <>
       <PageTitle title="갤러리" />
       <Header title="갤러리" link="/galleries" />
-      <BtnAdd link="/galleries/posts" text="앨범 추가" />
+      <BtnAdd link="/galleries/posts" text="앨범 추가" plus={true} />
       <Main>
         <DateWrapper>
           <MobileDatePicker
