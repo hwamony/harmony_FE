@@ -126,9 +126,13 @@ const Album = () => {
             key={album.id}
             className={cn(parseInt(galleryId) === album.id && 'selected')}
           >
-            <Link to={`/galleries/${scheduleId}/${album.id}`} replace="true">
+            <a
+              rel="noreferrer"
+              href={`/galleries/${scheduleId}/${album.id}`}
+              replace="true"
+            >
               {album.title}
-            </Link>
+            </a>
           </li>
         ))}
       </AlbumList>
