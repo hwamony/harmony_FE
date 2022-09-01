@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Grade } from './LongCard';
 import { hwamokGrades } from '../../utils/data';
+import MoreComment from './MoreComment';
 
 const CommentItem = ({ comment }) => {
-  useEffect(() => {
-    console.log(comment);
-  }, []);
-
   return (
     <Item>
       <Grade>
@@ -19,10 +16,12 @@ const CommentItem = ({ comment }) => {
         />
       </Grade>
       <CommentContent>
-        <strong>{comment.commenter.nickname}</strong>
+        <div className="comment-header">
+          <strong>{comment.commenter.nickname}</strong>
+          {comment.isCommenter && <MoreComment />}
+        </div>
         <p>
-          {comment.content} Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit. Itaque, quidem.
+          {comment.content}
         </p>
         <small>{dayjs(comment.createdAt).format('YYYY년 M월 D일')}</small>
       </CommentContent>
@@ -42,11 +41,24 @@ const Item = styled.div`
 `;
 
 const CommentContent = styled.div`
+  width: 100%;
   font-size: 14px;
-  strong {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    strong {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    svg circle {
+      fill: #bababa;
+    }
+    .MuiIconButton-root {
+      padding: 16px 8px;
+      margin-top: -15px;
+    }
   }
   p {
     color: #18191f;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
@@ -13,6 +14,7 @@ import { formdataApi } from '../../../api/AxiosManager';
 
 const Post = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [localTags, setLocalTags] = useState([]);
   const [previewSrc, setPreviewSrc] = useState();
   const [file, setFile] = useState();
@@ -67,6 +69,7 @@ const Post = () => {
       console.log(res);
       alert('포스팅 성공!');
       navigate('/community');
+      return queryClient.invalidateQueries(['communityPosts', '전체']);
     } catch (e) {
       console.log(e);
     }
@@ -332,9 +335,4 @@ const SubmitBtnWrapper = styled.div`
       width: 460px;
     }
   }
-  /* button {
-    position: fixed;
-    bottom: 35px;
-    width: calc(100% - 40px);
-  } */
 `;

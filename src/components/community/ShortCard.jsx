@@ -33,11 +33,7 @@ const ShortCard = ({ post }) => {
             <Content>
               <div>
                 <h2>{post.title}</h2>
-                <p>
-                  {post.content} Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Tenetur neque explicabo cumque quae, tempora
-                  ullam iusto vero? Incidunt, distinctio dolor!
-                </p>
+                <p>{post.content}</p>
               </div>
               <img src={post.imageUrl} alt="" />
             </Content>

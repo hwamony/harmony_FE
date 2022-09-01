@@ -96,6 +96,7 @@ const GlobalStyle = createGlobalStyle`
       height: 100vh;
       background-image: url('${process.env.PUBLIC_URL}/images/webappbackground.png');
       background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
       overflow: hidden;

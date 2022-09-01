@@ -4,59 +4,57 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
 import { hwamokGrades } from '../../utils/data';
+import MorePost from './MorePost';
 
-const LongCard = ({ post }) => {
+const LongCard = ({ post, postId }) => {
   return (
     <>
       <CardContainer>
         <CardTitle>
-          {/* <em>{post.category}</em> */}
-          <em>카테고리</em>
-          {/* <h2>{post.title}</h2> */}
-          <h2>제목제목</h2>
+          {/* TODO: api에 카테고리 값 추가로 받아오기 */}
+          <div>
+            {/* <em>{post.category}</em> */}
+            <h2>{post.title}</h2>
+          </div>
+          <MorePost postId={postId} />
         </CardTitle>
 
         <Profile>
           {/* TODO: {post.poster.flower}꽃여부 */}
-          {/* <Grade><img
-              src={hwamokGrades[{post.poster.level}].icon}
-              alt={hwamokGrades[{post.poster.level}].name}
-            /></Grade> */}
           <Grade>
-            <img src={hwamokGrades[1].icon} alt={hwamokGrades[1].name} />
+            <img
+              src={hwamokGrades[`${post.poster.level}`].icon}
+              alt={hwamokGrades[`${post.poster.level}`].name}
+            />
           </Grade>
           <Info>
-            {/* <strong>{post.poster.nickname}</strong> */}
-            <strong>작성자</strong>
-            {/* <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p> */}
-            <p>2022년 9월 1일</p>
+            <strong>{post.poster.nickname}</strong>
+            <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p>
           </Info>
         </Profile>
 
         <CardContent>
           <Content>
             {/* FIXME: textarea로 수정 */}
-            {/* <p>{post.content}</p> */}
-            <p>내용내용</p>
-            {/* <img src={post.imageUrl} alt="" /> */}
+            <p>{post.content}</p>
+            {post.imageUrl && <img src={post.imageUrl} alt="" />}
           </Content>
 
           <Tags>
-            {/* {post.tags.map((tag) => (
+            {post.tags.map((tag) => (
               <span key={tag}>#{tag}</span>
-            ))} */}
-            <span>#태그</span>
+            ))}
           </Tags>
 
           <Counts>
             {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
             <small>
               <IconLikeCount />
-              좋아요 2{/* 좋아요 {post.likeCount} */}
+              좋아요 {post.likeCount}
             </small>
             <small>
               <IconCommentCount />
-              댓글 0{/* 댓글 {post.commentCount} */}
+              댓글 {post.comments.length}
             </small>
           </Counts>
         </CardContent>
@@ -66,7 +64,7 @@ const LongCard = ({ post }) => {
 };
 
 LongCard.propTypes = {
-  // post: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
 };
 
 export default LongCard;
@@ -78,18 +76,29 @@ const CardContainer = styled.article`
 `;
 
 const CardTitle = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
   em {
     display: block;
     margin-bottom: 8px;
     color: ${({ theme }) => theme.palette.primary.main};
     font-style: normal;
-    font-size: 13px;
+    font-size: 14px;
   }
   h2 {
     font-size: 20px;
     font-weight: 600;
   }
+
+  svg circle {
+      fill: #bababa;
+    }
+    .MuiIconButton-root {
+      height: 34px;
+      margin-top: -17px;
+    }
 `;
 
 export const Profile = styled.div`
@@ -127,19 +136,18 @@ export const CardContent = styled.div`
 
 const Content = styled.div`
   margin: 18px 0 7.5px;
-  h2 {
-    margin-bottom: 10px;
-    font-size: 15px;
-    font-weight: 600;
-  }
   p {
     width: 100%;
     margin-bottom: 14px;
     color: #000;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
   }
   img {
+    display: block;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto 22px;
     object-fit: cover;
   }
 `;
@@ -152,7 +160,7 @@ export const Tags = styled.div`
     border-radius: 45px;
     background: #ededed;
     color: #707070;
-    font-size: 13px;
+    font-size: 14px;
   }
 `;
 
