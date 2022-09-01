@@ -144,7 +144,10 @@ const Content = styled.div`
     line-height: 1.5;
   }
   img {
-    margin-bottom: 22px;
+    display: block;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto 22px;
     object-fit: cover;
   }
 `;
