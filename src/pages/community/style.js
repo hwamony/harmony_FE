@@ -1,22 +1,12 @@
 import styled, { css } from 'styled-components';
 
-export const CommunityFixed = styled.section`
-  display: flex;
-  flex-direction: column;
-  height: 144px;
-  text-align: center;
-  h1 {
-    margin: 1em 0;
-    font-size: 1.2em;
-    font-weight: 700;
-  }
+export const Main = styled.main`
+  position: relative;
+  overflow-y: auto;
+  height: 100vh;
 `;
 
 export const CommunityNav = styled.nav`
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
   z-index: 200;
 `;
 
@@ -65,35 +55,12 @@ export const CategoryItem = styled.li`
     `}
 `;
 
-export const Order = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 40px;
-  padding: 0 23px;
-  background: #efefef;
-  p {
-    display: inline-block;
-    color: #868686;
-    font-size: 12px;
-    &:hover {
-      color: #000;
-      font-weight: 700;
-    }
-    &:first-child::after {
-      content: '';
-      display: inline-block;
-      width: 3px;
-      height: 3px;
-      margin: 0 8px 2px;
-      border-radius: 50%;
-      background: #303030;
-    }
-  }
+export const ContentWrap = styled.div`
+  overflow: auto;
 `;
 
 export const CommunityContent = styled.main`
   padding: 0 0 65px;
   min-height: calc(100vh - 144px);
   background: #efefef;
-`;
+  `;

@@ -49,14 +49,12 @@ Calendar.propTypes = {
 export default Calendar;
 
 const CalendarContainer = styled.article`
-  position: fixed;
-  top: 127px;
-  left: 0;
-  right: 0;
+  position: sticky;
   display: flex;
   flex-direction: column;
   height: 347px;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 10px 20px;
+  margin: 0 -20px;
   background: #fafafa;
   text-align: center;
   z-index: 20;

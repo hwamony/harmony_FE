@@ -20,7 +20,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
-import { Button } from '../../components/Button';
+import { Button } from '../../styles/Button';
 import { MdAddPhotoAlternate } from 'react-icons/md';
 
 const PostAlbum = () => {
@@ -272,7 +272,6 @@ export default PostAlbum;
 const AlbumForm = styled.form`
   overflow-y: auto;
   min-height: calc(100vh - 55px - 90px);
-  margin: 55px 0 90px;
   padding: 0 20px;
   label {
     color: #000;
@@ -288,9 +287,12 @@ const AlbumForm = styled.form`
   }
   button {
     position: fixed;
-    left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      width: 460px;
+    }
   }
   .MuiSnackbar-root {
     bottom: 75px;

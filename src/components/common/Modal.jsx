@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input } from './Input';
+import { Input } from '../../styles/Input';
 import { useForm } from 'react-hook-form';
-import api from '../api/AxiosManager';
+import api from '../../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
-import ScheduleDetail from './calendar/ScheduleDetail';
+import ScheduleDetail from '../calendar/ScheduleDetail';
 
 const Modal = (props) => {
   const [modalData, setModalData] = useState({

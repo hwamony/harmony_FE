@@ -4,8 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../components/common/PageTitle';
 
-import { Button, OutlineButton } from '../../components/Button';
-import { Input } from '../../components/Input';
+import { Button, OutlineButton } from '../../styles/Button';
+import { Input } from '../../styles/Input';
 import {
   Container,
   LogoWrap,

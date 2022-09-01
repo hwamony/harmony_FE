@@ -10,11 +10,11 @@ import ShortCard from '../../components/community/ShortCard';
 import Loading from '../../components/common/Loading';
 import { communityRoles } from '../../utils/data';
 import {
-  CommunityFixed,
+  Main,
   CommunityNav,
   Category,
+  ContentWrap,
   CategoryItem,
-  Order,
   CommunityContent,
 } from './style';
 
@@ -62,39 +62,41 @@ const Community = () => {
       <PageTitle title="커뮤니티" />
       <Header title="커뮤니티" link="/community" />
 
-      <CommunityFixed>
-        <BtnAdd link={'posts'} text="게시글 작성" community={true} />
-        <CommunityNav>
-          <Category>
-            {communityRoles.map((v, i) => (
-              <CategoryItem
-                key={v}
-                active={category === communityRoles[i]}
-                onClick={() => onClickCategory(communityRoles[i])}
-                tabIndex="0"
-              >
-                {v}
-              </CategoryItem>
-            ))}
-          </Category>
-          <Order>
-            <p>최신순</p>
-            <p>인기순</p>
-          </Order>
-        </CommunityNav>
-      </CommunityFixed>
-
-      <CommunityContent>
-        {postList &&
-          postList.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.data.map((post) => (
-                <ShortCard key={post.postId} post={post} />
+      <Main>
+        <>
+          <BtnAdd link={'posts'} text="게시글 작성" community={true} />
+          <CommunityNav>
+            <Category>
+              {communityRoles.map((v, i) => (
+                <CategoryItem
+                  key={v}
+                  active={category === communityRoles[i]}
+                  onClick={() => onClickCategory(communityRoles[i])}
+                  tabIndex="0"
+                >
+                  {v}
+                </CategoryItem>
               ))}
-            </React.Fragment>
-          ))}
-      </CommunityContent>
-      {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
+            </Category>
+          </CommunityNav>
+        </>
+
+
+        <ContentWrap>
+          <CommunityContent>
+            {postList &&
+              postList.pages.map((page, index) => (
+                <React.Fragment key={index}>
+                  {page.data.map((post) => (
+                    <ShortCard key={post.postId} post={post} />
+                  ))}
+                </React.Fragment>
+              ))}
+          </CommunityContent>
+        </ContentWrap>
+
+        {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
+      </Main>
     </>
   );
 };

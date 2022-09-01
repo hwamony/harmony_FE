@@ -130,22 +130,19 @@ export default Home;
 const Main = styled.main`
   position: relative;
   overflow-y: auto;
-  min-height: calc(100vh - 127px - 347px - 65px);
-  margin: 474px 0 65px;
-  padding: 5px 10px 65px 25px;
+  height: 100vh;
+  padding: 0 20px;
 `;
 
 const ListWrapper = styled.ul`
+  padding: 0 5px;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
 `;
 
 const NoSchedule = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 0;
-  right: 0;
-  bottom: 20%;
+  margin-top: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;

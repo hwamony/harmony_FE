@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackButton } from '../../components/Button';
+import { BackButton } from '../../styles/Button';
 import {
   Container,
   Header,

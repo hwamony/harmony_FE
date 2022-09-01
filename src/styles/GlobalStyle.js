@@ -107,6 +107,26 @@ const GlobalStyle = createGlobalStyle`
     background: #3ec192;
     color: #fff;
   }
+
+  @media only screen and (min-width: 1025px) {
+    body {
+      height: 100vh;
+      background-image: url('${process.env.PUBLIC_URL}/images/webappbackground.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      overflow: hidden;
+    }
+
+    #root {
+      width: 500px;
+      height: 100vh;
+      box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
+      position: relative;
+      left: 920px;
+      background: #ffffff;
+    }
+  }
 `;
 
 export default GlobalStyle;

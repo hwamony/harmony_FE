@@ -89,6 +89,11 @@ const IconBtn = styled(IconButton)`
   svg {
     fill: #bababa;
   }
+
+  @media only screen and (min-width: 1025px) {
+    position: absolute;
+    right: 0;
+  }
 `;
 
 const StyledMenu = styled((props) => (

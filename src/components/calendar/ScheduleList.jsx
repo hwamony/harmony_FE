@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreVert from './MoreVert';
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 
 const ScheduleList = ({ schedule, selectedDate }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -71,10 +71,10 @@ ScheduleList.propTypes = {
 export default ScheduleList;
 
 const ScheduleItem = styled.li`
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 const Schedule = styled.div`
