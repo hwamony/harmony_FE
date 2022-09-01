@@ -94,8 +94,7 @@ export default EditAlbum;
 const AlbumForm = styled.form`
   overflow-y: auto;
   min-height: calc(100vh - 55px - 90px);
-  margin: 55px 0 65px;
-  padding: 0 20px;
+  padding: 0 20px 90px;
   label {
     color: #000;
   }
@@ -110,9 +109,12 @@ const AlbumForm = styled.form`
   }
   button {
     position: fixed;
-    left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      width: 460px;
+    }
   }
   .MuiSnackbar-root {
     bottom: 75px;

@@ -18,7 +18,4 @@ const Ranking = () => {
 
 export default Ranking;
 
-const RankingContent = styled.div`
-  margin-top: 55px;
-  padding: 20px;
-`;
+const RankingContent = styled.div``;

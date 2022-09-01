@@ -1,4 +1,6 @@
 import React from 'react';
+import PageTitle from '../../components/common/PageTitle';
+import HeaderMid from '../../components/common/HeaderMid';
 import { BackButton } from '../../styles/Button';
 import {
   Container,
@@ -24,51 +26,47 @@ const Notice = () => {
   const navigate = useNavigate();
 
   return (
-    <Container>
-      <Header>
-        <BackButton
-          src={`${process.env.PUBLIC_URL}/images/back.png`}
-          alt="뒤로가기"
-          onClick={() => navigate(-1)}
-        />
-        <Title>알림</Title>
-      </Header>
-      <Body>
-        <InProgress />
-        {/* <NoticeWrap>
-          <NoticeItem>
-            <IconWrap>
-              <FiBell size="1.4em" color="#ffffff" />
-            </IconWrap>
-            <DescWrap>
-              <DescTitle>소식알림</DescTitle>
-              <DescMsg>일정이 추가되었습니다.</DescMsg>
-            </DescWrap>
-            <TimeWrap>08.14</TimeWrap>
-          </NoticeItem>
-          <NoticeItem>
-            <IconWrap>
-              <FiBell size="1.4em" color="#ffffff" />
-            </IconWrap>
-            <DescWrap>
-              <DescTitle>소식알림</DescTitle>
-              <DescMsg>일정이 추가되었습니다.</DescMsg>
-            </DescWrap>
-            <TimeWrap>08.14</TimeWrap>
-          </NoticeItem>
-          <NoticeItem>
-            <IconWrap>
-              <FiBell size="1.4em" color="#ffffff" />
-            </IconWrap>
-            <DescWrap>
-              <DescTitle>소식알림</DescTitle>
-              <DescMsg>일정이 추가되었습니다.</DescMsg>
-            </DescWrap>
-            <TimeWrap>08.14</TimeWrap>
-          </NoticeItem>
-        </NoticeWrap> */}
-      </Body>
-    </Container>
+    <>
+      <PageTitle title="알림" />
+      <HeaderMid text="알림" />
+      <InProgress />
+      {/* <Container>
+        <Body>
+          <NoticeWrap>
+            <NoticeItem>
+              <IconWrap>
+                <FiBell size="1.4em" color="#ffffff" />
+              </IconWrap>
+              <DescWrap>
+                <DescTitle>소식알림</DescTitle>
+                <DescMsg>일정이 추가되었습니다.</DescMsg>
+              </DescWrap>
+              <TimeWrap>08.14</TimeWrap>
+            </NoticeItem>
+            <NoticeItem>
+              <IconWrap>
+                <FiBell size="1.4em" color="#ffffff" />
+              </IconWrap>
+              <DescWrap>
+                <DescTitle>소식알림</DescTitle>
+                <DescMsg>일정이 추가되었습니다.</DescMsg>
+              </DescWrap>
+              <TimeWrap>08.14</TimeWrap>
+            </NoticeItem>
+            <NoticeItem>
+              <IconWrap>
+                <FiBell size="1.4em" color="#ffffff" />
+              </IconWrap>
+              <DescWrap>
+                <DescTitle>소식알림</DescTitle>
+                <DescMsg>일정이 추가되었습니다.</DescMsg>
+              </DescWrap>
+              <TimeWrap>08.14</TimeWrap>
+            </NoticeItem>
+          </NoticeWrap>
+        </Body>
+      </Container> */}
+    </>
   );
 };
 

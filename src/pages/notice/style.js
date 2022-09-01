@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   height: 60px;
-  margon-bottom: 1px solid #f2f2f2;
+  margin-bottom: 1px solid #f2f2f2;
   display: flex;
   justify-content: center;
 `;
@@ -58,7 +58,7 @@ export const DescTitle = styled.div`
 
 export const DescMsg = styled.div`
   margin-top: 8px;
-  ont-weight: 400;
+  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
 `;

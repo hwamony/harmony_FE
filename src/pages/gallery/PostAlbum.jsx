@@ -270,9 +270,10 @@ const PostAlbum = () => {
 export default PostAlbum;
 
 const AlbumForm = styled.form`
+  position: relative;
   overflow-y: auto;
   min-height: calc(100vh - 55px - 90px);
-  padding: 0 20px;
+  padding: 0 20px 90px;
   label {
     color: #000;
   }

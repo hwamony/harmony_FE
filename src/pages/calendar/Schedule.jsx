@@ -251,10 +251,9 @@ const Schedule = () => {
             />
           </ContentWrapper>
 
-                  <BtnWrap>
-                  <Button>{scheduleData ? '수정하기' : '등록하기'}</Button>
-
-                  </BtnWrap>
+          <BtnWrap>
+            <Button>{scheduleData ? '수정하기' : '등록하기'}</Button>
+          </BtnWrap>
         </ScheduleForm>
       </ScheduleSection>
     </>
@@ -265,6 +264,7 @@ export default Schedule;
 
 const ScheduleSection = styled.section`
   position: relative;
+  padding-bottom: 90px;
 `;
 
 const ScheduleForm = styled.form`
@@ -304,7 +304,8 @@ const ScheduleForm = styled.form`
 `;
 
 const BtnWrap = styled.div`
-padding: 0 20px;`
+  padding: 0 20px;
+`;
 
 const DateWrapper = styled.div`
   padding: 5px 0 10px;

@@ -166,11 +166,11 @@ const Post = () => {
 export default Post;
 
 const PostForm = styled.form`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 55px;
   text-align: center;
   background-color: #f2f2f2;
   h1 {
@@ -185,6 +185,7 @@ const BoxP = styled.div`
   border-radius: 5px;
   background-color: white;
   color: #ababab;
+  padding-bottom: 90px;
 `;
 
 const PostCategory = styled.div`
@@ -325,5 +326,15 @@ const SubmitBtnWrapper = styled.div`
     left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      left: calc(50vw - 230px);
+      width: 460px;
+    }
   }
+  /* button {
+    position: fixed;
+    bottom: 35px;
+    width: calc(100% - 40px);
+  } */
 `;

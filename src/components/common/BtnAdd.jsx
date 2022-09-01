@@ -12,7 +12,11 @@ const BtnAdd = ({ link, text, plus, photo, community }) => {
         <Button to={link}>
           <p className="hidden">{text}</p>
           {plus && <IconPlus />}
-          {photo && <span><MdAddPhotoAlternate /></span>}
+          {photo && (
+            <span>
+              <MdAddPhotoAlternate />
+            </span>
+          )}
           {community && <IconPost />}
         </Button>
       )}
@@ -49,7 +53,6 @@ const Button = styled(Link)`
   }
 
   @media only screen and (min-width: 1025px) {
-    right: inherit;
-    left: 1350px;
+    left: calc(50vw + 180px);
   }
 `;

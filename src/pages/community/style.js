@@ -1,14 +1,12 @@
 import styled, { css } from 'styled-components';
 
 export const Main = styled.main`
-  position: relative;
   overflow-y: auto;
-  height: 100vh;
+  position: relative;
+  padding-bottom: 65px;
 `;
 
-export const CommunityNav = styled.nav`
-  z-index: 200;
-`;
+export const CommunityNav = styled.nav``;
 
 export const Category = styled.ul`
   overflow-x: auto;
@@ -63,4 +61,4 @@ export const CommunityContent = styled.main`
   padding: 0 0 65px;
   min-height: calc(100vh - 144px);
   background: #efefef;
-  `;
+`;

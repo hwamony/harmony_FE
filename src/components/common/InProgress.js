@@ -21,10 +21,11 @@ const InProgress = () => {
 export default InProgress;
 
 const InfoWrap = styled.div`
-  margin-top: 242px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40vh;
+  padding: 20px;
 `;
 
 const InfoIcon = styled.div`

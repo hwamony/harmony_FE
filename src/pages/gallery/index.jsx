@@ -73,7 +73,7 @@ const Main = styled.main`
   overflow-y: auto;
   min-height: calc(100vh - 60px - 65px);
   border-top: 2px solid #f2f2f2;
-  padding: 20px;
+  padding: 20px 20px 65px;
   button {
     position: absolute;
     right: 20px;

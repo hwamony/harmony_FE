@@ -31,12 +31,15 @@ export default CommentEditor;
 
 const CommentBar = styled.section`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: 0;
+  width: 100%;
   background: #f2f2f2;
   color: #868686;
   z-index: 100;
+
+  @media only screen and (min-width: 1025px) {
+    width: 500px;
+  }
 `;
 
 const CommentForm = styled.form`
