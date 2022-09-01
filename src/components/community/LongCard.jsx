@@ -10,53 +10,47 @@ const LongCard = ({ post }) => {
     <>
       <CardContainer>
         <CardTitle>
+          {/* TODO: api에 카테고리 값 추가로 받아오기 */}
           {/* <em>{post.category}</em> */}
-          <em>카테고리</em>
-          {/* <h2>{post.title}</h2> */}
-          <h2>제목제목</h2>
+          <h2>{post.title}</h2>
         </CardTitle>
 
         <Profile>
           {/* TODO: {post.poster.flower}꽃여부 */}
-          {/* <Grade><img
-              src={hwamokGrades[{post.poster.level}].icon}
-              alt={hwamokGrades[{post.poster.level}].name}
-            /></Grade> */}
           <Grade>
-            <img src={hwamokGrades[1].icon} alt={hwamokGrades[1].name} />
+            <img
+              src={hwamokGrades[`${post.poster.level}`].icon}
+              alt={hwamokGrades[`${post.poster.level}`].name}
+            />
           </Grade>
           <Info>
-            {/* <strong>{post.poster.nickname}</strong> */}
-            <strong>작성자</strong>
-            {/* <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p> */}
-            <p>2022년 9월 1일</p>
+            <strong>{post.poster.nickname}</strong>
+            <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p>
           </Info>
         </Profile>
 
         <CardContent>
           <Content>
             {/* FIXME: textarea로 수정 */}
-            {/* <p>{post.content}</p> */}
-            <p>내용내용</p>
-            {/* <img src={post.imageUrl} alt="" /> */}
+            <p>{post.content}</p>
+            {post.imageUrl && <img src={post.imageUrl} alt="" />}
           </Content>
 
           <Tags>
-            {/* {post.tags.map((tag) => (
+            {post.tags.map((tag) => (
               <span key={tag}>#{tag}</span>
-            ))} */}
-            <span>#태그</span>
+            ))}
           </Tags>
 
           <Counts>
             {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
             <small>
               <IconLikeCount />
-              좋아요 2{/* 좋아요 {post.likeCount} */}
+              좋아요 {post.likeCount}
             </small>
             <small>
               <IconCommentCount />
-              댓글 0{/* 댓글 {post.commentCount} */}
+              댓글 {post.comments.length}
             </small>
           </Counts>
         </CardContent>
@@ -66,7 +60,7 @@ const LongCard = ({ post }) => {
 };
 
 LongCard.propTypes = {
-  // post: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
 };
 
 export default LongCard;
