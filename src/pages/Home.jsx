@@ -142,11 +142,7 @@ const ListWrapper = styled.ul`
 `;
 
 const NoSchedule = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 0;
-  right: 0;
-  bottom: 20%;
+  margin-top: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;

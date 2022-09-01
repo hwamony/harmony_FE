@@ -50,6 +50,6 @@ const Button = styled(Link)`
 
   @media only screen and (min-width: 1025px) {
     right: inherit;
-    left: 1140px;
+    left: 1350px;
   }
 `;

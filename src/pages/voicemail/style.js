@@ -18,9 +18,11 @@ export const Header = styled.div`
 
 export const Body = styled.div`
   width: 100%;
+  position: relative;
   height: 100vh;
   padding: 10px 20px;
   background: #efefef;
+  overflow-y: auto;
 `;
 
 export const EmptyWrap = styled.div`
@@ -129,15 +131,4 @@ export const From = styled.div`
 
 export const To = styled(From)`
   float: right;
-`;
-
-export const PlusBtn = styled.button`
-  width: 52px;
-  height: 52px;
-  border-radius: 26px;
-  background: #3ec192;
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
-  position: fixed;
-  bottom: 79px;
-  right: 20px;
 `;

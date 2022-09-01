@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import PageTitle from '../../components/common/PageTitle';
 import useAuth from '../../hooks/useAuth';
 
-import { Input, Checkinput, RadioInput } from '../../components/Input';
-import { Button, InlineButton, BackButton } from '../../components/Button';
-import { Label, RadioLabel } from '../../components/Label';
+import { Input, Checkinput, RadioInput } from '../../styles/Input';
+import { Button, InlineButton, BackButton } from '../../styles/Button';
+import { Label, RadioLabel } from '../../styles/Label';
 import {
   Container,
   Top,

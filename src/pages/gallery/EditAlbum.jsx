@@ -8,7 +8,7 @@ import { TextField } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
-import { Button } from '../../components/Button';
+import { Button } from '../../styles/Button';
 
 const EditAlbum = () => {
   const navigate = useNavigate();

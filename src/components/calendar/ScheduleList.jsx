@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreVert from './MoreVert';
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 
 const ScheduleList = ({ schedule, selectedDate }) => {
   const [isVisible, setIsVisible] = useState(false);

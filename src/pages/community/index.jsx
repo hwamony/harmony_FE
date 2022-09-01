@@ -6,10 +6,10 @@ import api from '../../api/AxiosManager';
 
 import PageTitle from '../../components/common/PageTitle';
 import {
-  CommunityFixed,
+  Main,
   CommunityNav,
   Category,
-  Order,
+  ContentWrap,
   CommunityContent,
 } from './style';
 import ShortCard from '../../components/community/ShortCard';
@@ -57,33 +57,34 @@ const Community = () => {
       <PageTitle title="커뮤니티" />
       <Header title="커뮤니티" link="/community" />
 
-      <CommunityFixed>
-        <BtnAdd link={'posts'} text="게시글 작성" community={true} />
-        <CommunityNav>
-          <Category>
-            <p>전체</p>
-            {communityRoles.map((v) => (
-              <p key={v}>{v}</p>
-            ))}
-          </Category>
-          <Order>
-            <p>최신순</p>
-            <p>인기순</p>
-          </Order>
-        </CommunityNav>
-      </CommunityFixed>
-
-      <CommunityContent>
-        {postList &&
-          postList.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.data.map((post) => (
-                <ShortCard key={post.postId} post={post} />
+      <Main>
+        <>
+          <BtnAdd link={'posts'} text="게시글 작성" community={true} />
+          <CommunityNav>
+            <Category>
+              <p>전체</p>
+              {communityRoles.map((v) => (
+                <p key={v}>{v}</p>
               ))}
-            </React.Fragment>
-          ))}
-      </CommunityContent>
-      {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
+            </Category>
+          </CommunityNav>
+        </>
+
+        <ContentWrap>
+          <CommunityContent>
+            {postList &&
+              postList.pages.map((page, index) => (
+                <React.Fragment key={index}>
+                  {page.data.map((post) => (
+                    <ShortCard key={post.postId} post={post} />
+                  ))}
+                </React.Fragment>
+              ))}
+          </CommunityContent>
+        </ContentWrap>
+
+        {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
+      </Main>
     </>
   );
 };

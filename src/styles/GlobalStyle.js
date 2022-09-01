@@ -115,7 +115,7 @@ const GlobalStyle = createGlobalStyle`
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      overflow:hidden;
+      overflow: hidden;
     }
 
     #root {
@@ -123,7 +123,7 @@ const GlobalStyle = createGlobalStyle`
       height: 100vh;
       box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
       position: relative;
-      left: 710px;
+      left: 920px;
       background: #ffffff;
     }
   }

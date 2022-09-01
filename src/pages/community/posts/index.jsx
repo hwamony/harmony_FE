@@ -6,7 +6,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import PageTitle from '../../../components/common/PageTitle';
 import TagBox from '../../../components/community/TagBox';
 import HeaderMid from '../../../components/common/HeaderMid';
-import { Button } from '../../../components/Button';
+import { Button } from '../../../styles/Button';
 import { IconCamera } from '../../../assets/icons';
 import { communityRoles } from '../../../utils/data';
 import { formdataApi } from '../../../api/AxiosManager';

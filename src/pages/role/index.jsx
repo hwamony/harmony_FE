@@ -2,9 +2,9 @@ import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Container, Wrap, Desc, InputWrap, IconWrap, BtnWrap, Box } from './style';
-import { RoleInput } from '../../components/Input';
-import { RoleLabel } from '../../components/Label';
-import { Button } from '../../components/Button';
+import { RoleInput } from '../../styles/Input';
+import { RoleLabel } from '../../styles/Label';
+import { Button } from '../../styles/Button';
 import api from '../../api/AxiosManager';
 
 const Role = () => {
