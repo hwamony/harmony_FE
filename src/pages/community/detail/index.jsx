@@ -115,13 +115,13 @@ const Repl = styled.section`
 
 const NoComments = styled.div`
   position: relative;
-  height: 180px;
+  height: 240px;
   div {
     position: absolute;
     top: 20%;
     left: 0;
     right: 0;
-    bottom: 20%;
+    bottom: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
