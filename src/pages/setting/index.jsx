@@ -77,7 +77,7 @@ const SettingsContainer = styled.section`
   position: relative;
   overflow-y: auto;
   min-height: calc(100vh - 75px - 65px);
-  margin-top: 119px;
+  margin-top: 44px;
   padding: 0px 20px 25px;
 
   h3 {

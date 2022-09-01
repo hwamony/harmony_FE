@@ -30,6 +30,5 @@ const AlbumsSection = styled.section`
   position: relative;
   overflow-y: auto;
   min-height: calc(100vh - 55px - 65px);
-  margin: 55px 0 65px;
-  padding: 23px 20px 20px;
+  padding: 23px 20px 85px;
 `;

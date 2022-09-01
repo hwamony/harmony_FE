@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BackButton, Button } from '../../components/Button';
+import { BackButton, Button } from '../../styles/Button';
 import { useNavigate } from 'react-router-dom';
 import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
 import { useForm } from 'react-hook-form';
-import { Input } from '../../components/Input';
-import { Label } from '../../components/Label';
+import { Input } from '../../styles/Input';
+import { Label } from '../../styles/Label';
 import api from '../../api/AxiosManager';
-import axios from '../../../node_modules/axios/index';
 import {
   Container,
   Header,

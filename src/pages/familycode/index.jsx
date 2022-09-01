@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Container, LogoWrap, WelcomeDesc, InputWrap, Inputdesc, InputTitle, Icon } from './style';
-import { CodeLabel } from '../../components/Label';
-import { CodeInput } from '../../components/Input';
-import { Button } from '../../components/Button';
-import Modal from '../../components/Modal';
+import { CodeLabel } from '../../styles/Label';
+import { CodeInput } from '../../styles/Input';
+import { Button } from '../../styles/Button';
+import Modal from '../../components/common/Modal';
 
 const Familycode = () => {
   const [isVisible, setIsVisible] = useState(false);

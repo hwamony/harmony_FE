@@ -10,48 +10,22 @@ import LongCard from '../../../components/community/LongCard';
 import CommentEditor from '../../../components/community/CommentEditor';
 import CommentItem from '../../../components/community/CommentItem';
 
-const dummyComments = [
-  {
-    commentId: 12412,
-    content: '댓글 내용',
-    createdAt: '2022-08-30',
-    commenter: {
-      level: 0,
-      flower: false,
-      nickname: '닉네임',
-    },
-    isCommenter: true,
-  },
-  {
-    commentId: 32412,
-    content: '댓글 내용22',
-    createdAt: '2022-09-01',
-    commenter: {
-      level: 1,
-      flower: true,
-      nickname: '닉넴넴',
-    },
-    isCommenter: false,
-  },
-];
-
-// const dummyComments = [];
-
 const PostDetail = () => {
   const postId = useParams().postId;
 
-  // const getPost = async (postId) => {
-  //   const res = await api.get(`/posts/${postId}`);
-  //   return res.data.data;
-  // };
+  const getPost = async (postId) => {
+    const res = await api.get(`/posts/${postId}`);
+    return res.data.data;
+  };
 
-  // const { data: postData } = useQuery(
-  //   ['communityPost', postId],
-  //   () => getPost(postId),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //   },
-  // );
+  const { data: postData } = useQuery(
+    ['communityPost', postId],
+    () => getPost(postId),
+    {
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => console.log(data),
+    },
+  );
 
   return (
     <>
@@ -59,16 +33,17 @@ const PostDetail = () => {
       <HeaderMid text="커뮤니티" />
 
       <CommunityDetail>
-        {/* <LongCard post={postData} /> */}
-        <LongCard />
+        <LongCard post={postData} postId={postId} />
+
         <Repl>
           <h3>
-            {/* 댓글 <span>{postData.comments.length}</span> */}
-            댓글 <span>{dummyComments.length}</span>
+            댓글 <span>{postData.comments.length}</span>
           </h3>
-          {dummyComments.length > 0 ? (
-            dummyComments.map((comment) => (
-              <CommentItem key={comment.commentId} comment={comment} />
+          {postData.comments.length > 0 ? (
+            postData.comments.map((comment, i) => (
+              // FIXME: API 수정 후 되돌리기
+              // <CommentItem key={comment.commentId} comment={comment} />
+              <CommentItem key={i} comment={comment} />
             ))
           ) : (
             <NoComments>
@@ -83,7 +58,8 @@ const PostDetail = () => {
             </NoComments>
           )}
         </Repl>
-        <CommentEditor />
+
+        <CommentEditor postId={postId} />
       </CommunityDetail>
     </>
   );
@@ -95,7 +71,6 @@ const CommunityDetail = styled.main`
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 55px - 84px);
-  margin-top: 55px;
   padding-bottom: 84px;
   background-color: #f2f2f2;
 `;
@@ -115,13 +90,13 @@ const Repl = styled.section`
 
 const NoComments = styled.div`
   position: relative;
-  height: 180px;
+  height: 240px;
   div {
     position: absolute;
     top: 20%;
     left: 0;
     right: 0;
-    bottom: 20%;
+    bottom: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;

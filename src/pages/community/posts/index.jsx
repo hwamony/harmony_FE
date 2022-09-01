@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import PageTitle from '../../../components/common/PageTitle';
 import TagBox from '../../../components/community/TagBox';
 import HeaderMid from '../../../components/common/HeaderMid';
-import { Button } from '../../../components/Button';
+import { Button } from '../../../styles/Button';
 import { IconCamera } from '../../../assets/icons';
 import { communityRoles } from '../../../utils/data';
 import { formdataApi } from '../../../api/AxiosManager';
 
 const Post = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [localTags, setLocalTags] = useState([]);
   const [previewSrc, setPreviewSrc] = useState();
   const [file, setFile] = useState();
@@ -67,6 +69,7 @@ const Post = () => {
       console.log(res);
       alert('포스팅 성공!');
       navigate('/community');
+      return queryClient.invalidateQueries(['communityPosts', '전체']);
     } catch (e) {
       console.log(e);
     }
@@ -80,7 +83,7 @@ const Post = () => {
       <PostForm onSubmit={(e) => handleSubmit(e)}>
         <BoxP>
           <PostCategory>
-            {communityRoles.map((role) => (
+            {communityRoles.slice(1).map((role) => (
               <React.Fragment key={role}>
                 <input
                   id={role}
@@ -166,11 +169,11 @@ const Post = () => {
 export default Post;
 
 const PostForm = styled.form`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 55px;
   text-align: center;
   background-color: #f2f2f2;
   h1 {
@@ -185,6 +188,7 @@ const BoxP = styled.div`
   border-radius: 5px;
   background-color: white;
   color: #ababab;
+  padding-bottom: 90px;
 `;
 
 const PostCategory = styled.div`
@@ -325,5 +329,10 @@ const SubmitBtnWrapper = styled.div`
     left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      left: calc(50vw - 230px);
+      width: 460px;
+    }
   }
 `;

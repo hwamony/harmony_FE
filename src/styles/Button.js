@@ -29,7 +29,7 @@ export const InlineButton = styled(Button)`
 
 export const BackButton = styled.img`
   position: absolute;
-  top: 24px;
+  top: 14px;
   left: 20px;
   width: 20px;
   height: 20px;

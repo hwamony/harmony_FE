@@ -1,8 +1,15 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+
+import PageTitle from '../../components/common/PageTitle';
+import AudioPlayer from '../../components/voicemail/AudioPlayer';
+import BtnAdd from '../../components/common/BtnAdd';
+import { MdDeleteOutline } from 'react-icons/md';
 import {
   Container,
   Header,
-  Title,
   Body,
   EmptyWrap,
   EmptyIcon,
@@ -19,20 +26,11 @@ import {
   UserWrap,
   From,
   To,
-  PlusBtn,
 } from './style';
-import { useNavigate } from 'react-router-dom';
-import PageTitle from '../../components/common/PageTitle';
-import AudioPlayer from '../../components/voicemail/AudioPlayer';
-import api from '../../api/AxiosManager';
-import { useQuery } from '@tanstack/react-query';
-import { MdDeleteOutline } from "react-icons/md";
-
 
 const Voicemail = () => {
   // Referance
   const navigate = useNavigate();
-  const dropdownRef = useRef();
 
   const getVoicemails = async () => {
     const res = await api.get('/voice-mails');
@@ -62,11 +60,11 @@ const Voicemail = () => {
   };
 
   const deleteVoicemails = async (e) => {
-    console.log(e.target.id)
+    console.log(e.target.id);
     try {
       const res = await api.delete(`/voice-mails/${e.target.id}`);
       console.log(res);
-      navigate(0)
+      navigate(0);
     } catch (err) {
       console.log(err);
     }
@@ -86,7 +84,7 @@ const Voicemail = () => {
         {voicemailList.length === 0 ? (
           <EmptyWrap>
             <EmptyIcon
-              src={`${process.env.PUBLIC_URL}/images/emtpy.png`}
+              src={`${process.env.PUBLIC_URL}/images/empty.png`}
               alt="아이콘"
             />
             <EmptyDesc>
@@ -97,41 +95,41 @@ const Voicemail = () => {
         ) : (
           voicemailList.map((item) => {
             return (
-              <MailWrap key={item.voiceMailId}>
-                <MailTitle>{item.title}</MailTitle>
-                <MailDesc>{item.createdAt}</MailDesc>
-                <DropdownWrap>
-                  <DropdownmenuBtn onClick={showDropdown}>
-                    <img
-                      src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
-                      alt="아이콘"
-                    />
-                  </DropdownmenuBtn>
-                  <Dropdown hidden={true}>
-                    <DropdownContent
-                      id={item.voiceMailId}
-                      onClick={deleteVoicemails}
-                    >
-                      <MdDeleteOutline color='#000000'></MdDeleteOutline>
-                      <DropdownTitle>삭제</DropdownTitle>
-                    </DropdownContent>
-                  </Dropdown>
-                </DropdownWrap>
-                <AudioWrap>
-                  <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
-                </AudioWrap>
-                <UserWrap>
-                  <From>{`from. ${item.from}`}</From>
-                  <To>{`to. ${item.to}`}</To>
-                </UserWrap>
-              </MailWrap>
+              <>
+                <MailWrap key={item.voiceMailId}>
+                  <MailTitle>{item.title}</MailTitle>
+                  <MailDesc>{item.createdAt}</MailDesc>
+                  <DropdownWrap>
+                    <DropdownmenuBtn onClick={showDropdown}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
+                        alt="아이콘"
+                      />
+                    </DropdownmenuBtn>
+                    <Dropdown hidden={true}>
+                      <DropdownContent
+                        id={item.voiceMailId}
+                        onClick={deleteVoicemails}
+                      >
+                        <MdDeleteOutline color="#000000"></MdDeleteOutline>
+                        <DropdownTitle>삭제</DropdownTitle>
+                      </DropdownContent>
+                    </Dropdown>
+                  </DropdownWrap>
+                  <AudioWrap>
+                    <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
+                  </AudioWrap>
+                  <UserWrap>
+                    <From>{`from. ${item.from}`}</From>
+                    <To>{`to. ${item.to}`}</To>
+                  </UserWrap>
+                </MailWrap>
+              </>
             );
           })
         )}
       </Body>
-      <PlusBtn onClick={() => navigate('/voice-recorder')}>
-        <img src={`${process.env.PUBLIC_URL}/images/plus.png`} alt="아이콘" />
-      </PlusBtn>
+      <BtnAdd link="/voice-recorder" text="녹음 등록" plus={true} />
     </Container>
   );
 };

@@ -1,13 +1,29 @@
 import React, { useRef } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
 import styled from 'styled-components';
 
-const CommentEditor = () => {
+const CommentEditor = ({ postId }) => {
+  const queryClient = useQueryClient();
   const commentInput = useRef();
+
+  const { mutate: addComment } = useMutation(
+    (data) => api.post(`/posts/${postId}/comments`, data),
+    {
+      onSuccess: () => {
+        alert('댓글이 등록되었습니다!');
+        return queryClient.invalidateQueries(['communityPost', postId]);
+      },
+      onError: (err) => console.log(err),
+    },
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: 댓글 유효성 검사 후 댓글 등록
-    // alert('댓글이 등록되었습니다!');
+    const data = {
+      content: commentInput.current.value,
+    };
+    addComment(data);
   };
 
   return (
@@ -31,12 +47,15 @@ export default CommentEditor;
 
 const CommentBar = styled.section`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: 0;
+  width: 100%;
   background: #f2f2f2;
   color: #868686;
   z-index: 100;
+
+  @media only screen and (min-width: 1025px) {
+    width: 500px;
+  }
 `;
 
 const CommentForm = styled.form`

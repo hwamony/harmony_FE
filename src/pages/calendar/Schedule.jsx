@@ -15,7 +15,7 @@ import { Switch, TextField, Select, MenuItem } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { IconHistory, IconMembers, IconSelect } from '../../assets/icons';
-import { Button } from '../../components/Button';
+import { Button } from '../../styles/Button';
 import { categories } from '../../utils/data';
 
 const Schedule = () => {
@@ -251,7 +251,9 @@ const Schedule = () => {
             />
           </ContentWrapper>
 
-          <Button>{scheduleData ? '수정하기' : '등록하기'}</Button>
+          <BtnWrap>
+            <Button>{scheduleData ? '수정하기' : '등록하기'}</Button>
+          </BtnWrap>
         </ScheduleForm>
       </ScheduleSection>
     </>
@@ -262,7 +264,7 @@ export default Schedule;
 
 const ScheduleSection = styled.section`
   position: relative;
-  margin: 55px 0 65px;
+  padding-bottom: 90px;
 `;
 
 const ScheduleForm = styled.form`
@@ -286,9 +288,12 @@ const ScheduleForm = styled.form`
   }
   button {
     position: fixed;
-    left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      width: 460px;
+    }
   }
   small {
     display: inline-block;
@@ -296,6 +301,10 @@ const ScheduleForm = styled.form`
     font-size: 0.8em;
     color: #979797;
   }
+`;
+
+const BtnWrap = styled.div`
+  padding: 0 20px;
 `;
 
 const DateWrapper = styled.div`

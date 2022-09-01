@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: 100vh;
-  padding: 18px 20px 20px;
 `;
 
 export const Header = styled.div`
   height: 60px;
+  padding: 14px 0 0 20px;
   h1 {
     font-size: 20px;
     font-weight: 700;
@@ -17,11 +17,12 @@ export const Header = styled.div`
 `;
 
 export const Body = styled.div`
-  width: 100vw;
+  width: 100%;
+  position: relative;
   height: 100vh;
   padding: 10px 20px;
-  margin: -20px;
   background: #efefef;
+  overflow-y: auto;
 `;
 
 export const EmptyWrap = styled.div`
@@ -41,6 +42,7 @@ export const EmptyDesc = styled.div`
   line-height: 19px;
   letter-spacing: 1px;
   color: #838383;
+  text-align: center;
 `;
 
 export const MailWrap = styled.div`
@@ -130,15 +132,4 @@ export const From = styled.div`
 
 export const To = styled(From)`
   float: right;
-`;
-
-export const PlusBtn = styled.button`
-  width: 52px;
-  height: 52px;
-  border-radius: 26px;
-  background: #3ec192;
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
-  position: fixed;
-  bottom: 79px;
-  right: 20px;
 `;

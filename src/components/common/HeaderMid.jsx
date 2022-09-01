@@ -68,10 +68,6 @@ HeaderMid.propTypes = {
 export default HeaderMid;
 
 const HeaderContainer = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   width: 100vw;
   height: 55px;
   padding: 19px 0 15px;
@@ -80,6 +76,10 @@ const HeaderContainer = styled.header`
   text-align: center;
   font-weight: 700;
   z-index: 50;
+
+  @media only screen and (min-width: 1025px) {
+    width: 500px;
+  }
 `;
 
 const BtnBack = styled.button`
