@@ -74,7 +74,7 @@ const DetailContent = styled.div`
     text-align: center;
   }
   .detail-members {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     display: flex;
     max-height: 42px;

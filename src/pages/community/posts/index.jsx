@@ -188,7 +188,7 @@ const BoxP = styled.div`
 `;
 
 const PostCategory = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   display: flex;
   width: 100%;
@@ -250,7 +250,7 @@ const PostTitle = styled.div`
 `;
 
 const TagWrapper = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   display: flex;
   width: 100%;
