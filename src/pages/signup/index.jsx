@@ -39,7 +39,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     try {
       const response = await api.post('/signup', data);
-      console.log('response >>', response);
+      console.log('response >>', response.data);
       navigate('/signupcomplete');
     } catch (err) {
       console.log('Error >>', err.response.data);
@@ -52,12 +52,14 @@ const Signup = () => {
       const response = await api.post('/email-check', {
         email: email,
       });
-      console.log('response >>', response);
+      console.log('response >>', response.data);
       setIsOverlap((prev) => {
         return { ...prev, email: true };
       });
+      { response.data.data.enable ? alert('사용가능한 이메일입니다.') : alert('이미 존재하는 이메일입니다.')}
     } catch (err) {
       console.log('Error >>', err.response.data);
+      alert(err.response.data.message);
     }
     e.preventDefault();
   };
@@ -72,8 +74,10 @@ const Signup = () => {
       setIsOverlap((prev) => {
         return { ...prev, nickname: true };
       });
+      { response.data.data.enable ? alert('사용가능한 닉네임입니다.') : alert('이미 존재하는 닉네임입니다.')}
     } catch (err) {
       console.log('Error >>', err.response.data);
+      alert(err.response.data.message);
     }
     e.preventDefault();
   };
@@ -97,8 +101,8 @@ const Signup = () => {
                 이메일<Asterisk>*</Asterisk>
               </Label>
               <Input
-                style={{ width: 'calc(100vw - 128px)' }}
-                placeholder="아이디를 입력해주세요."
+                style={{ width: 'calc(100% - 88px)' }}
+                placeholder="이메일를 입력해주세요."
                 name="email"
                 ref={register({
                   required: true,
@@ -191,7 +195,7 @@ const Signup = () => {
                 닉네임<Asterisk>*</Asterisk>
               </Label>
               <Input
-                style={{ width: 'calc(100vw - 128px)' }}
+                style={{ width: 'calc(100% - 88px)' }}
                 placeholder="닉네임를 입력해주세요."
                 name="nickname"
                 ref={register({
