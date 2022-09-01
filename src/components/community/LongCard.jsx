@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
+import { hwamokGrades } from '../../utils/data';
 
 const LongCard = ({ post }) => {
   return (
@@ -17,9 +18,13 @@ const LongCard = ({ post }) => {
 
         <Profile>
           {/* TODO: {post.poster.flower}꽃여부 */}
-          {/* TODO: 화목 등급별 아이콘 적용 */}
-          {/* <Grade>{post.poster.level}</Grade> */}
-          <Grade>1</Grade>
+          {/* <Grade><img
+              src={hwamokGrades[{post.poster.level}].icon}
+              alt={hwamokGrades[{post.poster.level}].name}
+            /></Grade> */}
+          <Grade>
+            <img src={hwamokGrades[1].icon} alt={hwamokGrades[1].name} />
+          </Grade>
           <Info>
             {/* <strong>{post.poster.nickname}</strong> */}
             <strong>작성자</strong>
@@ -32,9 +37,7 @@ const LongCard = ({ post }) => {
           <Content>
             {/* FIXME: textarea로 수정 */}
             {/* <p>{post.content}</p> */}
-            <p>
-              내용내용
-            </p>
+            <p>내용내용</p>
             {/* <img src={post.imageUrl} alt="" /> */}
           </Content>
 
