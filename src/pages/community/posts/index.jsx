@@ -80,7 +80,7 @@ const Post = () => {
       <PostForm onSubmit={(e) => handleSubmit(e)}>
         <BoxP>
           <PostCategory>
-            {communityRoles.map((role) => (
+            {communityRoles.slice(1).map((role) => (
               <React.Fragment key={role}>
                 <input
                   id={role}

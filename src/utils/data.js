@@ -26,6 +26,7 @@ export const categories = [
 ];
 
 export const communityRoles = [
+  '전체',
   '아빠',
   '엄마',
   '첫째',

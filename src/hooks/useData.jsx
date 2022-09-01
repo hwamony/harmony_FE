@@ -7,7 +7,8 @@ const getFamilyInfo = async () => {
     const res = await apis.getFamily();
     return res.data.data;
   } catch (err) {
-    console.log(err.response.data);
+    localStorage.removeItem('TOKEN');
+    window.location.href('/');
   }
 };
 
@@ -52,6 +53,25 @@ const getFamilyCode = async () => {
 
 export const useFamilyCode = () =>
   useQuery(['familyCode'], getFamilyCode, {
+    enabled: !!hasToken,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
+const getRankings = async () => {
+  try {
+    const res = await api.get(`/rankings`);
+    return res.data.data;
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const useRankings = () =>
+  useQuery(['familyCode'], getRankings, {
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
