@@ -41,6 +41,7 @@ export const EmptyDesc = styled.div`
   line-height: 19px;
   letter-spacing: 1px;
   color: #838383;
+  text-align: center;
 `;
 
 export const MailWrap = styled.div`
@@ -130,15 +131,4 @@ export const From = styled.div`
 
 export const To = styled(From)`
   float: right;
-`;
-
-export const PlusBtn = styled.button`
-  width: 52px;
-  height: 52px;
-  border-radius: 26px;
-  background: #3ec192;
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.0784314);
-  position: fixed;
-  bottom: 79px;
-  right: 20px;
 `;

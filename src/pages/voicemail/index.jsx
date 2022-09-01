@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import {
   Container,
   Header,
-  Title,
   Body,
   EmptyWrap,
   EmptyIcon,
@@ -19,7 +18,6 @@ import {
   UserWrap,
   From,
   To,
-  PlusBtn,
 } from './style';
 import { useNavigate } from 'react-router-dom';
 import PageTitle from '../../components/common/PageTitle';
@@ -27,6 +25,8 @@ import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import api from '../../api/AxiosManager';
 import { useQuery } from '@tanstack/react-query';
 import { MdDeleteOutline } from "react-icons/md";
+import BtnAdd from '../../components/common/BtnAdd';
+
 
 
 const Voicemail = () => {
@@ -129,9 +129,7 @@ const Voicemail = () => {
           })
         )}
       </Body>
-      <PlusBtn onClick={() => navigate('/voice-recorder')}>
-        <img src={`${process.env.PUBLIC_URL}/images/plus.png`} alt="아이콘" />
-      </PlusBtn>
+      <BtnAdd link="/voice-recorder" text="음성 녹음" plus={true} />
     </Container>
   );
 };
