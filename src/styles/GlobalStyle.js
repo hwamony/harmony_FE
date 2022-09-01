@@ -123,7 +123,7 @@ const GlobalStyle = createGlobalStyle`
       height: 100vh;
       box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
       position: relative;
-      left: 920px;
+      left: calc(50vw - 250px);
       background: #ffffff;
     }
   }
