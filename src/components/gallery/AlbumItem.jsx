@@ -147,6 +147,7 @@ const Item = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 500px;
   margin-bottom: 20px;
   border-radius: 12px;
   box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.24);
@@ -165,18 +166,19 @@ const ImgContainer = styled.div`
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-gap: 2px;
   cursor: pointer;
   img {
     display: block;
-    width: auto;
-    height: 100%;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
     transition: transform 0.2s ease;
     &:hover {
       transform: scale(105%);
     }
     &:first-child {
+      aspect-ratio: 4 / 3.55;
       grid-area: 1 / 1 / 3 / 4;
     }
   }
