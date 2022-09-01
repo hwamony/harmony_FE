@@ -14,7 +14,6 @@ import {
   SocialLoginWrap,
   SocialLogin,
   LoginDesc,
-  ForgotLink,
   SignupLink,
   ErrorMsg,
 } from './style';
