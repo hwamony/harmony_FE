@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Grade } from './LongCard';
+import { hwamokGrades } from '../../utils/data';
 
 const CommentItem = ({ comment }) => {
   useEffect(() => {
@@ -11,7 +12,12 @@ const CommentItem = ({ comment }) => {
 
   return (
     <Item>
-      <Grade>{comment.commenter.level}</Grade>
+      <Grade>
+        <img
+          src={hwamokGrades[comment.commenter.level].icon}
+          alt={hwamokGrades[comment.commenter.level].name}
+        />
+      </Grade>
       <CommentContent>
         <strong>{comment.commenter.nickname}</strong>
         <p>

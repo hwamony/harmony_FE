@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
 import { Grade, Profile, Info, CardContent, Tags, Counts } from './LongCard';
+import { hwamokGrades } from '../../utils/data';
 
 const ShortCard = ({ post }) => {
   return (
@@ -14,8 +16,12 @@ const ShortCard = ({ post }) => {
           <CardTitle>
             <Profile>
               {/* TODO: {post.poster.flower}꽃여부 */}
-              {/* TODO: 화목 등급별 아이콘 적용 */}
-              <Grade>{post.poster.level}</Grade>
+              <Grade>
+                <img
+                  src={hwamokGrades[post.poster.level].icon}
+                  alt={hwamokGrades[post.poster.level].name}
+                />
+              </Grade>
               <Info>
                 <strong>{post.poster.nickname}</strong>
                 <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p>
