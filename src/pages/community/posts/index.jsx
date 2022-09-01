@@ -74,7 +74,7 @@ const Post = () => {
 
   return (
     <>
-      <PageTitle title="포스팅" />
+      <PageTitle title="게시물 작성" />
       <HeaderMid text="게시물 작성" />
 
       <PostForm onSubmit={(e) => handleSubmit(e)}>
@@ -202,6 +202,7 @@ const PostCategory = styled.div`
     word-break: keep-all;
     font-size: 14px;
     color: #000;
+    user-select: none;
     cursor: pointer;
   }
   input:checked + label {
@@ -304,6 +305,7 @@ const AddPhoto = styled.div`
     border: 1px solid #bcbcbc;
     border-radius: 5px;
     background: #eee;
+    user-select: none;
     cursor: pointer;
     svg {
       margin-bottom: 5px;

@@ -1,91 +1,66 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-const CommentEditor = ({onCreate}) => {
-  const [comment, setComment] = useState('');
-
+const CommentEditor = () => {
   const commentInput = useRef();
-
-  const handleChangeState = (e) => {
-    setComment(e.target.value);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('error');
-    if(comment.length < 5) {
-      commentInput.current.focus();
-    }
-    onCreate(comment);
-    alert('댓글이 등록되었습니다!');
-    setComment(e.target.value);
+    // TODO: 댓글 유효성 검사 후 댓글 등록
+    // alert('댓글이 등록되었습니다!');
   };
 
   return (
     <>
-    <CommentBar onSubmit={(e) => handleSubmit(e)}>
-      <CommentP className='CommentEditor'>
-        <input
-          ref={commentInput}
-          name='comment'
-          value={comment}
-          placeholder='댓글을 입력하세요.'
-          onChange={(e) => handleChangeState(e)}
-        />
-        <button type='submit'>입력</button>
-      </CommentP>
-    </CommentBar>
+      <CommentBar>
+        <CommentForm onSubmit={(e) => handleSubmit(e)}>
+          <input
+            name="comment"
+            placeholder="댓글을 입력하세요."
+            autoComplete="off"
+            ref={commentInput}
+          />
+          <button>등록</button>
+        </CommentForm>
+      </CommentBar>
     </>
   );
 };
 
 export default CommentEditor;
 
-const CommentBar = styled.form`
-  border-top: 2px solid white;
-  padding-bottom: 5px;
+const CommentBar = styled.section`
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: white;
+  background: #f2f2f2;
   color: #868686;
-  font-size: 12px;
   z-index: 100;
-`
+`;
 
-const CommentP = styled.div`
-  padding: 17px;
+const CommentForm = styled.form`
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  input{
-    width: 85vw;
-    max-width: 600px;
+  padding: 13px 20px 28px;
+  input {
+    width: 100%;
     height: 43px;
-    font-size: 17px;
-    background-color: white;
-    border: 1px solid #3EC192;
+    padding: 14px 12px 15px;
     border-radius: 5px;
-    padding-left: 15px;
-    ::placeholder{
-        color: #3EC192;
-        font-size: 15px;
-    };
-  };
-  button{
-    padding: 10px;
-    width: 130px;
-    height: 43px;
-    border: 1px solid #3EC192;
-    background-color: white;
-    color: #3EC192;
-    font-size: 15px;
-    border-radius: 5px;
-    :hover{
-        background-color: #3EC192;
-        color: white;
+    background: #fff;
+    ::placeholder {
+      color: #9e9e9e;
+      font-size: 12px;
     }
   }
-`
+  button {
+    position: absolute;
+    right: 35px;
+    bottom: 40px;
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-size: 15px;
+    font-weight: 500;
+  }
+`;

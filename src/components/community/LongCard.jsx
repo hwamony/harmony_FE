@@ -1,160 +1,167 @@
-import React, { useState } from 'react';
+import React from 'react';
+import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegThumbsUp } from 'react-icons/fa'
-import {
-  CardContainer, CardTitle, Profile, Photo, Info
-} from './ShortCard';
+import { IconLikeCount, IconCommentCount } from '../../assets/icons';
 
-
-const LongCard = () => {
-  const [like, setLike] = useState(0);
+const LongCard = ({ post }) => {
   return (
     <>
       <CardContainer>
-        <LongInventory>
-          <CardTitle>
-            <Profile>
-              <Photo>프사</Photo>
-              <Info>
-                <h5>화목화목</h5>
-                <p>12시간 전</p>
-                </Info>
-            </Profile>
-            <p>. . .</p>
-          </CardTitle>
-          <LongContent>
-              <h1>제목입니다</h1>
-            <WideImage>
-              <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus quis sapien non blandit. Ut vitae augue egestas, luctus est id, malesuada risus. Maecenas sed nisi vel quam gravida tristique sit amet sed ligula. Vivamus leo sem, aliquet ac lorem at, suscipit sollicitudin diam. Suspendisse aliquet neque nec mi iaculis, sed porttitor nisi posuere. Mauris est augue, pulvinar in eros eu, luctus iaculis lacus.</h3>
-              <div/>
-            </WideImage>
-            <LongTag>
-              <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요 {like}</h5>
-              <h3>#일상</h3>
-              <h3>#고민</h3>
-              <h3>#아무말</h3>
-            </LongTag>
-          </LongContent>
-          <LongGood>
-            {/* <LongCount>
-              <p>좋아요 {like}개</p>
-              <p>﹒</p>
-              <p>댓글 1개</p>
-            </LongCount>
-            <h5 onClick={()=> {setLike(like + 1)} } ><FaRegThumbsUp/> 좋아요 {like}</h5> */}
-          </LongGood>
-        </LongInventory>
-    </CardContainer>
+        <CardTitle>
+          {/* <em>{post.category}</em> */}
+          <em>카테고리</em>
+          {/* <h2>{post.title}</h2> */}
+          <h2>제목제목</h2>
+        </CardTitle>
+
+        <Profile>
+          {/* TODO: {post.poster.flower}꽃여부 */}
+          {/* TODO: 화목 등급별 아이콘 적용 */}
+          {/* <Photo>{post.poster.level}</Photo> */}
+          <Photo>1</Photo>
+          <Info>
+            {/* <strong>{post.poster.nickname}</strong> */}
+            <strong>작성자</strong>
+            {/* <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p> */}
+            <p>2022년 9월 1일</p>
+          </Info>
+        </Profile>
+
+        <CardContent>
+          <Content>
+            {/* FIXME: textarea로 수정 */}
+            {/* <p>{post.content}</p> */}
+            <p>
+              내용내용
+            </p>
+            {/* <img src={post.imageUrl} alt="" /> */}
+          </Content>
+
+          <Tags>
+            {/* {post.tags.map((tag) => (
+              <span key={tag}>#{tag}</span>
+            ))} */}
+            <span>#태그</span>
+          </Tags>
+
+          <Counts>
+            {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
+            <small>
+              <IconLikeCount />
+              좋아요 2{/* 좋아요 {post.likeCount} */}
+            </small>
+            <small>
+              <IconCommentCount />
+              댓글 0{/* 댓글 {post.commentCount} */}
+            </small>
+          </Counts>
+        </CardContent>
+      </CardContainer>
     </>
-  )
-}
+  );
+};
+
+LongCard.propTypes = {
+  // post: PropTypes.object.isRequired,
+};
+
 export default LongCard;
 
-const LongInventory = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 455px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: white;
-`
+const CardContainer = styled.article`
+  padding: 30px 20px 14px;
+  margin-bottom: 8px;
+  background: #fff;
+`;
 
-const LongContent = styled.div`
-  width: 660px;
-  height: 395px;
+const CardTitle = styled.div`
+  margin-bottom: 20px;
+  em {
+    display: block;
+    margin-bottom: 8px;
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-style: normal;
+    font-size: 13px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+`;
+
+export const Profile = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: left;
-    h1 {
-    padding-left: 20px;
-    font-size: 1.2em;
+  align-items: center;
+`;
+
+export const Photo = styled.div`
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #eee;
+`;
+
+export const Info = styled.div`
+  strong {
+    color: #18191f;
+    font-size: 14px;
     font-weight: 700;
-    text-align: left;
-  };
-  h3 {
-    margin: 2px 10px;
-    text-align: left;
-  };
-`
-const WideImage = styled.div`
-  width: 610px;
+  }
+  p {
+    color: #9e9e9e;
+    font-size: 11px;
+    font-weight: 400;
+  }
+`;
+
+export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  h3{
-    width: 635px;
-    margin: 2px auto;
-    padding-left: 20px;
-    padding-bottom: 10px;
-  }
-  div{
-    background-image: url('https://t1.daumcdn.net/cfile/blog/21150B4654FFDC532D');
-    width: 620px;
-    height: 145px;
-    margin-left: 50px;
-    margin-bottom: 15px;
-  }
-`
+`;
 
-const LongTag = styled.div`
-  width: 690px;
-  height: 20px;
-  padding-left: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  h3{
-    margin: 0 5px;
-    padding: 2px 10px;
-    border-radius: 10px;
-    background-color: #E7E7E7;
-    color: gray;
-    font-size: 13px;
-    text-align: left;
-  }
-  h5{
-    padding: 0 15px;
+const Content = styled.div`
+  margin: 18px 0 7.5px;
+  h2 {
+    margin-bottom: 10px;
     font-size: 15px;
-    color: #3EC192;
-      :hover{
-      cursor: pointer;
-    }
+    font-weight: 600;
   }
-`
+  p {
+    width: 100%;
+    margin-bottom: 14px;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  img {
+    object-fit: cover;
+  }
+`;
 
-const LongCount = styled.div`
-  width: 200px;
-  height: 3vh;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  p{
-    color: #9E9E9E;
-    padding-right: 10px;
+export const Tags = styled.div`
+  margin-bottom: 21px;
+  span {
+    padding: 3px 8px;
+    margin-right: 6px;
+    border-radius: 45px;
+    background: #ededed;
+    color: #707070;
     font-size: 13px;
   }
-`
+`;
 
-const LongGood = styled.div`
-  border-top: 0.01px solid #D9D9D9;
+export const Counts = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 45px;
-  font-size: 15px;
-  h5{
-    padding: 0 135px;
-    color: #3EC192;
-      :hover{
-      cursor: pointer;
+  padding-top: 12px;
+  border-top: 1px solid #dfdfdf;
+  small {
+    display: flex;
+    align-items: center;
+    margin-right: 9px;
+    font-size: 12px;
+    svg {
+      margin-right: 5px;
     }
   }
-`
+`;

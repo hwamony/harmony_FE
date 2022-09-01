@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
+import { Photo, Profile, Info, CardContent, Tags, Counts } from './LongCard';
 
 const ShortCard = ({ post }) => {
   return (
@@ -41,17 +42,17 @@ const ShortCard = ({ post }) => {
               ))}
             </Tags>
 
-            <CardGood>
-              {/* TODO: 좋아요 여부(isLiked) 받아와야 함 */}
+            <Counts>
+              {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
               <small>
                 <IconLikeCount />
-                좋아요 {post.likeCount}
+                {post.likeCount}
               </small>
               <small>
                 <IconCommentCount />
-                댓글 {post.commentCount}
+                {post.commentCount}
               </small>
-            </CardGood>
+            </Counts>
           </CardContent>
         </Link>
       </CardContainer>
@@ -65,56 +66,18 @@ ShortCard.propTypes = {
 
 export default ShortCard;
 
-export const CardContainer = styled.article`
+const CardContainer = styled.article`
   margin-bottom: 9px;
   padding: 20px 14px 14px 19px;
   background: #fff;
 `;
 
-export const CardTitle = styled.div`
+const CardTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  p {
-    color: gray;
-    font-size: 13px;
-    font-weight: bolder;
-  }
 `;
 
-export const Profile = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-`;
-
-export const Photo = styled.div`
-  background-color: #eee;
-  width: 25px;
-  height: 25px;
-  margin-right: 8px;
-  border-radius: 50%;
-`;
-
-export const Info = styled.div`
-  strong {
-    color: #18191f;
-    font-size: 14px;
-    font-weight: 700;
-  }
-  p {
-    color: #9e9e9e;
-    font-size: 11px;
-    font-weight: 400;
-  }
-`;
-
-export const CardContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Content = styled.div`
+const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -145,32 +108,5 @@ export const Content = styled.div`
     border-radius: 5px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-  }
-`;
-
-export const Tags = styled.div`
-  margin-bottom: 21px;
-  span {
-    padding: 3px 8px;
-    margin-right: 6px;
-    border-radius: 45px;
-    background: #ededed;
-    color: #707070;
-    font-size: 13px;
-  }
-`;
-
-export const CardGood = styled.div`
-  display: flex;
-  padding-top: 12px;
-  border-top: 1px solid #dfdfdf;
-  small {
-    display: flex;
-    align-items: center;
-    margin-right: 9px;
-    font-size: 12px;
-    svg {
-      margin-right: 5px;
-    }
   }
 `;
