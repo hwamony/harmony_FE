@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
 import { hwamokGrades } from '../../utils/data';
+import MorePost from './MorePost';
 
-const LongCard = ({ post }) => {
+const LongCard = ({ post, postId }) => {
   return (
     <>
       <CardContainer>
         <CardTitle>
           {/* TODO: api에 카테고리 값 추가로 받아오기 */}
-          {/* <em>{post.category}</em> */}
-          <h2>{post.title}</h2>
+          <div>
+            {/* <em>{post.category}</em> */}
+            <h2>{post.title}</h2>
+          </div>
+          <MorePost postId={postId} />
         </CardTitle>
 
         <Profile>
@@ -72,18 +76,29 @@ const CardContainer = styled.article`
 `;
 
 const CardTitle = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
   em {
     display: block;
     margin-bottom: 8px;
     color: ${({ theme }) => theme.palette.primary.main};
     font-style: normal;
-    font-size: 13px;
+    font-size: 14px;
   }
   h2 {
     font-size: 20px;
     font-weight: 600;
   }
+
+  svg circle {
+      fill: #bababa;
+    }
+    .MuiIconButton-root {
+      height: 34px;
+      margin-top: -17px;
+    }
 `;
 
 export const Profile = styled.div`
@@ -121,19 +136,15 @@ export const CardContent = styled.div`
 
 const Content = styled.div`
   margin: 18px 0 7.5px;
-  h2 {
-    margin-bottom: 10px;
-    font-size: 15px;
-    font-weight: 600;
-  }
   p {
     width: 100%;
     margin-bottom: 14px;
     color: #000;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
   }
   img {
+    margin-bottom: 22px;
     object-fit: cover;
   }
 `;
@@ -146,7 +157,7 @@ export const Tags = styled.div`
     border-radius: 45px;
     background: #ededed;
     color: #707070;
-    font-size: 13px;
+    font-size: 14px;
   }
 `;
 

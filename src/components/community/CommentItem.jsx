@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,10 +7,6 @@ import { hwamokGrades } from '../../utils/data';
 import MoreComment from './MoreComment';
 
 const CommentItem = ({ comment }) => {
-  useEffect(() => {
-    console.log(comment);
-  }, []);
-
   return (
     <Item>
       <Grade>
@@ -25,8 +21,7 @@ const CommentItem = ({ comment }) => {
           {comment.isCommenter && <MoreComment />}
         </div>
         <p>
-          {comment.content} Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit. Itaque, quidem.
+          {comment.content}
         </p>
         <small>{dayjs(comment.createdAt).format('YYYY년 M월 D일')}</small>
       </CommentContent>

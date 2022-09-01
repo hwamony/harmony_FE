@@ -33,7 +33,7 @@ const PostDetail = () => {
       <HeaderMid text="커뮤니티" />
 
       <CommunityDetail>
-        <LongCard post={postData} />
+        <LongCard post={postData} postId={postId} />
 
         <Repl>
           <h3>
