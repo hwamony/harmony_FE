@@ -1,4 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+
+import PageTitle from '../../components/common/PageTitle';
+import AudioPlayer from '../../components/voicemail/AudioPlayer';
+import BtnAdd from '../../components/common/BtnAdd';
+import { MdDeleteOutline } from 'react-icons/md';
 import {
   Container,
   Header,
@@ -19,13 +27,6 @@ import {
   From,
   To,
 } from './style';
-import { useNavigate } from 'react-router-dom';
-import PageTitle from '../../components/common/PageTitle';
-import AudioPlayer from '../../components/voicemail/AudioPlayer';
-import api from '../../api/AxiosManager';
-import { useQuery } from '@tanstack/react-query';
-import { MdDeleteOutline } from 'react-icons/md';
-import BtnAdd from '../../components/common/BtnAdd';
 
 const Voicemail = () => {
   // Referance

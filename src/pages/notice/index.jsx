@@ -16,6 +16,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { FiBell } from 'react-icons/fi';
 
+//추후 임포트 삭제
+import InProgress from '../../components/common/InProgress';
+
 const Notice = () => {
   // Reference
   const navigate = useNavigate();
@@ -31,7 +34,8 @@ const Notice = () => {
         <Title>알림</Title>
       </Header>
       <Body>
-        <NoticeWrap>
+        <InProgress />
+        {/* <NoticeWrap>
           <NoticeItem>
             <IconWrap>
               <FiBell size="1.4em" color="#ffffff" />
@@ -62,7 +66,7 @@ const Notice = () => {
             </DescWrap>
             <TimeWrap>08.14</TimeWrap>
           </NoticeItem>
-        </NoticeWrap>
+        </NoticeWrap> */}
       </Body>
     </Container>
   );

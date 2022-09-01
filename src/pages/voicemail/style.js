@@ -42,6 +42,7 @@ export const EmptyDesc = styled.div`
   line-height: 19px;
   letter-spacing: 1px;
   color: #838383;
+  text-align: center;
 `;
 
 export const MailWrap = styled.div`
