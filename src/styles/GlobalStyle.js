@@ -68,24 +68,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   * {
-    @media only screen and (min-width: 821px) {
-      &::-webkit-scrollbar {
-        display: fixed;
-        width: 12px;
-      }
-      &::-webkit-scrollbar-thumb {
-        width: 5px;
-        height: 80px;
-        border: 4px solid transparent;
-        border-radius: 10px;
-        background: #ccc;
-        background-clip: padding-box;
-      }
-      &::-webkit-scrollbar-trac {
-        background: none;
-      }
-    }
-  }
   .hidden {
     overflow: hidden;
     position: relative;
@@ -107,6 +89,7 @@ const GlobalStyle = createGlobalStyle`
     background: #3ec192;
     color: #fff;
   }
+}
 
   @media only screen and (min-width: 1025px) {
     body {
@@ -119,12 +102,20 @@ const GlobalStyle = createGlobalStyle`
     }
 
     #root {
+      overflow-x: hidden;
+      overflow-y: auto;
       width: 500px;
       height: 100vh;
       box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.4);
       position: relative;
-      left: 920px;
+      left: calc(50vw - 250px);
       background: #ffffff;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 `;

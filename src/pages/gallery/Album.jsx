@@ -177,7 +177,7 @@ const AlbumSection = styled.section`
   position: relative;
   overflow-y: auto;
   min-height: calc(100vh - 55px - 65px);
-  padding: 20px;
+  padding: 20px 20px 65px;
 `;
 
 const AlbumList = styled.ul`
@@ -240,17 +240,17 @@ const ImageList = styled.div`
 
 const SelectFooter = styled.footer`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: -64px;
   display: flex;
   justify-content: space-between;
+  width: 100%;
   height: 64px;
+  margin-left: -20px;
   padding: 0 17px;
   background: #fff;
   color: #868686;
   font-size: 12px;
-  transition: all 0.2s ease-in-out;
+  transition: bottom 0.2s ease-in-out;
   z-index: 150;
   &.on {
     bottom: 0;
@@ -273,5 +273,9 @@ const SelectFooter = styled.footer`
     height: 24px;
     color: ${({ theme }) => theme.palette.primary.main};
     cursor: pointer;
+  }
+
+  @media only screen and (min-width: 1025px) {
+    width: 500px;
   }
 `;

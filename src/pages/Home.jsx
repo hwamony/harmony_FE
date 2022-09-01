@@ -129,9 +129,10 @@ export default Home;
 
 const Main = styled.main`
   position: relative;
+  overflow-x: hidden;
   overflow-y: auto;
   height: 100vh;
-  padding: 0 20px;
+  padding: 0 20px 65px;
 `;
 
 const ListWrapper = styled.ul`

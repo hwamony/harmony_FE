@@ -92,7 +92,7 @@ const IconBtn = styled(IconButton)`
 
   @media only screen and (min-width: 1025px) {
     position: absolute;
-    right: 0;
+    right: 10px;
   }
 `;
 
