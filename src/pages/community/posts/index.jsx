@@ -255,6 +255,19 @@ const TagWrapper = styled.div`
   width: 100%;
   padding: 5px 0 15px 20px;
   border-bottom: 1px solid #dfdfdf;
+  &::-webkit-scrollbar {
+    display: fixed;
+    height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 7px solid transparent;
+    border-radius: 10px;
+    background: #e3e5e9;
+    background-clip: border-box;
+  }
+  &::-webkit-scrollbar-trac {
+    background: none;
+  }
 `;
 
 const PostContent = styled.div`

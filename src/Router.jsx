@@ -43,6 +43,7 @@ const Router = () => {
       <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />
       <Route path="/community/posts" element={<Post />} />
+      <Route path="/community/posts/edit" element={<Post />} />
       <Route path="/community/posts/:postId" element={<PostDetail />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/rankings" element={<Ranking />} />

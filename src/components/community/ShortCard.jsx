@@ -1,61 +1,59 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MoreVert from '../calendar/MoreVert';
 import { IconLikeCount, IconCommentCount } from '../../assets/icons';
 
 const ShortCard = ({ post }) => {
-  const navigate = useNavigate();
-
   return (
     <>
       <CardContainer>
-        <CardTitle>
-          <Profile>
-            {/* TODO: {post.poster.flower}꽃여부 */}
-            <Photo>{post.poster.level}</Photo>
-            <Info>
-              <strong>{post.poster.nickname}</strong>
-              <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p>
-            </Info>
-          </Profile>
-          {/* FIXME: MoreVert 수정, margin-right -7px */}
-          <MoreVert />
-        </CardTitle>
+        <Link to={`/community/posts/${post.postId}`}>
+          <CardTitle>
+            <Profile>
+              {/* TODO: {post.poster.flower}꽃여부 */}
+              {/* TODO: 화목 등급별 아이콘 적용 */}
+              <Photo>{post.poster.level}</Photo>
+              <Info>
+                <strong>{post.poster.nickname}</strong>
+                <p>{dayjs(post.createdAt).format('YYYY년 M월 D일')}</p>
+              </Info>
+            </Profile>
+          </CardTitle>
 
-        <CardContent>
-          <Content>
-            <div>
-              <h2>{post.title}</h2>
-              <p onClick={() => navigate(`/community/posts/${post.postId}`)}>
-                {post.content} Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Tenetur neque explicabo cumque quae, tempora
-                ullam iusto vero? Incidunt, distinctio dolor!
-              </p>
-            </div>
-            <img src={post.imageUrl} alt="" />
-          </Content>
+          <CardContent>
+            <Content>
+              <div>
+                <h2>{post.title}</h2>
+                <p>
+                  {post.content} Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Tenetur neque explicabo cumque quae, tempora
+                  ullam iusto vero? Incidunt, distinctio dolor!
+                </p>
+              </div>
+              <img src={post.imageUrl} alt="" />
+            </Content>
 
-          <Tags>
-            {post.tags.map((tag) => (
-              <span key={tag}>#{tag}</span>
-            ))}
-          </Tags>
+            <Tags>
+              {post.tags.map((tag) => (
+                <span key={tag}>#{tag}</span>
+              ))}
+            </Tags>
 
-          <CardGood>
-            {/* TODO: 좋아요 여부(isLiked) 받아와야 함 */}
-            <small>
-              <IconLikeCount />
-              좋아요 {post.likeCount}
-            </small>
-            <small onClick={() => navigate(`/community/posts/${post.postId}`)}>
-              <IconCommentCount />
-              댓글 {post.commentCount}
-            </small>
-          </CardGood>
-        </CardContent>
+            <CardGood>
+              {/* TODO: 좋아요 여부(isLiked) 받아와야 함 */}
+              <small>
+                <IconLikeCount />
+                좋아요 {post.likeCount}
+              </small>
+              <small>
+                <IconCommentCount />
+                댓글 {post.commentCount}
+              </small>
+            </CardGood>
+          </CardContent>
+        </Link>
       </CardContainer>
     </>
   );
@@ -69,7 +67,7 @@ export default ShortCard;
 
 export const CardContainer = styled.article`
   margin-bottom: 9px;
-  padding: 15px 14px 14px 19px;
+  padding: 20px 14px 14px 19px;
   background: #fff;
 `;
 
@@ -145,6 +143,7 @@ export const Content = styled.div`
     max-height: 55px;
     margin-left: 12px;
     border-radius: 5px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
   }
 `;

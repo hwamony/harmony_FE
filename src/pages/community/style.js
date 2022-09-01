@@ -25,6 +25,8 @@ export const Category = styled.div`
   height: 44px;
   padding: 0 10px;
   background-color: #fff;
+  overflow-x: scroll;
+  overflow-y: hidden;
   p {
     display: flex;
     justify-content: center;
@@ -43,6 +45,19 @@ export const Category = styled.div`
       color: ${({ theme }) => theme.palette.primary.main};
       font-weight: 700;
     }
+  }
+  &::-webkit-scrollbar {
+    display: fixed;
+    height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 7px solid transparent;
+    border-radius: 10px;
+    background: #e3e5e9;
+    background-clip: border-box;
+  }
+  &::-webkit-scrollbar-trac {
+    background: none;
   }
 `;
 

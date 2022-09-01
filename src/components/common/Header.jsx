@@ -6,11 +6,9 @@ import styled from 'styled-components';
 const Header = ({ title, link }) => {
   return (
     <HeaderContainer>
-      <p>
-        <Link to={link}>
-          <h1>{title}</h1>
-        </Link>
-      </p>
+      <Link to={link}>
+        <h1>{title}</h1>
+      </Link>
     </HeaderContainer>
   );
 };

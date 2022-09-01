@@ -106,20 +106,19 @@ const TagBoxBlock = styled.div`
 
 const TagWrapper = styled.div`
   display: flex;
+  margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 
   input.input-tag {
-    min-width: 100px;
+    width: 180px;
     padding: 4px 8px 5px;
     font-size: 14px;
     font-weight: 500;
   }
 
   button {
-    min-width: 55px;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    width: 45px;
     background: gray;
     color: white;
     font-weight: 600;
