@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useParams, useLocation, Link } from 'react-router-dom';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import styled from 'styled-components';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
 
-import HeaderMid from '../../components/common/HeaderMid';
 import BtnAdd from '../../components/common/BtnAdd';
 import ImageItem from '../../components/gallery/ImageItem';
+import ImageModal from '../../components/gallery/ImageModal';
 import { IconSave } from '../../assets/icons';
 import { FiTrash2 } from 'react-icons/fi';
 
 const Album = () => {
   const params = useParams();
-  const scheduleId = params.scheduleId;
-  const galleryId = params.galleryId;
+  const { scheduleId, galleryId } = params;
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checkedImgs, setCheckedImgs] = useState(new Set());
   const [size, setSize] = useState(0);
-  const location = useLocation();
-  const albumTitle = location.state;
-  // FIXME: state로 받지 말고 밖에서 outlet으로 헤더 처리
-  // console.log('albumTitle', albumTitle);
+  const [isVisible, setIsVisible] = useState(false);
+  const [curImage, setCurImage] = useState('');
 
   const getAlbumSchedules = async () => {
     const res = await api.get(`/schedules/${scheduleId}/galleryList`);
@@ -36,9 +34,6 @@ const Album = () => {
     getAlbumSchedules,
     {
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
 
@@ -47,29 +42,30 @@ const Album = () => {
     return res.data.data;
   };
 
-  const { data: imagerList } = useQuery(
+  const { data: imageList } = useQuery(
     ['albumImages', galleryId],
     getAlbumImages,
     {
       refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
 
   useEffect(() => {
-    console.log(params);
     return () => {
       dispatch(setOnSelect(false));
       dispatch(setOnSelectAll(false));
     };
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     setCheckedImgs(new Set());
     setSize(0);
   }, [onSelect]);
+
+  useEffect(() => {
+    setCheckedImgs(new Set(imageList.images.map(({ id }) => id)));
+    setSize(imageList.images.length);
+  }, [onSelectAll]);
 
   const handleCheck = (id, isChecked) => {
     if (isChecked) {
@@ -83,46 +79,95 @@ const Album = () => {
     }
   };
 
-  // TODO: 전체 선택 기능 구현하기
+  const deleteImg = async (data) => {
+    const res = await api.delete(`/galleries/${galleryId}/images`, {
+      data: data,
+    });
+    return res;
+  };
+
+  const queryClient = useQueryClient();
+  const { mutate: deleteImages } = useMutation(
+    () => deleteImg({ imageIds: [...checkedImgs] }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['albumImages']);
+        setCheckedImgs(new Set());
+        setSize(0);
+        dispatch(setOnSelect(false));
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    },
+  );
+
+  const downloadMultipleImages = async () => {
+    const srcs = [...checkedImgs].map(
+      (id) => imageList.images.filter((img) => img.id === id)[0].url,
+    );
+
+    for (let src of srcs) {
+      window.open(src);
+    }
+  };
 
   return (
-    <>
-      <AlbumSection>
-        <HeaderMid text="강릉여행" select={true} />
-        <BtnAdd link="/galleries/posts" text="앨범 추가" />
+    <AlbumSection>
+      <BtnAdd
+        link={`/galleries/posts/${galleryId}`}
+        text="사진 추가"
+        photo={true}
+      />
 
-        <AlbumList>
-          {scheduleList.galleries.map((album) => (
-            <li
-              key={album.id}
-              className={cn(parseInt(galleryId) === album.id && 'selected')}
+      <AlbumList>
+        {scheduleList.galleries.map((album) => (
+          <li
+            key={album.id}
+            className={cn(parseInt(galleryId) === album.id && 'selected')}
+          >
+            <a
+              rel="noreferrer"
+              href={`/galleries/${scheduleId}/${album.id}`}
+              replace="true"
             >
-              <Link to={`/galleries/${scheduleId}/${album.id}`} replace="true">
-                {album.title}
-              </Link>
-            </li>
-          ))}
-        </AlbumList>
+              {album.title}
+            </a>
+          </li>
+        ))}
+      </AlbumList>
 
-        <ImageList>
-          {imagerList.images.map((img) =>
-            onSelect ? (
-              <ImageItem img={img} handleCheck={handleCheck} key={img.id} />
-            ) : (
-              <Link to={img.id + ''} state={{ url: img.url }} key={img.id}>
-                <ImageItem img={img} handleCheck={handleCheck} />
-              </Link>
-            ),
-          )}
-        </ImageList>
+      <ImageList>
+        {imageList.images.map((img) => (
+          <ImageItem
+            key={img.id}
+            img={img}
+            handleCheck={handleCheck}
+            setIsVisible={setIsVisible}
+            setCurImage={setCurImage}
+          />
+        ))}
+      </ImageList>
 
-        <SelectFooter className={cn(onSelect && 'on')}>
+      {isVisible === true && (
+        <ImageModal
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          url={curImage}
+          date={imageList.date}
+        />
+      )}
+
+      <SelectFooter className={cn(onSelect && 'on')}>
+        <button onClick={downloadMultipleImages}>
           <IconSave />
-          <strong>선택 {size}</strong>
+        </button>
+        <strong>선택 {size}</strong>
+        <button onClick={deleteImages}>
           <FiTrash2 />
-        </SelectFooter>
-      </AlbumSection>
-    </>
+        </button>
+      </SelectFooter>
+    </AlbumSection>
   );
 };
 
@@ -131,8 +176,8 @@ export default Album;
 const AlbumSection = styled.section`
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 55px - 65px);
-  margin-top: 55px;
+  min-height: calc(100vh - 55px - 65px);
+  margin: 55px 0 65px;
   padding: 20px;
 `;
 
@@ -147,7 +192,9 @@ const AlbumList = styled.ul`
     &.selected {
       font-weight: 700;
       border-color: ${({ theme }) => theme.palette.primary.main};
-      color: ${({ theme }) => theme.palette.primary.main};
+      a {
+        color: ${({ theme }) => theme.palette.primary.main};
+      }
     }
     a {
       display: block;
@@ -166,6 +213,8 @@ const ImageList = styled.div`
     position: relative;
   }
   img {
+    width: 100%;
+    height: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
@@ -208,15 +257,22 @@ const SelectFooter = styled.footer`
     bottom: 0;
   }
   strong {
-    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    height: 100%;
     color: #18191f;
     font-size: 14px;
     font-weight: 700;
   }
+  button {
+    svg {
+      margin: 0;
+    }
+  }
   svg {
     width: 24px;
     height: 24px;
-    margin-top: 10px;
     color: ${({ theme }) => theme.palette.primary.main};
+    cursor: pointer;
   }
 `;

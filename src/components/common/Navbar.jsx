@@ -13,7 +13,7 @@ import {
 const Navbar = () => {
   const { pathname } = useLocation();
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules', '/galleries/posts'];
+  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts'];
 
   useEffect(() => {
     for (let path of paths) {
@@ -77,9 +77,11 @@ const Navigation = styled.nav`
   bottom: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
-  color: #868686;
   font-size: 12px;
   z-index: 100;
+  a {
+    color: #868686;
+  }
 `;
 
 const Lists = styled.ul`

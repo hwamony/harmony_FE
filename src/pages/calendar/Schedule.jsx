@@ -84,10 +84,6 @@ const Schedule = () => {
       memberIds: selectedMember,
       content: contentInput.current.value,
     };
-    console.log(data);
-    // FIXME: 추후 일정 등록에 시간 추가하면 바꾸기
-    // console.log(startDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
-    // console.log(endDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
 
     try {
       if (!scheduleData) {
@@ -266,12 +262,12 @@ export default Schedule;
 
 const ScheduleSection = styled.section`
   position: relative;
-  margin-top: 55px;
+  margin: 55px 0 65px;
 `;
 
 const ScheduleForm = styled.form`
   overflow-y: auto;
-  height: calc(100vh - 55px - 90px);
+  min-height: calc(100vh - 55px - 90px);
   #input-title {
     font-size: 20px;
     font-weight: 700;

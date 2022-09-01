@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BackButton, Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
+import { useForm } from 'react-hook-form';
+import { Input } from '../../components/Input';
+import { Label } from '../../components/Label';
+import api from '../../api/AxiosManager';
+import axios from '../../../node_modules/axios/index';
 import {
   Container,
   Header,
@@ -9,18 +15,38 @@ import {
   InputWrap,
   LabelTitle,
   RecordWrap,
-  WaveImg,
-  Currnettime,
-  RecordBtn,
 } from './style';
-import { Input } from '../../components/Input';
-import { Label } from '../../components/Label';
 
 const Recoder = () => {
+  // State
+  const [blobUrl, setBlobUrl] = useState('');
+
+  // Referance
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+
+  // Function
+  const onSubmit = async (data) => {
+    const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
+    const file = new File([audioBlob], 'file'); // blob을 데이터로 하는 파일 생성
+
+    const formData = new FormData(); // formdata 를 생성하여 값과 파일을 넣기
+    formData.append('title', data.title);
+    formData.append('from', data.from);
+    formData.append('to', data.to);
+    formData.append('sound', file);
+
+    try {
+      const res = await api.post('/voice-mails', formData);
+      console.log(res);
+      navigate('/voice-mails')
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <Header>
         <BackButton
           src={`${process.env.PUBLIC_URL}/images/back.png`}
@@ -32,8 +58,9 @@ const Recoder = () => {
       <Body>
         <InputWrap>
           <Input
-            id="title"
+            name="title"
             placeholder="제목"
+            ref={register({ required: true })}
             style={{ margin: '24px 0' }}
           ></Input>
         </InputWrap>
@@ -50,7 +77,9 @@ const Recoder = () => {
           </Label>
           <Input
             id="from"
+            name="from"
             placeholder="from."
+            ref={register({ required: true })}
             style={{ marginTop: '16px' }}
           ></Input>
         </InputWrap>
@@ -61,14 +90,14 @@ const Recoder = () => {
           </Label>
           <Input
             id="to"
+            name="to"
             placeholder="to."
+            ref={register({ required: true })}
             style={{ marginTop: '16px' }}
           ></Input>
         </InputWrap>
         <RecordWrap>
-          <WaveImg src={`${process.env.PUBLIC_URL}/images/wave.png`} alt="아이콘" />
-          <Currnettime>0:00</Currnettime>
-          <RecordBtn></RecordBtn>
+          <VoiceRecorder setBlobUrl={setBlobUrl} />
         </RecordWrap>
         <Button style={{ marginTop: '36px' }}>등록하기</Button>
       </Body>

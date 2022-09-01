@@ -11,7 +11,7 @@ const Summary = ({ counts }) => {
           <React.Fragment key={cat.value}>
             <Category val={cat.value}>
               <div />
-              {`${cat.name} +${counts[cat.value]}`}
+              {`${cat.name} +${counts[cat.value] ?? 0}`}
             </Category>
           </React.Fragment>
         ))}

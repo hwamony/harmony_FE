@@ -1,48 +1,91 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
+import api from '../../api/AxiosManager';
+
 import PageTitle from '../../components/common/PageTitle';
 import {
-    CommunityColor, CommunityContainer, TitleContainer,
-    ToolContainer, Space, Category, Order
+  CommunityFixed,
+  CommunityNav,
+  Category,
+  Order,
+  CommunityContent,
 } from './style';
 import ShortCard from '../../components/community/ShortCard';
-import { BiSearch, BiPencil } from 'react-icons/bi'
-// import {Box, Tabs, Tab } from '@mui/material'
+import Header from '../../components/common/Header';
+import BtnAdd from '../../components/common/BtnAdd';
+import { communityRoles } from '../../utils/data';
+import Loading from '../../components/common/Loading';
 
 const Community = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  // const [category, setCategory] = useState();
+  const { ref, inView } = useInView();
+
+  const getCommunityPosts = async (pageParam = 0) => {
+    // FIXME: 카테고리 수정하기
+    const res = await api.get(`/posts?category=전체&page=${pageParam}&size=10`);
+    const data = res.data.data.content;
+    const last = res.data.data.last;
+    return { data, last, nextPage: pageParam + 1 };
+  };
+
+  const {
+    data: postList,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ['communityPosts'],
+    ({ pageParam = 0 }) => getCommunityPosts(pageParam),
+    {
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage) =>
+        !lastPage.last ? lastPage.nextPage : undefined,
+      onSuccess: (data) => console.log(data),
+    },
+  );
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
   return (
     <>
-        <PageTitle title="커뮤니티" />
-          <CommunityColor>
-              <CommunityContainer>
-                  <TitleContainer>
-                      <h1>커뮤니티</h1>
-                      <ToolContainer>
-                          <BiSearch />
-                          <Space />
-                          <BiPencil onClick={() => navigate('/posts')}/>
-                      </ToolContainer>
-                  </TitleContainer>
-                  <Category>
-                      <h3>아빠</h3>
-                      <h3>엄마</h3>
-                      <h3>외동</h3>
-                      <h3>첫째</h3>
-                      <h3>N째</h3>
-                      <h3>막내</h3>
-                      <h3>동거인</h3>
-                  </Category>
-              </CommunityContainer>
-              <Order>
-                  <h5>최신순</h5>
-                  <Space/>
-                  <h5>인기순</h5>
-              </Order>
-              <ShortCard />
-              <ShortCard />
-        </CommunityColor>
+      <PageTitle title="커뮤니티" />
+      <Header title="커뮤니티" link="/community" />
+
+      <CommunityFixed>
+        <BtnAdd link={'posts'} text="게시글 작성" community={true} />
+        <CommunityNav>
+          <Category>
+            <p>전체</p>
+            {communityRoles.map((v) => (
+              <p key={v}>{v}</p>
+            ))}
+          </Category>
+          <Order>
+            <p>최신순</p>
+            <p>인기순</p>
+          </Order>
+        </CommunityNav>
+      </CommunityFixed>
+
+      <CommunityContent>
+        {postList &&
+          postList.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.data.map((post) => (
+                <ShortCard key={post.postId} post={post} />
+              ))}
+            </React.Fragment>
+          ))}
+      </CommunityContent>
+      {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
     </>
   );
 };
+
 export default Community;

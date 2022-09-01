@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.form`
   height: 110vh;
   padding: 20px;
 `;
@@ -34,27 +34,4 @@ export const LabelTitle = styled.span`
 export const RecordWrap = styled.div`
   margin-top: 40px;
   text-align: center;
-`
-
-export const WaveImg = styled.img`
-  width: 100%;
-`
-
-export const Currnettime = styled.div`
-  margin-top: 14px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #8C8C8C;
-`
-
-export const RecordBtn = styled.button`
-  width: 80px;
-  height: 80px;
-  border: 2px solid #3EC192;
-  border-radius: 40px;
-  margin-top: 32px;
-  background-image: url(${process.env.PUBLIC_URL}/images/record.png);
-  background-repeat: no-repeat;
-  background-position: center;
 `

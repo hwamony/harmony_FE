@@ -83,7 +83,7 @@ const Home = () => {
           <Widget />
           <Main>
             <h1 className="hidden">캘린더 홈</h1>
-            <BtnAdd link="/schedules" text="일정 추가" />
+            <BtnAdd link="/schedules" text="일정 추가" plus={true} />
             <Summary counts={monthSchedule.counts} />
             <Calendar schedules={monthSchedule.schedules} />
             <ListWrapper>
@@ -130,8 +130,8 @@ export default Home;
 const Main = styled.main`
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 127px - 347px - 65px);
-  margin-top: 474px;
+  min-height: calc(100vh - 127px - 347px - 65px);
+  margin: 474px 0 65px;
   padding: 5px 10px 65px 25px;
 `;
 
@@ -150,6 +150,7 @@ const NoSchedule = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 200px;
   line-height: 1.4;
   color: #adadad;
   user-select: none;

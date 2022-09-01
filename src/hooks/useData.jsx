@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { apis } from '../api/AxiosManager';
+import api, { apis } from '../api/AxiosManager';
 const hasToken = localStorage.getItem('TOKEN');
 
 const getFamilyInfo = async () => {
@@ -26,7 +26,8 @@ const getValidInfo = async () => {
     const res = await apis.getValidUser();
     return res.data.data;
   } catch (err) {
-    console.log(err.response.data);
+    localStorage.removeItem('TOKEN');
+    window.location.href('/');
   }
 };
 
@@ -57,4 +58,14 @@ export const useFamilyCode = () =>
     onSuccess: (data) => {
       console.log(data);
     },
+  });
+
+const getAlbums = async (scheduleId) => {
+  const res = await api.get(`/schedules/${scheduleId}/galleries`);
+  return res.data.data;
+};
+
+export const useAlbumsData = (scheduleId) =>
+  useQuery(['albums', scheduleId], () => getAlbums(scheduleId), {
+    refetchOnWindowFocus: false,
   });

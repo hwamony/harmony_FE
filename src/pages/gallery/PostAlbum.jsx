@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
@@ -16,6 +16,7 @@ import {
   IconButton,
   Snackbar,
 } from '@mui/material';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
@@ -24,11 +25,13 @@ import { MdAddPhotoAlternate } from 'react-icons/md';
 
 const PostAlbum = () => {
   const navigate = useNavigate();
+  const galleryId = useParams().galleryId;
   const [date, setDate] = useState(dayjs());
   const [schedule, setSchedule] = useState('');
   const [scheduleNum, setScheduleNum] = useState(-1);
   const [selectedDate, setSelectedDate] = useState('');
   const [albumTitle, setAlbumTitle] = useState('');
+  const [albumContent, setAlbumContent] = useState('');
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
@@ -44,7 +47,6 @@ const PostAlbum = () => {
     {
       enabled: !!date,
       refetchOnWindowFocus: false,
-      onSuccess: (data) => console.log(data),
     },
   );
 
@@ -63,7 +65,7 @@ const PostAlbum = () => {
     }
 
     return new Promise((resolve) => {
-      setFiles([...files, ...newFiles]);
+      setFiles([...files, ...newFiles].slice(0, 30));
       setPreviewUrls(urlList);
       resolve();
     });
@@ -75,7 +77,7 @@ const PostAlbum = () => {
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
-    formData.append('content', 'content');
+    formData.append('content', albumContent);
 
     for (let i = 0; i < files.length; i++) {
       const imageForm = files[i];
@@ -83,20 +85,24 @@ const PostAlbum = () => {
       formData.append(`imageFiles[${i}]`, imageForm);
     }
 
-    // FIXME: formData 조회. 최종 배포 전 지울 것
-    // for (let key of formData.keys()) {
-    //   console.log(key, ':', formData.get(key));
-    // }
-    // console.log(formData);
-
     try {
-      const res = await formdataApi.post(
-        `/schedules/${data.schedules[scheduleNum].id}/galleries`,
-        formData,
-      );
-      console.log(res);
-      alert('앨범이 생성되었습니다!');
-      navigate('/galleries');
+      if (galleryId) {
+        const res = await formdataApi.post(
+          `/galleries/${galleryId}/images`,
+          formData,
+        );
+        console.log(res);
+        alert('사진이 추가되었습니다!');
+        navigate(-1);
+      } else {
+        const res = await formdataApi.post(
+          `/schedules/${data.schedules[scheduleNum].id}/galleries`,
+          formData,
+        );
+        console.log(res);
+        alert('앨범이 생성되었습니다!');
+        navigate('/galleries');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -104,100 +110,123 @@ const PostAlbum = () => {
 
   return (
     <>
-      <PageTitle title="앨범생성 - 갤러리" />
-      <HeaderMid text="앨범생성" />
+      <PageTitle
+        title={galleryId ? '사진추가 - 갤러리' : '앨범생성 - 갤러리'}
+      />
+      <HeaderMid text={galleryId ? '사진추가' : '앨범생성'} />
+
       <AlbumForm onSubmit={(e) => createAlbum(e)} encType="multipart/form-data">
-        <InputWrapper>
-          {!selectedDate && (
-            <MobileDatePicker
-              style={{ width: '50%' }}
-              views={['year', 'month']}
-              value={date}
-              onChange={(state) => {
-                setDate(state);
-                setSchedule('');
-                setScheduleNum(-1);
-              }}
-              label="연도/월 선택"
-              onError={console.log}
-              inputFormat="YYYY년 M월"
-              renderInput={(params) => <TextField {...params} />}
-            />
-          )}
-
-          <FormControl variant="outlined">
-            <InputLabel id="schedule-label">일정 선택</InputLabel>
-            <Select
-              style={{ width: '100%' }}
-              variant="outlined"
-              value={schedule}
-              onChange={(e) => setSchedule(e.target.value)}
-              labelId="schedule-label"
-              label={'일정 선택'}
-              required
-            >
-              {data?.schedules.length > 0 ? (
-                data?.schedules.map((v, i) => (
-                  <MenuItem
-                    key={i}
-                    value={v.title}
-                    onClick={() => setScheduleNum(i)}
-                  >
-                    {v.title}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>선택할 일정이 없습니다.</MenuItem>
+        {!galleryId && (
+          <>
+            <InputWrapper>
+              {!selectedDate && (
+                <MobileDatePicker
+                  style={{ width: '50%' }}
+                  views={['year', 'month']}
+                  value={date}
+                  onChange={(state) => {
+                    setDate(state);
+                    setSchedule('');
+                    setScheduleNum(-1);
+                  }}
+                  label="연도/월 선택"
+                  onError={console.log}
+                  inputFormat="YYYY년 M월"
+                  renderInput={(params) => <TextField {...params} />}
+                />
               )}
-            </Select>
-          </FormControl>
 
-          <FormControl variant="outlined">
-            {scheduleNum > -1 && (
-              <>
-                <InputLabel id="selected-date-label">날짜 선택</InputLabel>
+              <FormControl variant="outlined">
+                <InputLabel id="schedule-label">일정 선택</InputLabel>
                 <Select
                   style={{ width: '100%' }}
                   variant="outlined"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  labelId="selected-date-label"
-                  label={'날짜 선택'}
+                  value={schedule}
+                  onChange={(e) => setSchedule(e.target.value)}
+                  labelId="schedule-label"
+                  label={'일정 선택'}
                   required
                 >
-                  {data?.schedules[scheduleNum].dates.map((v, i) => (
-                    <MenuItem key={v.date} value={v.date} disabled={!v.enable}>
-                      {v.date}
-                    </MenuItem>
-                  ))}
+                  {data?.schedules.length > 0 ? (
+                    data?.schedules.map((v, i) => (
+                      <MenuItem
+                        key={i}
+                        value={v.title}
+                        onClick={() => setScheduleNum(i)}
+                      >
+                        {v.title}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem disabled>선택할 일정이 없습니다.</MenuItem>
+                  )}
                 </Select>
-              </>
-            )}
-          </FormControl>
-          <button
-            type="button"
-            onClick={() => {
-              setScheduleNum(-1);
-              setSelectedDate('');
-            }}
-          >
-            다시 선택
-          </button>
-        </InputWrapper>
-        <hr />
+              </FormControl>
 
-        <InputWrapper>
-          <TextField
-            id="input-albumtitle"
-            label="앨범명"
-            variant="outlined"
-            autoComplete="off"
-            value={albumTitle}
-            onChange={(e) => setAlbumTitle(e.target.value)}
-            required
-          />
-        </InputWrapper>
-        <hr />
+              <FormControl variant="outlined">
+                {scheduleNum > -1 && (
+                  <>
+                    <InputLabel id="selected-date-label">날짜 선택</InputLabel>
+                    <Select
+                      style={{ width: '100%' }}
+                      variant="outlined"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      labelId="selected-date-label"
+                      label={'날짜 선택'}
+                      required
+                    >
+                      {data?.schedules[scheduleNum].dates.map((v) => (
+                        <MenuItem
+                          key={v.date}
+                          value={v.date}
+                          disabled={!v.enable}
+                        >
+                          {v.date}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </>
+                )}
+              </FormControl>
+              <button
+                type="button"
+                onClick={() => {
+                  setScheduleNum(-1);
+                  setSelectedDate('');
+                }}
+              >
+                다시 선택
+              </button>
+            </InputWrapper>
+            <hr />
+
+            <InputWrapper>
+              <TextField
+                id="input-albumtitle"
+                label="앨범명"
+                variant="outlined"
+                autoComplete="off"
+                value={albumTitle}
+                onChange={(e) => setAlbumTitle(e.target.value)}
+                required
+              />
+
+              <Textarea
+                placeholder="내용을 3000자 이내로 입력해주세요."
+                wrap="hard"
+                spellCheck="false"
+                maxLength="3000"
+                minRows="3"
+                maxRows="5"
+                value={albumContent}
+                onChange={(e) => setAlbumContent(e.target.value)}
+                required
+              />
+            </InputWrapper>
+            <hr />
+          </>
+        )}
 
         <UploadTitle>
           <strong>사진 업로드 (추후 변경 가능)</strong>
@@ -221,7 +250,7 @@ const PostAlbum = () => {
           ))}
         </ImageList>
 
-        <Button>생성하기</Button>
+        <Button>{galleryId ? <>추가하기</> : <>생성하기</>}</Button>
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -242,8 +271,8 @@ export default PostAlbum;
 
 const AlbumForm = styled.form`
   overflow-y: auto;
-  height: calc(100vh - 55px - 90px);
-  margin-top: 55px;
+  min-height: calc(100vh - 55px - 90px);
+  margin: 55px 0 90px;
   padding: 0 20px;
   label {
     color: #000;
@@ -302,8 +331,27 @@ const ImageList = styled.div`
   div {
     position: relative;
     img {
+      width: 100%;
+      height: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
+  }
+`;
+
+const Textarea = styled(TextareaAutosize)`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b5b5b5;
+  border-radius: 4px;
+  resize: none;
+  font-size: 1em;
+  line-height: 1.4em;
+  transition: border 0.2s ease;
+  outline: none;
+  &::placeholder {
+    font-weight: 300;
+    font-size: 0.9em;
   }
 `;

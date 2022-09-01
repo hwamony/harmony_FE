@@ -24,3 +24,14 @@ export const categories = [
     value: 'PERSONAL',
   },
 ];
+
+export const communityRoles = [
+  '아빠',
+  '엄마',
+  '첫째',
+  '둘째',
+  'N째',
+  '막내',
+  '외동',
+  '동거인',
+];

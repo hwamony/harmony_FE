@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { MdMoreVert, MdModeEdit, MdDelete } from 'react-icons/md';
+import { MdModeEdit, MdDelete } from 'react-icons/md';
+import { IconMoreHoriz } from '../../assets/icons';
 
-const MoreVert = ({ schedule }) => {
+const MoreHoriz = ({ album }) => {
   const navigate = useNavigate();
+  const scheduleId = useParams().scheduleId;
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -22,41 +24,43 @@ const MoreVert = ({ schedule }) => {
     setAnchorEl(null);
   };
 
-  const deleteSchedule = async () => {
+  const deleteAlbum = async () => {
     try {
-      const res = await api.delete(`/schedules/${schedule.scheduleId}`);
+      const res = await api.delete(`/galleries/${album.id}`);
       return res;
     } catch (err) {
       console.log(err);
     }
   };
 
-  const { mutate: deleteData } = useMutation(deleteSchedule, {
+  const { mutate: deleteAlbumM } = useMutation(deleteAlbum, {
     onSuccess: (res) => {
       alert(res.data.msg);
-      queryClient.invalidateQueries(['schedule']);
+      queryClient.invalidateQueries(['albums', scheduleId]);
     },
   });
 
   // TODO: 삭제 confirm 추가하기
 
   const onClickEdit = () => {
-    console.log(schedule.scheduleId);
-    navigate('/schedules/edit', { state: schedule });
+    console.log(album.id);
+    navigate(`/galleries/posts/${scheduleId}/${album.id}/edit`, {
+      state: album,
+    });
     handleClose();
   };
 
   return (
     <>
-      <IconBtn
+      <IconButton
         id="more-button"
         aria-controls={open ? 'more-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MdMoreVert />
-      </IconBtn>
+        <IconMoreHoriz />
+      </IconButton>
       <StyledMenu
         id="more-menu"
         MenuListProps={{
@@ -68,28 +72,22 @@ const MoreVert = ({ schedule }) => {
       >
         <MenuItem onClick={onClickEdit} disableRipple>
           <MdModeEdit />
-          수정
+          앨범수정
         </MenuItem>
-        <MenuItem onClick={deleteData} disableRipple>
+        <MenuItem onClick={deleteAlbumM} disableRipple>
           <MdDelete />
-          삭제
+          앨범삭제
         </MenuItem>
       </StyledMenu>
     </>
   );
 };
 
-MoreVert.propTypes = {
-  schedule: PropTypes.object.isRequired,
+MoreHoriz.propTypes = {
+  album: PropTypes.object.isRequired,
 };
 
-export default MoreVert;
-
-const IconBtn = styled(IconButton)`
-  svg {
-    fill: #bababa;
-  }
-`;
+export default MoreHoriz;
 
 const StyledMenu = styled((props) => (
   <Menu

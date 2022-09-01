@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { IconCheck } from '../../assets/icons';
 
-const ImageItem = ({ img, handleCheck }) => {
-  const { onSelect } = useSelector((state) => state.gallery);
+const ImageItem = ({ img, handleCheck, setIsVisible, setCurImage }) => {
+  const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    setChecked(false);
+    if (!onSelect) setChecked(false);
   }, [onSelect]);
+
+  useEffect(() => {
+    if (onSelectAll) setChecked(true);
+    else setChecked(false);
+  }, [onSelectAll]);
+
+  const handleModalOpen = () => {
+    setCurImage(img.url);
+    setIsVisible(true);
+  };
 
   const handleItemCheck = ({ target }) => {
     setChecked(!checked);
@@ -40,7 +51,7 @@ const ImageItem = ({ img, handleCheck }) => {
           <img src={img.url} alt="" />
         </label>
       ) : (
-        <img src={img.url} alt="" />
+        <ImgDetail src={img.url} alt="" onClick={handleModalOpen} />
       )}
     </div>
   );
@@ -52,3 +63,7 @@ ImageItem.propTypes = {
 };
 
 export default ImageItem;
+
+const ImgDetail = styled.img`
+  cursor: pointer;
+`;

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-export const CommunityColor = styled.article`
+export const CommunityFixed = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 144px;
   text-align: center;
-  background-color: #f2f2f2;
   h1 {
     margin: 1em 0;
     font-size: 1.2em;
@@ -13,78 +12,84 @@ export const CommunityColor = styled.article`
   }
 `;
 
-export const CommunityContainer = styled.div`
-  border-bottom: 1px solid #e7e7e7;
+export const CommunityNav = styled.nav`
   position: fixed;
+  top: 60px;
   left: 0;
   right: 0;
-  top: 0;
-  height: 110px;
-  text-align: center;
-  background-color: white;
-`;
-
-export const TitleContainer = styled.div`
-  border-bottom: 1px solid #e7e7e7;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  h1 {
-    margin-left: 20px;
-  }
-`;
-
-export const ToolContainer = styled.div`
-  padding-right: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: right;
-  font-size: 25px;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-export const Space = styled.div`
-  width: 20px;
+  z-index: 200;
 `;
 
 export const Category = styled.div`
-  height: 40px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  border-bottom: 2px solid white;
-  h3 {
-    color: #ababab;
-    padding: 2px 10px;
+  height: 44px;
+  padding: 0 10px;
+  background-color: #fff;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 49px;
+    height: 100%;
+    margin-right: 10px;
+    border-bottom: 2px solid transparent;
+    color: #545454;
     text-align: center;
-    :hover {
-      color: black;
-      cursor: pointer;
+    word-break: keep-all;
+    font-size: 14px;
+    font-weight: 600;
+    &:hover {
+      border-bottom: 2px solid #3ec192;
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-weight: 700;
     }
+  }
+  &::-webkit-scrollbar {
+    display: fixed;
+    height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 7px solid transparent;
+    border-radius: 10px;
+    background: #e3e5e9;
+    background-clip: border-box;
+  }
+  &::-webkit-scrollbar-trac {
+    background: none;
   }
 `;
 
 export const Order = styled.div`
-  padding-top: 130px;
-  width: 95vw;
-  height: 40px;
-  padding-right: 10px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: right;
-  h5 {
+  justify-content: flex-end;
+  height: 40px;
+  padding: 0 23px;
+  background: #efefef;
+  p {
+    display: inline-block;
     color: #868686;
-    font-size: 15px;
-    :hover {
-      cursor: pointer;
-      color: black;
+    font-size: 12px;
+    &:hover {
+      color: #000;
+      font-weight: 700;
+    }
+    &:first-child::after {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      margin: 0 8px 2px;
+      border-radius: 50%;
+      background: #303030;
     }
   }
+`;
+
+export const CommunityContent = styled.main`
+  padding: 0 0 65px;
+  min-height: calc(100vh - 144px);
+  background: #efefef;
 `;

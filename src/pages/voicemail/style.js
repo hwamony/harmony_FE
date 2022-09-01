@@ -2,19 +2,18 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: 100vh;
-  padding: 20px;
+  padding: 18px 20px 20px;
 `;
 
 export const Header = styled.div`
   height: 60px;
-`;
-
-export const Title = styled.h1`
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0.0333333px;
-  color: #18191f;
+  h1 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.0333333px;
+    color: #18191f;
+  }
 `;
 
 export const Body = styled.div`
@@ -25,8 +24,27 @@ export const Body = styled.div`
   background: #efefef;
 `;
 
+export const EmptyWrap = styled.div`
+  margin-top: 242px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyIcon = styled.img``;
+
+export const EmptyDesc = styled.div`
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 1px;
+  color: #838383;
+`;
+
 export const MailWrap = styled.div`
-  height: 210px;
+  height: 220px;
   padding: 18px;
   margin-top: 14px;
   border-radius: 12px;
@@ -53,68 +71,43 @@ export const MailDesc = styled.div`
   color: #adadad;
 `;
 
-export const AudioWrap = styled.div`
-  :after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-`;
+export const DropdownWrap = styled.div``;
 
-export const Timeline = styled.div`
-  margin-top: 32px;
-  position: relative;
-`;
-
-export const Timebar = styled.input`
-  width: 100%;
-  height: 4px;
-  background: #d9d9d9;
+export const DropdownmenuBtn = styled.button`
   cursor: pointer;
-  
-
-  ::-webkit-slider-thumb { 
-    width: 8px;
-    height: 8px;    
-    border-radius: 4px;
-    background: #7D7D7D;
-    -webkit-appearance: none;
-  }
+  position: absolute;
+  top: 20px;
+  right: 12px;
 `;
 
-export const Currenttime = styled.div`
-  margin-top: 8px;
-  font-size: 12px;
+export const Dropdown = styled.div`
+  position: absolute;
+  top: 46px;
+  right: 20px;
+  background: #ffffff;
+  width: 10vw;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+`;
+
+export const DropdownContent = styled.div`
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const DropdownTitle = styled.div`
+  padding-left: 6px;
   font-weight: 400;
+  font-size: 12px;
   line-height: 14px;
-  color: #898989;
-  float: left;
+  letter-spacing: 0.0333333px;
 `;
 
-export const Duration = styled(Currenttime)`
-  float: right;
-`;
-
-export const AudioBtn = styled.div`
-  text-align: center;
-`;
-
-export const PlayBtn = styled.button`
-  width: 40px;
-  height: 40px;
-  margin-top: 10px;
-
-  &.play {
-    background-image: url(${process.env.PUBLIC_URL}/images/play.png);
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  &.pause {
-    background-image: url(${process.env.PUBLIC_URL}/images/pause.png);
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+export const AudioWrap = styled.div`
+  width: 100%;
 `;
 
 export const UserWrap = styled.div`
