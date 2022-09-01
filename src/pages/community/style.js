@@ -25,7 +25,7 @@ export const Category = styled.div`
   height: 44px;
   padding: 0 10px;
   background-color: #fff;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   p {
     display: flex;

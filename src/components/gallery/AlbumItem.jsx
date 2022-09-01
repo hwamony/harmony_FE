@@ -165,22 +165,18 @@ const ImgContainer = styled.div`
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   grid-gap: 2px;
-  /* max-height: 177px; */
   cursor: pointer;
   img {
     display: block;
+    width: auto;
     height: 100%;
-    aspect-ratio: 3 / 4;
     object-fit: cover;
     transition: transform 0.2s ease;
     &:hover {
       transform: scale(105%);
     }
     &:first-child {
-      height: 100%;
-      aspect-ratio: 4 / 3.55;
       grid-area: 1 / 1 / 3 / 4;
     }
   }
