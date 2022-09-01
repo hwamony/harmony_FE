@@ -34,8 +34,8 @@ const Gallery = () => {
   return (
     <>
       <PageTitle title="갤러리" />
-      <Header title="갤러리" />
-      <BtnAdd link="/galleries/posts" text="앨범 추가" />
+      <Header title="갤러리" link="/galleries" />
+      <BtnAdd link="/galleries/posts" text="앨범 추가" plus={true} />
       <Main>
         <DateWrapper>
           <MobileDatePicker
@@ -71,8 +71,9 @@ export default Gallery;
 
 const Main = styled.main`
   overflow-y: auto;
-  min-height: calc(100vh - 70px - 65px);
-  margin-top: 70px;
+  min-height: calc(100vh - 60px - 65px);
+  margin-top: 60px;
+  border-top: 2px solid #f2f2f2;
   padding: 20px;
   button {
     position: absolute;

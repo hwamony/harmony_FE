@@ -11,7 +11,7 @@ const Albums = () => {
 
   return (
     <AlbumsSection>
-      <BtnAdd link="/galleries/posts" text="앨범 추가" />
+      <BtnAdd link="/galleries/posts" text="앨범 추가" plus={true} />
       {data.galleries.map((album) => (
         <AlbumItem
           key={album.id}

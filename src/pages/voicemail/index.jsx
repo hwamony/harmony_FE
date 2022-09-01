@@ -80,7 +80,7 @@ const Voicemail = () => {
     <Container>
       <PageTitle title="소리샘" />
       <Header>
-        <Title>소리샘</Title>
+        <h1>소리샘</h1>
       </Header>
       <Body>
         {voicemailList.length === 0 ? (

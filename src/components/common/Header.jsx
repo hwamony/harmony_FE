@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Header = ({ title }) => {
+const Header = ({ title, link }) => {
   return (
     <HeaderContainer>
-      <p>
-        <Link to="/galleries">
-          <strong>{title}</strong>
-        </Link>
-      </p>
+      <Link to={link}>
+        <h1>{title}</h1>
+      </Link>
     </HeaderContainer>
   );
 };
@@ -29,11 +27,11 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 60px;
   padding: 0 20px;
-  border-bottom: 2px solid #f2f2f2;
   background: #fff;
-  strong {
+  z-index: 200;
+  h1 {
     color: #18191f;
     font-size: 20px;
     font-weight: 700;

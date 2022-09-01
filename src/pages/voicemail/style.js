@@ -2,19 +2,18 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: 100vh;
-  padding: 20px;
+  padding: 18px 20px 20px;
 `;
 
 export const Header = styled.div`
   height: 60px;
-`;
-
-export const Title = styled.h1`
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0.0333333px;
-  color: #18191f;
+  h1 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.0333333px;
+    color: #18191f;
+  }
 `;
 
 export const Body = styled.div`
@@ -72,7 +71,7 @@ export const MailDesc = styled.div`
   color: #adadad;
 `;
 
-export const DropdownWrap = styled.div``
+export const DropdownWrap = styled.div``;
 
 export const DropdownmenuBtn = styled.button`
   cursor: pointer;

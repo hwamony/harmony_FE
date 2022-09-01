@@ -83,7 +83,7 @@ const Home = () => {
           <Widget />
           <Main>
             <h1 className="hidden">캘린더 홈</h1>
-            <BtnAdd link="/schedules" text="일정 추가" />
+            <BtnAdd link="/schedules" text="일정 추가" plus={true} />
             <Summary counts={monthSchedule.counts} />
             <Calendar schedules={monthSchedule.schedules} />
             <ListWrapper>

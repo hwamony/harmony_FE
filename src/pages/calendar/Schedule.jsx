@@ -84,10 +84,6 @@ const Schedule = () => {
       memberIds: selectedMember,
       content: contentInput.current.value,
     };
-    console.log(data);
-    // FIXME: 추후 일정 등록에 시간 추가하면 바꾸기
-    // console.log(startDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
-    // console.log(endDate.locale('en').format('YYYY-MM-DD-A-hh-mm'));
 
     try {
       if (!scheduleData) {

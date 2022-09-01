@@ -2,16 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { IconPlus } from '../../assets/icons';
+import { IconPlus, IconPost } from '../../assets/icons';
 import { MdAddPhotoAlternate } from 'react-icons/md';
 
-const BtnAdd = ({ link, text, photo }) => {
+const BtnAdd = ({ link, text, plus, photo, community }) => {
   return (
     <>
       {IconPlus && (
         <Button to={link}>
           <p className="hidden">{text}</p>
-          {photo ? <span><MdAddPhotoAlternate /></span> : <IconPlus />}
+          {plus && <IconPlus />}
+          {photo && <span><MdAddPhotoAlternate /></span>}
+          {community && <IconPost />}
         </Button>
       )}
     </>
@@ -21,7 +23,9 @@ const BtnAdd = ({ link, text, photo }) => {
 BtnAdd.propTypes = {
   link: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  plus: PropTypes.bool,
   photo: PropTypes.bool,
+  community: PropTypes.bool,
 };
 
 export default BtnAdd;
