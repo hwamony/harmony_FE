@@ -232,7 +232,7 @@ const PostTitle = styled.div`
   input {
     width: 100%;
     padding: 20px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: #000;
     &::placeholder {
@@ -282,7 +282,7 @@ const Textarea = styled(TextareaAutosize)`
   resize: none;
   outline: none;
   padding: 15px 20px;
-  font-size: 15px;
+  font-size: 14px;
   color: #000;
   line-height: 1.5em;
   &::placeholder {
@@ -305,6 +305,7 @@ const AddPhoto = styled.div`
     border: 1px solid #bcbcbc;
     border-radius: 5px;
     background: #eee;
+    font-size: 14px;
     user-select: none;
     cursor: pointer;
     svg {

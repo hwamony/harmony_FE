@@ -18,8 +18,8 @@ const LongCard = ({ post }) => {
         <Profile>
           {/* TODO: {post.poster.flower}꽃여부 */}
           {/* TODO: 화목 등급별 아이콘 적용 */}
-          {/* <Photo>{post.poster.level}</Photo> */}
-          <Photo>1</Photo>
+          {/* <Grade>{post.poster.level}</Grade> */}
+          <Grade>1</Grade>
           <Info>
             {/* <strong>{post.poster.nickname}</strong> */}
             <strong>작성자</strong>
@@ -94,9 +94,11 @@ export const Profile = styled.div`
   align-items: center;
 `;
 
-export const Photo = styled.div`
+export const Grade = styled.div`
   width: 25px;
   height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   margin-right: 8px;
   border-radius: 50%;
   background: #eee;
