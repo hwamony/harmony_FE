@@ -8,7 +8,7 @@ const Header = ({ title, link }) => {
     <HeaderContainer>
       <p>
         <Link to={link}>
-          <strong>{title}</strong>
+          <h1>{title}</h1>
         </Link>
       </p>
     </HeaderContainer>
@@ -32,7 +32,8 @@ const HeaderContainer = styled.header`
   height: 60px;
   padding: 0 20px;
   background: #fff;
-  strong {
+  z-index: 200;
+  h1 {
     color: #18191f;
     font-size: 20px;
     font-weight: 700;

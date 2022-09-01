@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-export const CommunityColor = styled.article`
+export const CommunityFixed = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 144px;
   text-align: center;
-  background-color: #f2f2f2;
   h1 {
     margin: 1em 0;
     font-size: 1.2em;
@@ -13,38 +12,20 @@ export const CommunityColor = styled.article`
   }
 `;
 
-export const CommunityContainer = styled.div`
+export const CommunityNav = styled.nav`
   position: fixed;
   top: 60px;
   left: 0;
   right: 0;
-  height: 40px;
-  background-color: white;
   z-index: 200;
-`;
-
-export const ToolContainer = styled.div`
-  padding-right: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: right;
-  font-size: 25px;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-export const Space = styled.div`
-  width: 20px;
 `;
 
 export const Category = styled.div`
   display: flex;
-  width: 100vw;
   height: 44px;
   padding: 0 10px;
-  h3 {
+  background-color: #fff;
+  p {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,33 +35,46 @@ export const Category = styled.div`
     border-bottom: 2px solid transparent;
     color: #545454;
     text-align: center;
+    word-break: keep-all;
     font-size: 14px;
     font-weight: 600;
-    word-break: keep-all;
-    :hover {
+    &:hover {
       border-bottom: 2px solid #3ec192;
       color: ${({ theme }) => theme.palette.primary.main};
       font-weight: 700;
-      cursor: pointer;
     }
   }
 `;
 
 export const Order = styled.div`
-  padding-top: 130px;
-  width: 95vw;
-  height: 40px;
-  padding-right: 10px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: right;
-  h5 {
+  justify-content: flex-end;
+  height: 40px;
+  padding: 0 23px;
+  background: #efefef;
+  p {
+    display: inline-block;
     color: #868686;
-    font-size: 15px;
-    :hover {
-      cursor: pointer;
-      color: black;
+    font-size: 12px;
+    &:hover {
+      color: #000;
+      font-weight: 700;
+    }
+    &:first-child::after {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      margin: 0 8px 2px;
+      border-radius: 50%;
+      background: #303030;
     }
   }
+`;
+
+export const CommunityContent = styled.main`
+  padding: 0 0 65px;
+  min-height: calc(100vh - 144px);
+  background: #efefef;
 `;

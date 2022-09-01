@@ -6,11 +6,11 @@ import api from '../../api/AxiosManager';
 
 import PageTitle from '../../components/common/PageTitle';
 import {
-  CommunityColor,
-  CommunityContainer,
-  Space,
+  CommunityFixed,
+  CommunityNav,
   Category,
   Order,
+  CommunityContent,
 } from './style';
 import ShortCard from '../../components/community/ShortCard';
 import Header from '../../components/common/Header';
@@ -55,24 +55,25 @@ const Community = () => {
   return (
     <>
       <PageTitle title="커뮤니티" />
-      <BtnAdd link={'posts'} text="게시글 작성" community={true} />
-      <CommunityColor>
-        <CommunityContainer>
-          <Header title="커뮤니티" link="/community" />
+      <Header title="커뮤니티" link="/community" />
+
+      <CommunityFixed>
+        <BtnAdd link={'posts'} text="게시글 작성" community={true} />
+        <CommunityNav>
           <Category>
-            <h3>전체</h3>
+            <p>전체</p>
             {communityRoles.map((v) => (
-              <h3 key={v}>{v}</h3>
+              <p key={v}>{v}</p>
             ))}
           </Category>
-        </CommunityContainer>
+          <Order>
+            <p>최신순</p>
+            <p>인기순</p>
+          </Order>
+        </CommunityNav>
+      </CommunityFixed>
 
-        <Order>
-          <h5>최신순</h5>
-          <Space />
-          <h5>인기순</h5>
-        </Order>
-
+      <CommunityContent>
         {postList &&
           postList.pages.map((page, index) => (
             <React.Fragment key={index}>
@@ -81,7 +82,7 @@ const Community = () => {
               ))}
             </React.Fragment>
           ))}
-      </CommunityColor>
+      </CommunityContent>
       {isFetchingNextPage ? <Loading /> : <div ref={ref} />}
     </>
   );

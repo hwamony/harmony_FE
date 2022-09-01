@@ -281,6 +281,7 @@ const AddPhoto = styled.div`
   display: flex;
   padding: 15px 20px;
   label {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
