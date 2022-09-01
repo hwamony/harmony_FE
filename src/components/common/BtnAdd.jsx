@@ -34,6 +34,7 @@ const Button = styled(Link)`
   position: fixed;
   bottom: 80px;
   right: 20px;
+  width: 52px;
   padding: 15px;
   background: ${({ theme }) => theme.palette.primary.main};
   border-radius: 50%;
@@ -45,5 +46,10 @@ const Button = styled(Link)`
       height: 21px;
       fill: #fff;
     }
+  }
+
+  @media only screen and (min-width: 1025px) {
+    right: inherit;
+    left: 1140px;
   }
 `;

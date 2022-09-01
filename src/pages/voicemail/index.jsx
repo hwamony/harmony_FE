@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Container,
   Header,
@@ -32,7 +32,6 @@ import { MdDeleteOutline } from "react-icons/md";
 const Voicemail = () => {
   // Referance
   const navigate = useNavigate();
-  const dropdownRef = useRef();
 
   const getVoicemails = async () => {
     const res = await api.get('/voice-mails');

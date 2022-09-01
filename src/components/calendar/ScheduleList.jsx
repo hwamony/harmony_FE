@@ -71,10 +71,10 @@ ScheduleList.propTypes = {
 export default ScheduleList;
 
 const ScheduleItem = styled.li`
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 const Schedule = styled.div`

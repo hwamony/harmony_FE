@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: 100vh;
-  padding: 18px 20px 20px;
 `;
 
 export const Header = styled.div`
   height: 60px;
+  padding: 14px 0 0 20px;
   h1 {
     font-size: 20px;
     font-weight: 700;
@@ -17,10 +17,9 @@ export const Header = styled.div`
 `;
 
 export const Body = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   padding: 10px 20px;
-  margin: -20px;
   background: #efefef;
 `;
 

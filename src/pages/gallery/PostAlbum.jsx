@@ -288,9 +288,12 @@ const AlbumForm = styled.form`
   }
   button {
     position: fixed;
-    left: 20px;
     bottom: 35px;
     width: calc(100% - 40px);
+
+    @media only screen and (min-width: 1025px) {
+      width: 460px;
+    }
   }
   .MuiSnackbar-root {
     bottom: 75px;

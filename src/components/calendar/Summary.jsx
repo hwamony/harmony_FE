@@ -26,15 +26,14 @@ Summary.propTypes = {
 export default Summary;
 
 const CalendarSummary = styled.section`
-  position: fixed;
-  top: 75px;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   height: 52px;
-  gap: 5px 10px;
   padding: 0 18px;
+  margin: -20px;
+  margin-bottom: 0;
+  gap: 5px 10px;
+
 `;
 
 const Category = styled.div`

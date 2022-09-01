@@ -72,15 +72,18 @@ export default Navbar;
 
 const Navigation = styled.nav`
   position: fixed;
-  left: 0;
-  right: 0;
   bottom: 0;
+  width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
   font-size: 12px;
   z-index: 100;
   a {
     color: #868686;
+  }
+
+  @media only screen and (min-width: 1025px) {
+    width: 500px;
   }
 `;
 

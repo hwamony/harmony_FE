@@ -20,16 +20,11 @@ Header.propTypes = {
 export default Header;
 
 const HeaderContainer = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 60px;
   padding: 0 20px;
-  background: #fff;
   z-index: 200;
   h1 {
     color: #18191f;
