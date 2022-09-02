@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { IconSave } from '../../assets/icons';
-import { IoMdCloseCircle } from 'react-icons/io';
+import { IconClose, IconSave } from '../../assets/icons';
 
 const ImageModal = ({ isVisible, setIsVisible, url, date }) => {
   const ModalClose = () => {
@@ -19,7 +18,7 @@ const ImageModal = ({ isVisible, setIsVisible, url, date }) => {
     <ModalWrap visible={isVisible}>
       <Overlay onClick={onDimmerClick}>
         <button onClick={ModalClose} className="close">
-          <IoMdCloseCircle />
+          <IconClose />
         </button>
         <p>{dayjs(date).format('YYYY년 M월 D일')}</p>
         <a rel="noreferrer" href={url} className="save">
@@ -56,20 +55,19 @@ const Overlay = styled.div`
   z-index: 999;
   button.close {
     position: absolute;
-    top: 10px;
+    top: 11px;
     left: 10px;
     width: 35px;
     height: 35px;
     cursor: pointer;
     z-index: 10;
-    svg {
-      color: #fff;
-      width: 24px;
+    svg path {
+      stroke: #fff;
     }
   }
   a.save {
     position: absolute;
-    top: 15px;
+    top: 17px;
     right: 10px;
     width: 35px;
     height: 35px;
