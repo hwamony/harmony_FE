@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useFamilyData } from '../../hooks/useData';
+import { hwamokGrades, hwamokScores } from '../../utils/data';
 import HeaderMid from '../../components/common/HeaderMid';
 import PageTitle from '../../components/common/PageTitle';
-import { hwamokGrades, hwamokScores } from '../../utils/data';
-import { Button } from '../../styles/Button';
 import { IconNextMember } from '../../assets/icons';
+import { Button } from '../../styles/Button';
 
 const FamilyScore = () => {
   const navigate = useNavigate();
