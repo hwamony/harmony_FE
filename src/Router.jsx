@@ -24,6 +24,7 @@ const Notice = React.lazy(() => import('./pages/notice'));
 const FamilyScore = React.lazy(() => import('./pages/family'));
 const FamilyInfo = React.lazy(() => import('./pages/family/info'));
 const FamilyRanking = React.lazy(() => import('./pages/family/ranking'));
+const NotFound = React.lazy(() => import('./pages/notfound'));
 
 const Router = () => {
   return (
@@ -54,6 +55,7 @@ const Router = () => {
       <Route path="/family" element={<FamilyScore />} />
       <Route path="/family/info" element={<FamilyInfo />} />
       <Route path="/family/rankings" element={<FamilyRanking />} />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 };
