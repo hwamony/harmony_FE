@@ -10,7 +10,7 @@ const VoiceRecorder = (props) => {
   const { setBlobUrl } = props;
   const { startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder(
     {
-      audio: true
+      audio: true,
     },
   );
 

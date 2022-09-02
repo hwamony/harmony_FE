@@ -53,7 +53,8 @@ const AuthControl = () => {
         }
       }
     } catch (err) {
-      console.log('err>>', err.response);
+      localStorage.removeItem('TOKEN');
+      window.location.href('/');
     }
   };
 

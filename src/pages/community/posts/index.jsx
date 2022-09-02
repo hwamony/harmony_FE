@@ -58,11 +58,13 @@ const Post = () => {
     formData.append('category', state.category);
     formData.append('title', state.title);
     formData.append('content', state.content);
-    for (let i = 0; i < localTags.length; i++) {
-      const tagForm = localTags[i];
-      formData.append(`tags[${i}]`, tagForm);
+    if (localTags) {
+      for (let i = 0; i < localTags.length; i++) {
+        const tagForm = localTags[i];
+        formData.append(`tags[${i}]`, tagForm);
+      }
     }
-    formData.append('image', file);
+    if (file) formData.append('image', file);
 
     try {
       const res = await formdataApi.post(`/posts`, formData);

@@ -68,7 +68,6 @@ HeaderMid.propTypes = {
 export default HeaderMid;
 
 const HeaderContainer = styled.header`
-  width: 100vw;
   height: 55px;
   padding: 19px 0 15px;
   border-bottom: 2px solid #f2f2f2;
