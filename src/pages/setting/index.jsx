@@ -48,7 +48,7 @@ const Setting = () => {
           )}
         </div>
 
-        <button type="button" onClick={() => navigate('/rankings')}>
+        <button type="button" onClick={() => navigate('/family/rankings')}>
           <h3>가족랭킹</h3>
           <IconNext />
         </button>

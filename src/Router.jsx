@@ -17,12 +17,13 @@ const Community = React.lazy(() => import('./pages/community'));
 const Post = React.lazy(() => import('./pages/community/posts'));
 const PostDetail = React.lazy(() => import('./pages/community/detail'));
 const Setting = React.lazy(() => import('./pages/setting'));
-const Ranking = React.lazy(() => import('./pages/ranking'));
 const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
 const Familycode = React.lazy(() => import('./pages/familycode'));
 const Role = React.lazy(() => import('./pages/role'));
 const Notice = React.lazy(() => import('./pages/notice'));
-
+const FamilyScore = React.lazy(() => import('./pages/family'));
+const FamilyInfo = React.lazy(() => import('./pages/family/info'));
+const FamilyRanking = React.lazy(() => import('./pages/family/ranking'));
 
 const Router = () => {
   return (
@@ -46,12 +47,13 @@ const Router = () => {
       <Route path="/community/posts/edit" element={<Post />} />
       <Route path="/community/posts/:postId" element={<PostDetail />} />
       <Route path="/settings" element={<Setting />} />
-      <Route path="/rankings" element={<Ranking />} />
       <Route path="/signupcomplete" element={<SignupComplete />} />
       <Route path="/familycode" element={<Familycode />} />
       <Route path="/role" element={<Role />} />
       <Route path="/notice" element={<Notice />} />
-
+      <Route path="/family" element={<FamilyScore />} />
+      <Route path="/family/info" element={<FamilyInfo />} />
+      <Route path="/family/rankings" element={<FamilyRanking />} />
     </Routes>
   );
 };

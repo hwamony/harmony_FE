@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageTitle from '../../components/common/PageTitle';
-import HeaderMid from '../../components/common/HeaderMid';
-import InProgress from '../../components/common/InProgress';
+import PageTitle from '../../../components/common/PageTitle';
+import HeaderMid from '../../../components/common/HeaderMid';
+import InProgress from '../../../components/common/InProgress';
 
-const Ranking = () => {
+const FamilyRanking = () => {
   return (
     <>
       <PageTitle title="가족랭킹" />
@@ -16,6 +16,6 @@ const Ranking = () => {
   );
 };
 
-export default Ranking;
+export default FamilyRanking;
 
 const RankingContent = styled.div``;
