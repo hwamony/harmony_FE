@@ -81,7 +81,6 @@ const Main = styled.main`
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    z-index: -1;
     svg {
       margin-right: 6px;
     }
@@ -98,6 +97,8 @@ const DateWrapper = styled.div`
   }
   .MuiTextField-root {
     width: 100%;
+    background: transparent;
+    z-index: 10;
   }
   .MuiOutlinedInput-input {
     padding: 0;
