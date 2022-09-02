@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { FaPlay, FaPause } from 'react-icons/fa';
+import getBlobDuration from 'get-blob-duration';
 
 const AudioPlayer = (props) => {
   // State
@@ -32,9 +33,9 @@ const AudioPlayer = (props) => {
     return `${returnedMinutes}:${returnedSeconds}`;
   };
 
-  const loadedMetadata = () => {
-    console.log(audioplayer);
-    const seconds = Math.floor(audioplayer.current.duration);
+  const loadedMetadata = async () => {
+    const duration = await getBlobDuration(soundUrl); // Get duration from URL
+    const seconds = Math.floor(duration);
     setDuration(seconds);
     progressBar.current.max = seconds;
   };
@@ -85,7 +86,7 @@ const AudioPlayer = (props) => {
 
       {/* play btn */}
       <PlayPause onClick={toglePlayPause}>
-        {isPlaying ? <FaPause size='1.4em'/> : <FaPlay size='1.4em'/>}
+        {isPlaying ? <FaPause size="1.4em" /> : <FaPlay size="1.4em" />}
       </PlayPause>
     </Audioplayer>
   );
