@@ -52,6 +52,18 @@ const Voicemail = () => {
     },
   });
 
+  const calCreatedAt = (data) => {
+    console.log(data)
+    const date = data.split('T')[0];
+    const mon = date.split('-')[1] < 10 ? date.split('-')[1].slice(1) : date.split('-')[1];
+    const day = date.split('-')[2] < 10 ? date.split('-')[2].slice(1) : date.split('-')[2];
+    const time = data.split('T')[1];
+    const hour = time.split(':')[0];
+    const min = time.split(':')[1];
+
+    return `${mon}월 ${day}일, ${hour < 12 ? '오전' : '오후'} ${hour}:${min}`
+  };
+
   const showDropdown = (e) => {
     const dropdown = e.target.parentElement.nextSibling;
     {
@@ -95,10 +107,9 @@ const Voicemail = () => {
         ) : (
           voicemailList.map((item) => {
             return (
-              <>
                 <MailWrap key={item.voiceMailId}>
                   <MailTitle>{item.title}</MailTitle>
-                  <MailDesc>{item.createdAt}</MailDesc>
+                  <MailDesc>{calCreatedAt(item.createdAt)}</MailDesc>
                   <DropdownWrap>
                     <DropdownmenuBtn onClick={showDropdown}>
                       <img
@@ -124,7 +135,6 @@ const Voicemail = () => {
                     <To>{`to. ${item.to}`}</To>
                   </UserWrap>
                 </MailWrap>
-              </>
             );
           })
         )}

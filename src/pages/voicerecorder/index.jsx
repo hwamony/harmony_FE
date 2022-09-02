@@ -27,7 +27,7 @@ const Recoder = () => {
   // Function
   const onSubmit = async (data) => {
     const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
-    const file = new File([audioBlob], 'file'); // blob을 데이터로 하는 파일 생성
+    const file = new File([audioBlob], `${new Date()}.mp3`, { type: "audio/mpeg" }); // blob을 데이터로 하는 파일 생성
 
     const formData = new FormData(); // formdata 를 생성하여 값과 파일을 넣기
     formData.append('title', data.title);
