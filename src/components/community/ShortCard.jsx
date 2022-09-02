@@ -35,14 +35,16 @@ const ShortCard = ({ post }) => {
                 <h2>{post.title}</h2>
                 <p>{post.content}</p>
               </div>
-              <img src={post.imageUrl} alt="" />
+              {post.imageUrl && <img src={post.imageUrl} alt="" />}
             </Content>
 
-            <Tags>
-              {post.tags.map((tag) => (
-                <span key={tag}>#{tag}</span>
-              ))}
-            </Tags>
+            {post.tags.length > 0 && (
+              <Tags>
+                {post.tags.map((tag) => (
+                  <span key={tag}>#{tag}</span>
+                ))}
+              </Tags>
+            )}
 
             <Counts>
               {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}

@@ -7,7 +7,7 @@ const Summary = ({ counts }) => {
   return (
     <CalendarSummary>
       {categories &&
-        categories.slice(0, 5).map((cat, i) => (
+        categories.slice(0, 5).map((cat) => (
           <React.Fragment key={cat.value}>
             <Category val={cat.value}>
               <div />

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useFamilyData, useRankings } from '../../hooks/useData';
 import { IconAlert, IconDetail } from '../../assets/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
 
 const Widget = () => {
@@ -14,22 +14,25 @@ const Widget = () => {
 
   return (
     <FamilyWidget>
-      <LeftWrapper>
-        <Circle>
-          <img src={hwamokGrades[0].icon} alt={hwamokGrades[0].name} />
-        </Circle>
-        <div>
-          {/* TODO: 가족 정보 페이지 링크 추가 */}
-          <strong>
-            {familyInfo.familyName}
-            <IconDetail />
-          </strong>
-          <p>
-            0방울 <span>| 0방울</span>
-            <span className="level">{hwamokGrades[0].name}</span>
-          </p>
-        </div>
-      </LeftWrapper>
+      <Link to="/family">
+        <LeftWrapper>
+          <Circle>
+            <img src={hwamokGrades[0].icon} alt={hwamokGrades[0].name} />
+          </Circle>
+          <div>
+            {/* TODO: 가족 정보 페이지 링크 추가 */}
+            <strong>
+              {familyInfo.familyName}
+              <IconDetail />
+            </strong>
+            <p>
+              0방울 <span>| 0방울</span>
+              <span className="level">{hwamokGrades[0].name}</span>
+            </p>
+          </div>
+        </LeftWrapper>
+      </Link>
+
       <AlertBtn onClick={() => navigate('/notice')}>
         <IconAlert />
       </AlertBtn>
