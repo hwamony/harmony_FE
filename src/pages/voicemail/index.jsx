@@ -53,7 +53,6 @@ const Voicemail = () => {
   });
 
   const calCreatedAt = (data) => {
-    console.log(data)
     const date = data.split('T')[0];
     const mon = date.split('-')[1] < 10 ? date.split('-')[1].slice(1) : date.split('-')[1];
     const day = date.split('-')[2] < 10 ? date.split('-')[2].slice(1) : date.split('-')[2];

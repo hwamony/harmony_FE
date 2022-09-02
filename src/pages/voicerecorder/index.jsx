@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../../styles/Input';
 import { Label } from '../../styles/Label';
 import api from '../../api/AxiosManager';
+;
 import {
   Container,
   Header,
@@ -27,7 +28,7 @@ const Recoder = () => {
   // Function
   const onSubmit = async (data) => {
     const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
-    const file = new File([audioBlob], `${new Date()}.mp3`, { type: "audio/mpeg" }); // blob을 데이터로 하는 파일 생성
+    const file = new File([audioBlob], 'msg'); // blob을 데이터로 하는 파일 생성
 
     const formData = new FormData(); // formdata 를 생성하여 값과 파일을 넣기
     formData.append('title', data.title);
