@@ -182,6 +182,7 @@ const AlbumSection = styled.section`
 
 const AlbumList = styled.ul`
   display: flex;
+  flex-wrap: wrap;
   gap: 9px;
   margin-bottom: 24px;
   li {
