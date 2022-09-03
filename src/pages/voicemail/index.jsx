@@ -7,12 +7,13 @@ import PageTitle from '../../components/common/PageTitle';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import BtnAdd from '../../components/common/BtnAdd';
 import { MdDeleteOutline } from 'react-icons/md';
+import { IconMoreHoriz } from '../../assets/icons';
 import {
   Container,
   Header,
   Body,
   EmptyWrap,
-  EmptyIcon,
+  IconWrap,
   EmptyDesc,
   MailWrap,
   MailTitle,
@@ -54,13 +55,19 @@ const Voicemail = () => {
 
   const calCreatedAt = (data) => {
     const date = data.split('T')[0];
-    const mon = date.split('-')[1] < 10 ? date.split('-')[1].slice(1) : date.split('-')[1];
-    const day = date.split('-')[2] < 10 ? date.split('-')[2].slice(1) : date.split('-')[2];
+    const mon =
+      date.split('-')[1] < 10
+        ? date.split('-')[1].slice(1)
+        : date.split('-')[1];
+    const day =
+      date.split('-')[2] < 10
+        ? date.split('-')[2].slice(1)
+        : date.split('-')[2];
     const time = data.split('T')[1];
     const hour = time.split(':')[0];
     const min = time.split(':')[1];
 
-    return `${mon}월 ${day}일, ${hour < 12 ? '오전' : '오후'} ${hour}:${min}`
+    return `${mon}월 ${day}일, ${hour < 12 ? '오전' : '오후'} ${hour}:${min}`;
   };
 
   const showDropdown = (e) => {
@@ -94,10 +101,9 @@ const Voicemail = () => {
       <Body>
         {voicemailList.length === 0 ? (
           <EmptyWrap>
-            <EmptyIcon
-              src={`${process.env.PUBLIC_URL}/images/empty.png`}
-              alt="아이콘"
-            />
+            <IconWrap>
+              <IconMoreHoriz />
+            </IconWrap>
             <EmptyDesc>
               <p>아직 등록된 음성메시지가 없습니다.</p>
               <p>첫 번째 음성메시지를 등록해보세요!</p>
@@ -106,34 +112,34 @@ const Voicemail = () => {
         ) : (
           voicemailList.map((item) => {
             return (
-                <MailWrap key={item.voiceMailId}>
-                  <MailTitle>{item.title}</MailTitle>
-                  <MailDesc>{calCreatedAt(item.createdAt)}</MailDesc>
-                  <DropdownWrap>
-                    <DropdownmenuBtn onClick={showDropdown}>
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
-                        alt="아이콘"
-                      />
-                    </DropdownmenuBtn>
-                    <Dropdown hidden={true}>
-                      <DropdownContent
-                        id={item.voiceMailId}
-                        onClick={deleteVoicemails}
-                      >
-                        <MdDeleteOutline color="#000000"></MdDeleteOutline>
-                        <DropdownTitle>삭제</DropdownTitle>
-                      </DropdownContent>
-                    </Dropdown>
-                  </DropdownWrap>
-                  <AudioWrap>
-                    <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
-                  </AudioWrap>
-                  <UserWrap>
-                    <From>{`from. ${item.from}`}</From>
-                    <To>{`to. ${item.to}`}</To>
-                  </UserWrap>
-                </MailWrap>
+              <MailWrap key={item.voiceMailId}>
+                <MailTitle>{item.title}</MailTitle>
+                <MailDesc>{calCreatedAt(item.createdAt)}</MailDesc>
+                <DropdownWrap>
+                  <DropdownmenuBtn onClick={showDropdown}>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
+                      alt="아이콘"
+                    />
+                  </DropdownmenuBtn>
+                  <Dropdown hidden={true}>
+                    <DropdownContent
+                      id={item.voiceMailId}
+                      onClick={deleteVoicemails}
+                    >
+                      <MdDeleteOutline color="#000000"></MdDeleteOutline>
+                      <DropdownTitle>삭제</DropdownTitle>
+                    </DropdownContent>
+                  </Dropdown>
+                </DropdownWrap>
+                <AudioWrap>
+                  <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
+                </AudioWrap>
+                <UserWrap>
+                  <From>{`from. ${item.from}`}</From>
+                  <To>{`to. ${item.to}`}</To>
+                </UserWrap>
+              </MailWrap>
             );
           })
         )}
