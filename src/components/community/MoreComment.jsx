@@ -7,7 +7,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { IconMoreHoriz } from '../../assets/icons';
 
-const MoreComment = ({ postId, commentId }) => {
+const MoreComment = ({ postId, commentId, setOnEdit }) => {
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -20,12 +20,17 @@ const MoreComment = ({ postId, commentId }) => {
     setAnchorEl(null);
   };
 
+  const onClickEdit = () => {
+    setOnEdit(true);
+    handleClose();
+  };
+
   const { mutate: deleteComComment } = useMutation(
     () => api.delete(`/posts/${postId}/comments/${commentId}`),
     {
       onSuccess: () => {
         alert('댓글을 성공적으로 삭제했습니다.');
-        return queryClient.invalidateQueries(['communityPost', postId]);
+        return queryClient.invalidateQueries(['communityPost']);
       },
       onError: (err) => console.log(err),
     },
@@ -52,7 +57,7 @@ const MoreComment = ({ postId, commentId }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem disableRipple>
+        <MenuItem onClick={onClickEdit} disableRipple>
           <MdModeEdit />
           댓글수정
         </MenuItem>

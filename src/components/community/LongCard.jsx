@@ -74,14 +74,13 @@ const LongCard = ({ post, postId }) => {
           </Tags>
 
           <Counts>
-            {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
             {post.like ? (
-              <small onClick={deleteLike}>
+              <small onClick={deleteLike} className="btn-like">
                 <IconIsLiked />
                 좋아요 {post.likeCount}
               </small>
             ) : (
-              <small onClick={addLike}>
+              <small onClick={addLike} className="btn-like">
                 <IconLikeCount />
                 좋아요 {post.likeCount}
               </small>
@@ -208,7 +207,9 @@ export const Counts = styled.div`
     align-items: center;
     margin-right: 9px;
     font-size: 12px;
-    cursor: pointer;
+    &.btn-like {
+      cursor: pointer;
+    }
     svg {
       margin-right: 5px;
     }
