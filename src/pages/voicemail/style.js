@@ -33,7 +33,18 @@ export const EmptyWrap = styled.div`
   align-items: center;
 `;
 
-export const EmptyIcon = styled.img``;
+export const IconWrap = styled.div`
+  width: 34px;
+  height: 34px;
+  border: 2px solid #A8A8A8;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+
+  svg > circle {
+    fill: #A8A8A8;
+  }
+`;
 
 export const EmptyDesc = styled.div`
   margin-top: 20px;
