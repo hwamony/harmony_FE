@@ -12,6 +12,7 @@ const CommentEditor = ({ postId }) => {
     {
       onSuccess: () => {
         alert('댓글이 등록되었습니다!');
+        commentInput.current.value = '';
         return queryClient.invalidateQueries(['communityPost', postId]);
       },
       onError: (err) => console.log(err),

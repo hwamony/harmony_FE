@@ -32,6 +32,13 @@ const VoiceRecorder = (props) => {
 
   return (
     <>
+      <WaveWrap>
+        {!isRecording ? (
+          <img src={`${process.env.PUBLIC_URL}/images/wave_false.png`} style={{ width: '100%', height: '52px'}}></img>
+        ) : (
+          <img src={`${process.env.PUBLIC_URL}/images/wave_true.gif`}></img>
+        )}
+      </WaveWrap>
       <RecordBtn type="button" onClick={togleStartStop}>
         {!isRecording ? (
           <img src={`${process.env.PUBLIC_URL}/images/record.png`}></img>
@@ -63,12 +70,20 @@ const VoiceRecorder = (props) => {
 
 export default VoiceRecorder;
 
+const WaveWrap = styled.div`
+  overflow: hidden;
+  height: 80px;
+  display: flex;
+  align-items: center;
+`;
+
 const RecordBtn = styled.button`
   width: 80px;
   height: 80px;
   border: 2px solid #3ec192;
   border-radius: 50%;
   margin: auto;
+  margin-top: 30px;
   overflow: hidden;
   position: relative;
 `;

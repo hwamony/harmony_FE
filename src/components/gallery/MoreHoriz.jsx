@@ -40,8 +40,6 @@ const MoreHoriz = ({ album }) => {
     },
   });
 
-  // TODO: 삭제 confirm 추가하기
-
   const onClickEdit = () => {
     console.log(album.id);
     navigate(`/galleries/posts/${scheduleId}/${album.id}/edit`, {
@@ -74,7 +72,13 @@ const MoreHoriz = ({ album }) => {
           <MdModeEdit />
           앨범수정
         </MenuItem>
-        <MenuItem onClick={deleteAlbumM} disableRipple>
+        <MenuItem
+          onClick={() => {
+            const res = confirm('앨범을 삭제하시겠습니까?');
+            if (res) deleteAlbumM();
+          }}
+          disableRipple
+        >
           <MdDelete />
           앨범삭제
         </MenuItem>

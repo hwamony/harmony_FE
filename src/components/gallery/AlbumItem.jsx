@@ -147,7 +147,6 @@ const Item = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 500px;
   margin-bottom: 20px;
   border-radius: 12px;
   box-shadow: 2px 2px 20px rgba(184, 187, 192, 0.24);
@@ -170,6 +169,8 @@ const ImgContainer = styled.div`
   grid-gap: 2px;
   cursor: pointer;
   img {
+    width: 100%;
+    min-height: 100%;
     display: block;
     aspect-ratio: 3 / 4;
     object-fit: cover;

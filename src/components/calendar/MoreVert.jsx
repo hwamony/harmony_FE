@@ -38,8 +38,6 @@ const MoreVert = ({ schedule }) => {
     },
   });
 
-  // TODO: 삭제 confirm 추가하기
-
   const onClickEdit = () => {
     console.log(schedule.scheduleId);
     navigate('/schedules/edit', { state: schedule });
@@ -70,7 +68,13 @@ const MoreVert = ({ schedule }) => {
           <MdModeEdit />
           수정
         </MenuItem>
-        <MenuItem onClick={deleteData} disableRipple>
+        <MenuItem
+          onClick={() => {
+            const res = confirm('일정을 삭제하시겠습니까?');
+            if (res) deleteData();
+          }}
+          disableRipple
+        >
           <MdDelete />
           삭제
         </MenuItem>

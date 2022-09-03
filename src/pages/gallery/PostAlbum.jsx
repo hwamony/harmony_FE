@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
+import imageCompression from 'browser-image-compression';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
@@ -35,6 +36,8 @@ const PostAlbum = () => {
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
+
+  const [fakefiles, setFakefiles] = useState([]);
 
   const getEnableSchedules = async (year, month) => {
     const res = await api.get(`/schedules/dates?year=${year}&month=${month}`);
@@ -74,16 +77,35 @@ const PostAlbum = () => {
   const createAlbum = async (e) => {
     e.preventDefault();
 
+
+
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
     formData.append('content', albumContent);
 
-    for (let i = 0; i < files.length; i++) {
-      const imageForm = files[i];
-      console.log(imageForm);
-      formData.append(`imageFiles[${i}]`, imageForm);
-    }
+
+    // 여기서부터 리사이징 시작
+
+    const start = Date.now();
+
+    const options = {
+      maxSizeMB: 1,
+    };
+
+    await Promise.all(files.map(async (item) => {
+      await imageCompression(item, options).then((res) => formData.append(`imageFiles`, res));
+    }))
+
+    const end = Date.now();
+
+    console.log(`${start - end}ms`);
+    
+    // for (let i = 0; i < files.length; i++) {
+    //   const imageForm = files[i];
+    //   console.log(imageForm);
+    //   formData.append(`imageFiles[${i}]`, imageForm);
+    // }
 
     try {
       if (galleryId) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

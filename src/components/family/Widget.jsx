@@ -20,7 +20,6 @@ const Widget = () => {
             <img src={hwamokGrades[0].icon} alt={hwamokGrades[0].name} />
           </Circle>
           <div>
-            {/* TODO: 가족 정보 페이지 링크 추가 */}
             <strong>
               {familyInfo.familyName}
               <IconDetail />

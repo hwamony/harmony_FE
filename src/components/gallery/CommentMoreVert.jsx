@@ -40,8 +40,6 @@ const CommentMoreVert = ({ commentId, setOnEdit }) => {
     },
   });
 
-  // TODO: 삭제 confirm 추가하기
-
   const onClickEdit = () => {
     setOnEdit(true);
     handleClose();
@@ -71,7 +69,13 @@ const CommentMoreVert = ({ commentId, setOnEdit }) => {
           <MdModeEdit />
           댓글수정
         </MenuItem>
-        <MenuItem onClick={deleteCommentM} disableRipple>
+        <MenuItem
+          onClick={() => {
+            const res = confirm('댓글을 삭제하시겠습니까?');
+            if (res) deleteCommentM();
+          }}
+          disableRipple
+        >
           <MdDelete />
           댓글삭제
         </MenuItem>
