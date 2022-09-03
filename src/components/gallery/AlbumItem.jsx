@@ -170,6 +170,7 @@ const ImgContainer = styled.div`
   cursor: pointer;
   img {
     width: 100%;
+    min-height: 100%;
     display: block;
     aspect-ratio: 3 / 4;
     object-fit: cover;

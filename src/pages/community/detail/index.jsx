@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../api/AxiosManager';
@@ -40,11 +40,11 @@ const PostDetail = () => {
             댓글 <span>{postData.comments.length}</span>
           </h3>
           {postData.comments.length > 0 ? (
-            postData.comments.map((comment, i) => (
-              // FIXME: API 수정 후 되돌리기
-              // <CommentItem key={comment.commentId} comment={comment} />
-              <CommentItem key={i} comment={comment} />
-            ))
+            <ul>
+              {postData.comments.map((comment) => (
+                <CommentItem key={comment.commentId} comment={comment} />
+              ))}
+            </ul>
           ) : (
             <NoComments>
               <div>

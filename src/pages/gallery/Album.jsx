@@ -163,7 +163,12 @@ const Album = () => {
           <IconSave />
         </button>
         <strong>선택 {size}</strong>
-        <button onClick={deleteImages}>
+        <button
+          onClick={() => {
+            const res = confirm('선택한 이미지를 삭제하시겠습니까?');
+            if (res) deleteImages();
+          }}
+        >
           <FiTrash2 />
         </button>
       </SelectFooter>
