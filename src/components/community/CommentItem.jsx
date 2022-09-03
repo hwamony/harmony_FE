@@ -6,7 +6,7 @@ import { Grade } from './LongCard';
 import { hwamokGrades } from '../../utils/data';
 import MoreComment from './MoreComment';
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment, postId }) => {
   return (
     <Item>
       <Grade>
@@ -18,11 +18,11 @@ const CommentItem = ({ comment }) => {
       <CommentContent>
         <div className="comment-header">
           <strong>{comment.commenter.nickname}</strong>
-          {comment.isCommenter && <MoreComment />}
+          {comment.iamCommenter && (
+            <MoreComment postId={postId} commentId={comment.commentId} />
+          )}
         </div>
-        <p>
-          {comment.content}
-        </p>
+        <p>{comment.content}</p>
         <small>{dayjs(comment.createdAt).format('YYYY년 M월 D일')}</small>
       </CommentContent>
     </Item>

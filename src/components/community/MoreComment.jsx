@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { IconMoreHoriz } from '../../assets/icons';
 
-const MoreComment = () => {
+const MoreComment = ({ postId, commentId }) => {
+  const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -15,6 +19,17 @@ const MoreComment = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const { mutate: deleteComComment } = useMutation(
+    () => api.delete(`/posts/${postId}/comments/${commentId}`),
+    {
+      onSuccess: () => {
+        alert('댓글을 성공적으로 삭제했습니다.');
+        return queryClient.invalidateQueries(['communityPost', postId]);
+      },
+      onError: (err) => console.log(err),
+    },
+  );
 
   return (
     <>
@@ -41,7 +56,13 @@ const MoreComment = () => {
           <MdModeEdit />
           댓글수정
         </MenuItem>
-        <MenuItem disableRipple>
+        <MenuItem
+          onClick={() => {
+            const res = confirm('댓글을 삭제하시겠습니까?');
+            if (res) deleteComComment();
+          }}
+          disableRipple
+        >
           <MdDelete />
           댓글삭제
         </MenuItem>
