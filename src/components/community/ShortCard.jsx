@@ -4,7 +4,11 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { IconLikeCount, IconCommentCount } from '../../assets/icons';
+import {
+  IconIsLiked,
+  IconLikeCount,
+  IconCommentCount,
+} from '../../assets/icons';
 import { Grade, Profile, Info, CardContent, Tags, Counts } from './LongCard';
 import { hwamokGrades } from '../../utils/data';
 
@@ -49,7 +53,7 @@ const ShortCard = ({ post }) => {
             <Counts>
               {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
               <small>
-                <IconLikeCount />
+                {post.like ? <IconIsLiked /> : <IconLikeCount />}
                 {post.likeCount}
               </small>
               <small>

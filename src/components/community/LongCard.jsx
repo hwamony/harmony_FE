@@ -2,18 +2,45 @@ import React from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { IconLikeCount, IconCommentCount } from '../../assets/icons';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+
 import { hwamokGrades } from '../../utils/data';
 import MorePost from './MorePost';
+import {
+  IconIsLiked,
+  IconLikeCount,
+  IconCommentCount,
+} from '../../assets/icons';
 
 const LongCard = ({ post, postId }) => {
+  const queryClient = useQueryClient();
+  const { mutate: addLike } = useMutation(
+    () => api.put(`/posts/${postId}/likes`, { like: true }),
+    {
+      onSuccess: () => {
+        return queryClient.invalidateQueries(['communityPost', postId]);
+      },
+      onError: (err) => console.log(err),
+    },
+  );
+
+  const { mutate: deleteLike } = useMutation(
+    () => api.delete(`/posts/${postId}/likes`),
+    {
+      onSuccess: () => {
+        return queryClient.invalidateQueries(['communityPost', postId]);
+      },
+      onError: (err) => console.log(err),
+    },
+  );
+
   return (
     <>
       <CardContainer>
         <CardTitle>
-          {/* TODO: api에 카테고리 값 추가로 받아오기 */}
           <div>
-            {/* <em>{post.category}</em> */}
+            <em>카테고리 | {post.category}</em>
             <h2>{post.title}</h2>
           </div>
           <MorePost postId={postId} />
@@ -48,10 +75,18 @@ const LongCard = ({ post, postId }) => {
 
           <Counts>
             {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
-            <small>
-              <IconLikeCount />
-              좋아요 {post.likeCount}
-            </small>
+            {post.like ? (
+              <small onClick={deleteLike}>
+                <IconIsLiked />
+                좋아요 {post.likeCount}
+              </small>
+            ) : (
+              <small onClick={addLike}>
+                <IconLikeCount />
+                좋아요 {post.likeCount}
+              </small>
+            )}
+
             <small>
               <IconCommentCount />
               댓글 {post.comments.length}
@@ -93,12 +128,12 @@ const CardTitle = styled.div`
   }
 
   svg circle {
-      fill: #bababa;
-    }
-    .MuiIconButton-root {
-      height: 34px;
-      margin-top: -17px;
-    }
+    fill: #bababa;
+  }
+  .MuiIconButton-root {
+    height: 34px;
+    margin-top: -17px;
+  }
 `;
 
 export const Profile = styled.div`
@@ -173,6 +208,7 @@ export const Counts = styled.div`
     align-items: center;
     margin-right: 9px;
     font-size: 12px;
+    cursor: pointer;
     svg {
       margin-right: 5px;
     }
