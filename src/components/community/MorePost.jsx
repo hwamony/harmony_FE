@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
@@ -8,8 +8,9 @@ import { styled, alpha } from '@mui/material/styles';
 import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { IconMoreHoriz } from '../../assets/icons';
 
-const MorePost = ({ postId }) => {
+const MorePost = ({ post }) => {
   const navigate = useNavigate();
+  const { postId } = useParams();
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -34,6 +35,13 @@ const MorePost = ({ postId }) => {
     },
   );
 
+  const onClickEdit = () => {
+    navigate(`/community/posts/${postId}/edit`, {
+      state: post,
+    });
+    handleClose();
+  };
+
   return (
     <>
       <IconButton
@@ -55,7 +63,7 @@ const MorePost = ({ postId }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem disableRipple>
+        <MenuItem onClick={onClickEdit} disableRipple>
           <MdModeEdit />글 수정
         </MenuItem>
         <MenuItem
