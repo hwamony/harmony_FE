@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { formdataApi } from '../../../api/AxiosManager';
+import { communityRoles } from '../../../utils/data';
 import styled from 'styled-components';
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import PageTitle from '../../../components/common/PageTitle';
 import TagBox from '../../../components/community/TagBox';
 import HeaderMid from '../../../components/common/HeaderMid';
-import { Button } from '../../../styles/Button';
 import { IconCamera } from '../../../assets/icons';
-import { communityRoles } from '../../../utils/data';
-import { formdataApi } from '../../../api/AxiosManager';
+import { Button } from '../../../styles/Button';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -156,10 +156,19 @@ const Post = () => {
           </TagWrapper>
 
           <AddPhoto>
-            {/* TODO: 첨부한 이미지 삭제 기능 추가 */}
             {previewSrc ? (
               <label htmlFor="input-photo">
                 <img src={previewSrc} alt="" />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPreviewSrc();
+                    setFile();
+                  }}
+                >
+                  삭제
+                </button>
               </label>
             ) : (
               <label htmlFor="input-photo">
@@ -321,6 +330,7 @@ const AddPhoto = styled.div`
   padding: 15px 20px;
   label {
     overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -340,6 +350,15 @@ const AddPhoto = styled.div`
       min-width: 85px;
       min-height: 85px;
       object-fit: cover;
+    }
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-bottom-left-radius: 5px;
+      background: #000;
+      color: #fff;
+      font-size: 12px;
     }
   }
 `;
