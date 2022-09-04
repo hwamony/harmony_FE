@@ -4,18 +4,6 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
-export const Header = styled.div`
-  height: 60px;
-  padding: 14px 0 0 20px;
-  h1 {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: 0.0333333px;
-    color: #18191f;
-  }
-`;
-
 export const Body = styled.div`
   width: 100%;
   position: relative;
@@ -36,13 +24,13 @@ export const EmptyWrap = styled.div`
 export const IconWrap = styled.div`
   width: 34px;
   height: 34px;
-  border: 2px solid #A8A8A8;
+  border: 2px solid #a8a8a8;
   border-radius: 50%;
   display: flex;
   justify-content: center;
 
   svg > circle {
-    fill: #A8A8A8;
+    fill: #a8a8a8;
   }
 `;
 
@@ -84,39 +72,17 @@ export const MailDesc = styled.div`
   color: #adadad;
 `;
 
-export const DropdownWrap = styled.div``;
-
-export const DropdownmenuBtn = styled.button`
-  cursor: pointer;
+export const DropdownWrap = styled.div`
   position: absolute;
-  top: 20px;
+  top: 30px;
   right: 12px;
-`;
-
-export const Dropdown = styled.div`
-  position: absolute;
-  top: 46px;
-  right: 20px;
-  background: #ffffff;
-  width: 10vw;
-  min-width: 120px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-`;
-
-export const DropdownContent = styled.div`
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-export const DropdownTitle = styled.div`
-  padding-left: 6px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  letter-spacing: 0.0333333px;
+  svg circle {
+    fill: #bababa;
+  }
+  .MuiIconButton-root {
+    height: 34px;
+    margin-top: -17px;
+  }
 `;
 
 export const AudioWrap = styled.div`

@@ -43,7 +43,7 @@ const LongCard = ({ post, postId }) => {
             <em>카테고리 | {post.category}</em>
             <h2>{post.title}</h2>
           </div>
-          <MorePost postId={postId} />
+          {post.iamPoster && <MorePost post={post} />}
         </CardTitle>
 
         <Profile>

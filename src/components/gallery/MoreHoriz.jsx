@@ -41,7 +41,6 @@ const MoreHoriz = ({ album }) => {
   });
 
   const onClickEdit = () => {
-    console.log(album.id);
     navigate(`/galleries/posts/${scheduleId}/${album.id}/edit`, {
       state: album,
     });
