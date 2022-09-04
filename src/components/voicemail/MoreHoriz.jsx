@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { MdModeEdit, MdDelete } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { IconMoreHoriz } from '../../assets/icons';
 
-const MorePost = ({ post }) => {
+const MoreHoriz = ({ voiceMailId }) => {
   const navigate = useNavigate();
-  const { postId } = useParams();
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -23,24 +22,17 @@ const MorePost = ({ post }) => {
     setAnchorEl(null);
   };
 
-  const { mutate: deletePost } = useMutation(
-    () => api.delete(`/posts/${postId}`),
+  const { mutate: deleteVoicemail } = useMutation(
+    () => api.delete(`/voice-mails/${voiceMailId}`),
     {
       onSuccess: () => {
-        alert('게시글을 성공적으로 삭제했습니다.');
-        navigate('/community');
-        return queryClient.invalidateQueries(['communityPosts', '전체']);
+        alert('성공적으로 삭제했습니다.');
+        navigate(0);
+        return queryClient.invalidateQueries(['mails']);
       },
       onError: (err) => console.log(err),
     },
   );
-
-  const onClickEdit = () => {
-    navigate(`/community/posts/${postId}/edit`, {
-      state: post,
-    });
-    handleClose();
-  };
 
   return (
     <>
@@ -63,24 +55,22 @@ const MorePost = ({ post }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={onClickEdit} disableRipple>
-          <MdModeEdit />글 수정
-        </MenuItem>
         <MenuItem
           disableRipple
           onClick={() => {
             const res = confirm('정말로 삭제하시겠습니까?');
-            if (res) deletePost();
+            if (res) deleteVoicemail();
           }}
         >
-          <MdDelete />글 삭제
+          <MdDelete />
+          삭제
         </MenuItem>
       </StyledMenu>
     </>
   );
 };
 
-export default MorePost;
+export default MoreHoriz;
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -114,9 +104,6 @@ const StyledMenu = styled((props) => (
         fontSize: 18,
         color: theme.palette.text.secondary,
         marginRight: '10px',
-        '& circle': {
-          fill: '#bababa',
-        },
       },
       '&:active': {
         backgroundColor: alpha(

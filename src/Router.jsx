@@ -45,8 +45,8 @@ const Router = () => {
       <Route path="/voice-recorder" element={<Voicercorder />} />
       <Route path="/community" element={<Community />} />
       <Route path="/community/posts" element={<Post />} />
-      <Route path="/community/posts/edit" element={<Post />} />
       <Route path="/community/posts/:postId" element={<PostDetail />} />
+      <Route path="/community/posts/:postId/edit" element={<Post />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/signupcomplete" element={<SignupComplete />} />
       <Route path="/familycode" element={<Familycode />} />
