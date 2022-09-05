@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -16,6 +16,12 @@ import {
 
 const LongCard = ({ post, postId }) => {
   const queryClient = useQueryClient();
+  const [postContent, setPostContent] = useState();
+
+  useEffect(() => {
+    setPostContent(post.content);
+  }, [post]);
+
   const { mutate: addLike } = useMutation(
     () => api.put(`/posts/${postId}/likes`, { like: true }),
     {
@@ -64,13 +70,13 @@ const LongCard = ({ post, postId }) => {
         <CardContent>
           <Content>
             <Textarea
-                defaultValue={post.content}
-                wrap="hard"
-                spellCheck="false"
-                required
-                className="album-content"
-                readOnly
-              />
+              defaultValue={postContent}
+              wrap="hard"
+              spellCheck="false"
+              required
+              className="album-content"
+              readOnly
+            />
             {post.imageUrl && <img src={post.imageUrl} alt="" />}
           </Content>
 
