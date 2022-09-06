@@ -15,8 +15,6 @@ import {
   InputWrap,
   Asterisk,
   PolicyWrap,
-  PolicyDesc,
-  PolicyLink,
   PolicyCheck,
   PolicyIcon,
   ButtonWrap,
@@ -40,7 +38,7 @@ const Signup = () => {
     try {
       const response = await api.post('/signup', data);
       console.log('response >>', response.data);
-      navigate('/signupcomplete');
+      navigate('/signup/complete');
     } catch (err) {
       console.log('Error >>', err.response.data);
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../styles/Button';
+import { Button } from '../../../styles/Button';
 import { useNavigate } from 'react-router-dom';
 import {
     Container,
