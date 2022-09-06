@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import api, { formdataApi } from '../../api/AxiosManager';
+import useAuth from '../../hooks/useAuth';
 import imageCompression from 'browser-image-compression';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -27,6 +28,8 @@ import { MdAddPhotoAlternate } from 'react-icons/md';
 const PostAlbum = () => {
   const navigate = useNavigate();
   const galleryId = useParams().galleryId;
+  const { actions } = useAuth();
+  const queryClient = useQueryClient();
   const [date, setDate] = useState(dayjs());
   const [schedule, setSchedule] = useState('');
   const [scheduleNum, setScheduleNum] = useState(-1);
@@ -36,8 +39,6 @@ const PostAlbum = () => {
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
-
-  const [fakefiles, setFakefiles] = useState([]);
 
   const getEnableSchedules = async (year, month) => {
     const res = await api.get(`/schedules/dates?year=${year}&month=${month}`);
@@ -77,35 +78,26 @@ const PostAlbum = () => {
   const createAlbum = async (e) => {
     e.preventDefault();
 
-
-
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
     formData.append('content', albumContent);
 
-
-    // 여기서부터 리사이징 시작
-
+    // 리사이징 시작
     const start = Date.now();
-
     const options = {
       maxSizeMB: 1,
     };
-
-    await Promise.all(files.map(async (item) => {
-      await imageCompression(item, options).then((res) => formData.append(`imageFiles`, res));
-    }))
-
+    await Promise.all(
+      files.map(async (item) => {
+        await imageCompression(item, options).then((res) =>
+          formData.append(`imageFiles`, res),
+        );
+      }),
+    );
     const end = Date.now();
-
     console.log(`${start - end}ms`);
-    
-    // for (let i = 0; i < files.length; i++) {
-    //   const imageForm = files[i];
-    //   console.log(imageForm);
-    //   formData.append(`imageFiles[${i}]`, imageForm);
-    // }
+    // 리사이징 끝
 
     try {
       if (galleryId) {
@@ -123,7 +115,9 @@ const PostAlbum = () => {
         );
         console.log(res);
         alert('앨범이 생성되었습니다!');
+        actions.onScoreChanged(20);
         navigate('/galleries');
+        return queryClient.invalidateQueries(['familyInfo']);
       }
     } catch (e) {
       console.log(e);
