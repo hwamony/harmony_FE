@@ -64,7 +64,7 @@ const CommentItem = ({ scheduleId, comment }) => {
           </div>
           <p>{comment.content}</p>
           <small>{dayjs(comment.createdAt).format('YYYY년 M월 D일')}</small>
-          {comment.iamCommenter && (
+          {comment.isCommenter && (
             <CommentMoreVert commentId={comment.id} setOnEdit={setOnEdit} />
           )}
         </>
