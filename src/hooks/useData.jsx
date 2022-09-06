@@ -16,9 +16,7 @@ export const useFamilyData = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    cacheTime: 0,
   });
 
 const getValidInfo = async () => {
@@ -54,9 +52,6 @@ export const useFamilyCode = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
 const getRankings = async () => {

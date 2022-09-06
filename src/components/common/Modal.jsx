@@ -172,7 +172,7 @@ const Modal = (props) => {
   const Detail = () => {
     return (
       <article>
-        <ScheduleDetail schedule={props.schedule} />
+        <ScheduleDetail schedule={props.schedule} closeModal={ModalClose} />
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}

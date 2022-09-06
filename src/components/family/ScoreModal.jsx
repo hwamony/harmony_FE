@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useQueryClient } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
 import { useFamilyData } from '../../hooks/useData';
 import { hwamokGrades } from '../../utils/data';
 
 const ScoreModal = ({ isVisible, setIsVisible }) => {
+  const queryClient = useQueryClient();
   const { data: familyInfo } = useFamilyData();
   const { scoreUp, actions } = useAuth();
 
@@ -30,7 +32,14 @@ const ScoreModal = ({ isVisible, setIsVisible }) => {
           <strong>{scoreUp}방울 획득!</strong>
           <p>축하합니다!</p>
           <BtnWrap>
-            <ModalBtn onClick={ModalClose}>확인</ModalBtn>
+            <ModalBtn
+              onClick={() => {
+                ModalClose();
+                return queryClient.invalidateQueries(['familyInfo']);
+              }}
+            >
+              확인
+            </ModalBtn>
           </BtnWrap>
         </ModalInner>
       </Overlay>

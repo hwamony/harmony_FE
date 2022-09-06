@@ -81,7 +81,7 @@ export const hwamokScores = [
     score: 50,
   },
   {
-    title: '일정 등록 (2인 이상)',
+    title: '일정 완료 (2인 이상)',
     score: 10,
   },
   {
