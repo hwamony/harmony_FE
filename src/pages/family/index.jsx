@@ -10,7 +10,6 @@ import { Button } from '../../styles/Button';
 
 const FamilyScore = () => {
   const navigate = useNavigate();
-  // FIXME: 랭킹 api로 교체 또는 방울 정보 받는 api 따로
   const { data: familyInfo } = useFamilyData();
 
   return (
@@ -21,11 +20,10 @@ const FamilyScore = () => {
       <Content>
         <GradeInfo>
           <h2>{familyInfo.familyName}</h2>
-          {/* FIXME: 등급 받아와서 교체 */}
-          <img src={hwamokGrades[0].image} alt="" />
-          <strong>{hwamokGrades[0].name}</strong>
+          <img src={hwamokGrades[familyInfo.level].image} alt="" />
+          <strong>{hwamokGrades[familyInfo.level].name}</strong>
           <p>
-            <span>0방울</span> | 0방울
+            <span>월간 {familyInfo.monthlyScore}방울</span> | 누적 {familyInfo.score}방울
           </p>
 
           <Button onClick={() => navigate('/family/rankings')}>
