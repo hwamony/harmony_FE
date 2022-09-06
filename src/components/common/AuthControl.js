@@ -13,6 +13,8 @@ const AuthControl = () => {
     console.log('hasToken:', hasToken);
     if (hasToken) {
       actions.onLoggedIn();
+    } else if(pathname === '/login/oauth2/kakao') {
+      actions.onLoggedOut();
     } else {
       actions.onLoggedOut();
       navigate('/login');

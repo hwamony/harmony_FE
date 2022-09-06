@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../components/common/PageTitle';
 
+import { KAKAO_AUTH_URL } from '../../utils/OAuth';
 import { Button, OutlineButton } from '../../styles/Button';
 import { Input } from '../../styles/Input';
 import {
@@ -13,6 +14,7 @@ import {
   BtnWrap,
   SocialLoginWrap,
   SocialLogin,
+  SocialLoginBtn,
   LoginDesc,
   SignupLink,
   ErrorMsg,
@@ -37,14 +39,6 @@ const Login = () => {
       console.log(err.response.data);
       setErrMsg(err.response.data.message);
     }
-  };
-
-  const socialKakao = async () => {
-    alert('소셜로그인 - 카카오');
-
-    // 추후 엔드포인트 연결
-    const res = api.get('');
-    console.log(res);
   };
 
   const socialGoogle = async () => {
@@ -86,26 +80,13 @@ const Login = () => {
           <Button style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.1)' }}>
             로그인
           </Button>
-          <SocialLoginWrap>
-            <SocialLogin style={{ paddingLeft: '0' }}>
-              <OutlineButton onClick={socialKakao}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/kakao.png`}
-                  alt="카카오"
-                />
-                <LoginDesc>카카오 로그인</LoginDesc>
-              </OutlineButton>
-            </SocialLogin>
-            <SocialLogin style={{ paddingRight: '0' }}>
-              <OutlineButton onClick={socialGoogle}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/google.png`}
-                  alt="구글"
-                />
-                <LoginDesc>구글 로그인</LoginDesc>
-              </OutlineButton>
-            </SocialLogin>
-          </SocialLoginWrap>
+          <SocialLoginBtn href={KAKAO_AUTH_URL}>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/kakao.png`}
+              alt="카카오"
+            />
+            <LoginDesc>카카오 로그인</LoginDesc>
+          </SocialLoginBtn>
           <SignupLink onClick={() => navigate('/signup')}>
             <>
               아직 회원이 아니신가요? <strong>회원가입</strong>

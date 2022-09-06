@@ -1,23 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useFamilyData, useRankings } from '../../hooks/useData';
+import { useFamilyData } from '../../hooks/useData';
+
 import { IconAlert, IconDetail } from '../../assets/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
+import { connect, send } from '../../hooks/useSocket';
 
 const Widget = () => {
   const navigate = useNavigate();
-
-  // FIXME: 랭킹 api 완성 후 교체 - 방울 정보 및 화목 등급 필요
   const { data: familyInfo } = useFamilyData();
-  // const { data } = useRankings();
 
+  connect();
+  
   return (
     <FamilyWidget>
       <Link to="/family">
         <LeftWrapper>
           <Circle>
-            <img src={hwamokGrades[0].icon} alt={hwamokGrades[0].name} />
+            <img
+              src={hwamokGrades[familyInfo.level].icon}
+              alt={hwamokGrades[familyInfo.level].name}
+            />
           </Circle>
           <div>
             <strong>
@@ -25,8 +29,11 @@ const Widget = () => {
               <IconDetail />
             </strong>
             <p>
-              0방울 <span>| 0방울</span>
-              <span className="level">{hwamokGrades[0].name}</span>
+              {familyInfo.monthlyScore}방울{' '}
+              <span>| {familyInfo.score}방울</span>
+              <span className="level">
+                {hwamokGrades[familyInfo.level].name}
+              </span>
             </p>
           </div>
         </LeftWrapper>

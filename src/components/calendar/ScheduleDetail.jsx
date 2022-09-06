@@ -1,19 +1,23 @@
 import React from 'react';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
-import api from '../../api/AxiosManager';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styled from 'styled-components';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import api from '../../api/AxiosManager';
+import useAuth from '../../hooks/useAuth';
 import { IconCheck } from '../../assets/icons';
 
-const ScheduleDetail = ({ schedule }) => {
+const ScheduleDetail = ({ schedule, closeModal }) => {
   const queryClient = useQueryClient();
+  const { actions } = useAuth();
+
   const { mutate: toggleDone } = useMutation(
     () => api.put(`/schedules/${schedule.scheduleId}/done`),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['schedule']);
+        if (schedule.done) return queryClient.invalidateQueries(['familyInfo']);
       },
       onError: (err) => {
         console.log(err);
@@ -52,7 +56,13 @@ const ScheduleDetail = ({ schedule }) => {
 
       <button
         type="button"
-        onClick={toggleDone}
+        onClick={() => {
+          toggleDone();
+          if (schedule.members.length >= 2 && !schedule.done) {
+            actions.onScoreChanged(10);
+            return closeModal();
+          }
+        }}
         className={cn(schedule.done && 'done')}
       >
         <IconCheck />

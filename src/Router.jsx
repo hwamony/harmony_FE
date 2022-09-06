@@ -3,7 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/login'));
+const Kakao = React.lazy(() => import('./pages/login/kakao'));
 const Signup = React.lazy(() => import('./pages/signup'));
+const SignupComplete = React.lazy(() => import('./pages/signup/complete'));
 const Schedule = React.lazy(() => import('./pages/calendar/Schedule'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
 const AlbumLayout = React.lazy(() => import('./pages/gallery/AlbumLayout'));
@@ -17,7 +19,6 @@ const Community = React.lazy(() => import('./pages/community'));
 const Post = React.lazy(() => import('./pages/community/posts'));
 const PostDetail = React.lazy(() => import('./pages/community/detail'));
 const Setting = React.lazy(() => import('./pages/setting'));
-const SignupComplete = React.lazy(() => import('./pages/signupcomplete'));
 const Familycode = React.lazy(() => import('./pages/familycode'));
 const Role = React.lazy(() => import('./pages/role'));
 const Notice = React.lazy(() => import('./pages/notice'));
@@ -31,7 +32,9 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/signup/complete" element={<SignupComplete />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/login/oauth2/kakao" element={<Kakao />} />
       <Route path="/schedules/*" element={<Schedule />} />
       <Route path="/galleries" element={<Gallery />} />
       <Route path="/galleries/:scheduleId" element={<AlbumLayout />}>
@@ -48,7 +51,6 @@ const Router = () => {
       <Route path="/community/posts/:postId" element={<PostDetail />} />
       <Route path="/community/posts/:postId/edit" element={<Post />} />
       <Route path="/settings" element={<Setting />} />
-      <Route path="/signupcomplete" element={<SignupComplete />} />
       <Route path="/familycode" element={<Familycode />} />
       <Route path="/role" element={<Role />} />
       <Route path="/notice" element={<Notice />} />

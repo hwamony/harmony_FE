@@ -7,8 +7,7 @@ const getFamilyInfo = async () => {
     const res = await apis.getFamily();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 
@@ -17,9 +16,7 @@ export const useFamilyData = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    cacheTime: 0,
   });
 
 const getValidInfo = async () => {
@@ -27,8 +24,7 @@ const getValidInfo = async () => {
     const res = await apis.getValidUser();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 
@@ -47,8 +43,7 @@ const getFamilyCode = async () => {
     const res = await apis.getCode();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 
@@ -57,9 +52,6 @@ export const useFamilyCode = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
 const getRankings = async () => {

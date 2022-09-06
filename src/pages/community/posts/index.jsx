@@ -71,6 +71,13 @@ const Post = () => {
     formData.append('category', state.category);
     formData.append('title', state.title);
     formData.append('content', state.content);
+    if (post?.imageUrl) {
+      !previewSrc || file
+        ? formData.append('change', true)
+        : formData.append('change', false);
+    } else if (post && file) {
+      formData.append('change', true);
+    }
     if (localTags) {
       for (let i = 0; i < localTags.length; i++) {
         const tagForm = localTags[i];

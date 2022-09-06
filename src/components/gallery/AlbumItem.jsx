@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import api from '../../api/AxiosManager';
+import useAuth from '../../hooks/useAuth';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import MoreHoriz from './MoreHoriz';
@@ -22,6 +23,7 @@ const AlbumItem = ({ album, isLoading, title }) => {
   const navigate = useNavigate();
   const scheduleId = useParams().scheduleId;
   const commentInput = useRef();
+  const { actions } = useAuth();
   const queryClient = useQueryClient();
   const [albumContent, setAlbumContent] = useState();
 
@@ -46,8 +48,7 @@ const AlbumItem = ({ album, isLoading, title }) => {
   const { mutate: addCommentM } = useMutation(
     (galleryId) => addComment(galleryId),
     {
-      onSuccess: (res) => {
-        alert(res.data.msg);
+      onSuccess: () => {
         commentInput.current.value = '';
         queryClient.invalidateQueries(['albums', scheduleId]);
       },
@@ -121,6 +122,8 @@ const AlbumItem = ({ album, isLoading, title }) => {
                   onClick={(e) => {
                     e.preventDefault();
                     addCommentM(album.id);
+                    actions.onScoreChanged(5);
+                    return queryClient.invalidateQueries(['familyInfo']);
                   }}
                 >
                   등록
