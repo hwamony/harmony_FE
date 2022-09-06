@@ -53,7 +53,7 @@ const Modal = (props) => {
 
   const joinHandler = async (data) => {
     try {
-      const response = await api.put('/family/join', data);
+      await api.put('/family/join', data);
       navigate('/role');
     } catch (err) {
       console.log('err>>', err.response.data);
@@ -172,7 +172,7 @@ const Modal = (props) => {
   const Detail = () => {
     return (
       <article>
-        <ScheduleDetail schedule={props.schedule} />
+        <ScheduleDetail schedule={props.schedule} closeModal={ModalClose} />
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}

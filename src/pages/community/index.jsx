@@ -42,7 +42,6 @@ const Community = () => {
       refetchOnWindowFocus: false,
       getNextPageParam: (lastPage) =>
         !lastPage.last ? lastPage.nextPage : undefined,
-      onSuccess: (data) => console.log(data),
     },
   );
 
@@ -80,7 +79,6 @@ const Community = () => {
             </Category>
           </CommunityNav>
         </>
-
 
         <ContentWrap>
           <CommunityContent>

@@ -55,8 +55,7 @@ const Home = () => {
     getMonthSchedule,
     {
       enabled: !!getValidInfo && isValidUser,
-      onSuccess: (data) => {
-        console.log(data);
+      onSuccess: () => {
         dispatch(setDay(null));
       },
       refetchOnWindowFocus: false,

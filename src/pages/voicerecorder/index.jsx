@@ -1,36 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { BackButton, Button } from '../../styles/Button';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
 import { useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import useAuth from '../../hooks/useAuth';
+import api from '../../api/AxiosManager';
+
+import VoiceRecorder from '../../components/voicemail/VoiceRecorder';
+import { BackButton, Button } from '../../styles/Button';
 import { Input } from '../../styles/Input';
 import { Label } from '../../styles/Label';
-import api from '../../api/AxiosManager';
-;
-import {
-  Container,
-  Header,
-  Title,
-  Body,
-  InputWrap,
-  LabelTitle,
-  RecordWrap,
-} from './style';
+import { Container, Header, Title, Body, InputWrap, LabelTitle, RecordWrap } from './style';
 
 const Recoder = () => {
-  // State
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { actions } = useAuth();
+  const { register, handleSubmit } = useForm();
   const [blobUrl, setBlobUrl] = useState('');
 
-  // Referance
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
-
-  // Function
   const onSubmit = async (data) => {
     const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
     const file = new File([audioBlob], 'msg'); // blob을 데이터로 하는 파일 생성
 
-    const formData = new FormData(); // formdata 를 생성하여 값과 파일을 넣기
+    const formData = new FormData();
     formData.append('title', data.title);
     formData.append('from', data.from);
     formData.append('to', data.to);
@@ -39,7 +31,9 @@ const Recoder = () => {
     try {
       const res = await api.post('/voice-mails', formData);
       console.log(res);
-      navigate('/voice-mails')
+      actions.onScoreChanged(20);
+      navigate('/voice-mails');
+      return queryClient.invalidateQueries(['familyInfo']);
     } catch (err) {
       console.log(err);
     }
@@ -55,6 +49,7 @@ const Recoder = () => {
         />
         <Title>녹음등록</Title>
       </Header>
+
       <Body>
         <InputWrap>
           <Input
@@ -96,9 +91,11 @@ const Recoder = () => {
             style={{ marginTop: '16px' }}
           ></Input>
         </InputWrap>
+
         <RecordWrap>
           <VoiceRecorder setBlobUrl={setBlobUrl} />
         </RecordWrap>
+
         <Button style={{ marginTop: '36px' }}>등록하기</Button>
       </Body>
     </Container>
