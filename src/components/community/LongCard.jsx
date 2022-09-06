@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { hwamokGrades } from '../../utils/data';
 import MorePost from './MorePost';
 import {
@@ -43,7 +44,7 @@ const LongCard = ({ post, postId }) => {
             <em>카테고리 | {post.category}</em>
             <h2>{post.title}</h2>
           </div>
-          <MorePost postId={postId} />
+          {post.iamPoster && <MorePost post={post} />}
         </CardTitle>
 
         <Profile>
@@ -62,8 +63,14 @@ const LongCard = ({ post, postId }) => {
 
         <CardContent>
           <Content>
-            {/* FIXME: textarea로 수정 */}
-            <p>{post.content}</p>
+            <Textarea
+                defaultValue={post.content}
+                wrap="hard"
+                spellCheck="false"
+                required
+                className="album-content"
+                readOnly
+              />
             {post.imageUrl && <img src={post.imageUrl} alt="" />}
           </Content>
 
@@ -170,13 +177,6 @@ export const CardContent = styled.div`
 
 const Content = styled.div`
   margin: 18px 0 7.5px;
-  p {
-    width: 100%;
-    margin-bottom: 14px;
-    color: #000;
-    font-size: 15px;
-    line-height: 1.5;
-  }
   img {
     display: block;
     max-width: 600px;
@@ -214,4 +214,16 @@ export const Counts = styled.div`
       margin-right: 5px;
     }
   }
+`;
+
+const Textarea = styled(TextareaAutosize)`
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  border: none;
+  outline: none;
+  line-height: 1.5;
+  font-size: 15px;
+  color: #000;
+  resize: none;
 `;

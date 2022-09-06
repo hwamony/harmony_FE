@@ -1,15 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import PageTitle from '../../components/common/PageTitle';
-import AudioPlayer from '../../components/voicemail/AudioPlayer';
+import Header from '../../components/common/Header';
 import BtnAdd from '../../components/common/BtnAdd';
-import { MdDeleteOutline } from 'react-icons/md';
+import AudioPlayer from '../../components/voicemail/AudioPlayer';
+import MoreHoriz from '../../components/voicemail/MoreHoriz';
 import { IconMoreHoriz } from '../../assets/icons';
 import {
   Container,
-  Header,
   Body,
   EmptyWrap,
   IconWrap,
@@ -18,10 +17,6 @@ import {
   MailTitle,
   MailDesc,
   DropdownWrap,
-  DropdownmenuBtn,
-  Dropdown,
-  DropdownContent,
-  DropdownTitle,
   AudioWrap,
   UserWrap,
   From,
@@ -31,19 +26,12 @@ import {
 const Voicemail = () => {
   // Referance
   const navigate = useNavigate();
-
-
   const getVoicemails = async () => {
     const res = await api.get('/voice-mails');
-    console.log(res);
     return res.data.data.voiceMails;
   };
 
-  const {
-    data: voicemailList,
-    isLoading,
-    error,
-  } = useQuery(['mails'], getVoicemails, {
+  const { data: voicemailList } = useQuery(['mails'], getVoicemails, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       console.log(data);
@@ -53,51 +41,11 @@ const Voicemail = () => {
     },
   });
 
-  const calCreatedAt = (data) => {
-    const date = data.split('T')[0];
-    const mon =
-      date.split('-')[1] < 10
-        ? date.split('-')[1].slice(1)
-        : date.split('-')[1];
-    const day =
-      date.split('-')[2] < 10
-        ? date.split('-')[2].slice(1)
-        : date.split('-')[2];
-    const time = data.split('T')[1];
-    const hour = time.split(':')[0];
-    const min = time.split(':')[1];
-
-    return `${mon}월 ${day}일, ${hour < 12 ? '오전' : '오후'} ${hour}:${min}`;
-  };
-
-  const showDropdown = (e) => {
-    const dropdown = e.target.parentElement.nextSibling;
-    {
-      dropdown.hidden ? (dropdown.hidden = false) : (dropdown.hidden = true);
-    }
-  };
-
-  const deleteVoicemails = async (e) => {
-    console.log(e.target.id);
-    try {
-      const res = await api.delete(`/voice-mails/${e.target.id}`);
-      console.log(res);
-      navigate(0);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  if (isLoading) {
-    return <>is load...</>;
-  }
-
   return (
     <Container>
       <PageTitle title="소리샘" />
-      <Header>
-        <h1>소리샘</h1>
-      </Header>
+      <Header title="소리샘" link="/voice-mails" />
+
       <Body>
         {voicemailList.length === 0 ? (
           <EmptyWrap>
@@ -110,38 +58,27 @@ const Voicemail = () => {
             </EmptyDesc>
           </EmptyWrap>
         ) : (
-          voicemailList.map((item) => {
-            return (
-              <MailWrap key={item.voiceMailId}>
-                <MailTitle>{item.title}</MailTitle>
-                <MailDesc>{calCreatedAt(item.createdAt)}</MailDesc>
-                <DropdownWrap>
-                  <DropdownmenuBtn onClick={showDropdown}>
-                    <img
-                      src={`${process.env.PUBLIC_URL}/images/dropmenu.png`}
-                      alt="아이콘"
-                    />
-                  </DropdownmenuBtn>
-                  <Dropdown hidden={true}>
-                    <DropdownContent
-                      id={item.voiceMailId}
-                      onClick={deleteVoicemails}
-                    >
-                      <MdDeleteOutline color="#000000"></MdDeleteOutline>
-                      <DropdownTitle>삭제</DropdownTitle>
-                    </DropdownContent>
-                  </Dropdown>
-                </DropdownWrap>
-                <AudioWrap>
-                  <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
-                </AudioWrap>
-                <UserWrap>
-                  <From>{`from. ${item.from}`}</From>
-                  <To>{`to. ${item.to}`}</To>
-                </UserWrap>
-              </MailWrap>
-            );
-          })
+          voicemailList.map((item) => (
+            <MailWrap key={item.voiceMailId}>
+              <MailTitle>{item.title}</MailTitle>
+              <MailDesc>
+                {dayjs(item.createdAt).format('M월 D일, a hh:mm')}
+              </MailDesc>
+
+              <DropdownWrap>
+                <MoreHoriz voiceMailId={item.voiceMailId} />
+              </DropdownWrap>
+
+              <AudioWrap>
+                <AudioPlayer soundUrl={item.soundUrl}></AudioPlayer>
+              </AudioWrap>
+
+              <UserWrap>
+                <From>{`from. ${item.from}`}</From>
+                <To>{`to. ${item.to}`}</To>
+              </UserWrap>
+            </MailWrap>
+          ))
         )}
       </Body>
       <BtnAdd link="/voice-recorder" text="녹음 등록" plus={true} />

@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { formdataApi } from '../../../api/AxiosManager';
+import { communityRoles } from '../../../utils/data';
 import styled from 'styled-components';
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import PageTitle from '../../../components/common/PageTitle';
 import TagBox from '../../../components/community/TagBox';
 import HeaderMid from '../../../components/common/HeaderMid';
-import { Button } from '../../../styles/Button';
 import { IconCamera } from '../../../assets/icons';
-import { communityRoles } from '../../../utils/data';
-import { formdataApi } from '../../../api/AxiosManager';
+import { Button } from '../../../styles/Button';
 
 const Post = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { postId } = useParams();
+  const post = useLocation().state;
   const [localTags, setLocalTags] = useState([]);
   const [previewSrc, setPreviewSrc] = useState();
   const [file, setFile] = useState();
-
   const [state, setState] = useState({
     category: '',
     title: '',
     content: '',
   });
+
+  useEffect(() => {
+    if (post) {
+      setState({
+        category: post.category,
+        title: post.title,
+        content: post.content,
+      });
+      setLocalTags(post.tags);
+      setPreviewSrc(post.imageUrl);
+    }
+  }, [post]);
 
   const handleChangeState = (e) => {
     setState({
@@ -67,11 +80,19 @@ const Post = () => {
     if (file) formData.append('image', file);
 
     try {
-      const res = await formdataApi.post(`/posts`, formData);
-      console.log(res);
-      alert('포스팅 성공!');
-      navigate('/community');
-      return queryClient.invalidateQueries(['communityPosts', '전체']);
+      if (post) {
+        const res = await formdataApi.put(`/posts/${postId}`, formData);
+        console.log(res);
+        alert('게시물 수정 완료');
+        navigate(-1);
+        return queryClient.invalidateQueries(['communityPosts', '전체']);
+      } else {
+        const res = await formdataApi.post(`/posts`, formData);
+        console.log(res);
+        alert('게시물 작성 완료');
+        navigate('/community');
+        return queryClient.invalidateQueries(['communityPosts', '전체']);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -79,8 +100,8 @@ const Post = () => {
 
   return (
     <>
-      <PageTitle title="게시물 작성" />
-      <HeaderMid text="게시물 작성" />
+      <PageTitle title={post ? '게시물 수정' : '게시물 작성'} />
+      <HeaderMid text={post ? '게시물 수정' : '게시물 작성'} />
 
       <PostForm onSubmit={(e) => handleSubmit(e)}>
         <BoxP>
@@ -135,10 +156,19 @@ const Post = () => {
           </TagWrapper>
 
           <AddPhoto>
-            {/* TODO: 첨부한 이미지 삭제 기능 추가 */}
             {previewSrc ? (
-              <label>
+              <label htmlFor="input-photo">
                 <img src={previewSrc} alt="" />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPreviewSrc();
+                    setFile();
+                  }}
+                >
+                  삭제
+                </button>
               </label>
             ) : (
               <label htmlFor="input-photo">
@@ -158,10 +188,8 @@ const Post = () => {
           </AddPhoto>
         </BoxP>
 
-        {/* FIXME: 추후 교체 */}
-        {/* <Button>{postId ? '수정하기' : '등록하기'}</Button> */}
         <SubmitBtnWrapper>
-          <Button>등록하기</Button>
+          <Button>{post ? '수정하기' : '등록하기'}</Button>
         </SubmitBtnWrapper>
       </PostForm>
     </>
@@ -302,6 +330,7 @@ const AddPhoto = styled.div`
   padding: 15px 20px;
   label {
     overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -321,6 +350,15 @@ const AddPhoto = styled.div`
       min-width: 85px;
       min-height: 85px;
       object-fit: cover;
+    }
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-bottom-left-radius: 5px;
+      background: #000;
+      color: #fff;
+      font-size: 12px;
     }
   }
 `;

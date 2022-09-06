@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnSelect, setOnSelectAll } from '../../redux/modules/gallerySlice';
 import { IconBack, IconClose } from '../../assets/icons';
@@ -10,6 +10,7 @@ import { IconBack, IconClose } from '../../assets/icons';
 const HeaderMid = ({ text }) => {
   const params = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { onSelect, onSelectAll } = useSelector((state) => state.gallery);
   const [isAlbumPage, setIsAlbumPage] = useState(false);
@@ -44,6 +45,7 @@ const HeaderMid = ({ text }) => {
       )}
 
       {isAlbumPage &&
+        pathname.slice(-4) !== 'edit' &&
         (onSelect ? (
           <BtnSelect
             type="button"
