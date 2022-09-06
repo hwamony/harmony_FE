@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useFamilyData, useRankings } from '../../hooks/useData';
+import { useRankings, useFamilyData } from '../../hooks/useData';
 import { IconAlert, IconDetail } from '../../assets/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
+import { connect, send } from '../../hooks/useSocket';
 
 const Widget = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const Widget = () => {
   const { data: familyInfo } = useFamilyData();
   // const { data } = useRankings();
 
+  connect();
+  
   return (
     <FamilyWidget>
       <Link to="/family">
