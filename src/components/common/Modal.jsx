@@ -53,7 +53,7 @@ const Modal = (props) => {
 
   const joinHandler = async (data) => {
     try {
-      const response = await api.put('/family/join', data);
+      await api.put('/family/join', data);
       navigate('/role');
     } catch (err) {
       console.log('err>>', err.response.data);
