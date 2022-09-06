@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useFamilyData } from '../../hooks/useData';
+
 import { IconAlert, IconDetail } from '../../assets/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
+import { connect, send } from '../../hooks/useSocket';
 
 const Widget = () => {
   const navigate = useNavigate();
   const { data: familyInfo } = useFamilyData();
 
+  connect();
+  
   return (
     <FamilyWidget>
       <Link to="/family">

@@ -28,6 +28,23 @@ export const SocialLogin = styled.div`
   margin-top: 16px;
 `;
 
+export const SocialLoginBtn = styled.a`
+  width: 100%;
+  height: 52px;
+  padding-left: 18px;
+  border-radius: 5px;
+  margin-top: 16px;
+  background: #3ec192;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  border: 1px solid #cbcbcb;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+`;
+
 export const LoginDesc = styled.span`
   margin-left: 6px;
   color: #585858;

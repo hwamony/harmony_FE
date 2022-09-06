@@ -46,17 +46,6 @@ export const PolicyWrap = styled.div`
   position: relative;
 `;
 
-export const PolicyDesc = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-`;
-
-export const PolicyLink = styled.div`
-  font-size: 12px;
-  text-decoration: underline;
-  color: #7d7d7d;
-`;
-
 export const PolicyCheck = styled.div`
   margin-top: 20px;
   display: flex;
