@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
+import useAuth from '../../hooks/useAuth';
+import ScoreModal from '../family/ScoreModal';
 import {
   IconHome,
   IconGallery,
@@ -12,8 +14,14 @@ import {
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { scoreUp } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
   const [isShowing, setIsShowing] = useState(true);
   const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts'];
+
+  useEffect(() => {
+    if (scoreUp) setModalVisible(true);
+  }, [scoreUp])
 
   useEffect(() => {
     for (let path of paths) {
@@ -63,6 +71,13 @@ const Navbar = () => {
             </li>
           </Lists>
         </Navigation>
+      )}
+
+      {modalVisible === true && (
+        <ScoreModal
+          isVisible={modalVisible}
+          setIsVisible={setModalVisible}
+        />
       )}
     </>
   );
