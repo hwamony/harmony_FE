@@ -7,8 +7,7 @@ const getFamilyInfo = async () => {
     const res = await apis.getFamily();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 
@@ -27,8 +26,7 @@ const getValidInfo = async () => {
     const res = await apis.getValidUser();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 
@@ -47,8 +45,7 @@ const getFamilyCode = async () => {
     const res = await apis.getCode();
     return res.data.data;
   } catch (err) {
-    localStorage.removeItem('TOKEN');
-    window.location.href('/');
+    console.log(err);
   }
 };
 

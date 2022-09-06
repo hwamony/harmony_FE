@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+// TODO: 배포 시에만 baseURL 수정하도록.
+// 운영용 (54.180.26.250) 개발용 (43.200.174.197)
 const api = axios.create({
   baseURL: 'http://43.200.174.197/api',
   withCredentials: true,
