@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import PageTitle from '../../../components/common/PageTitle';
 import { Input, RadioInput } from '../../../styles/Input';
 import { Button, InlineButton } from '../../../styles/Button';
 import { Label, RadioLabel } from '../../../styles/Label';
 import api from '../../../api/AxiosManager';
+import PageTitle from '../../../components/common/PageTitle';
+import HeaderMid from '../../../components/common/HeaderMid';
+import { useUserProfile } from '../../../hooks/useData';
 
-const SignupKakao = () => {
-  const { register, handleSubmit, watch, getValues, errors } = useForm();
+const EditProfile = () => {
+  const { register, handleSubmit, getValues, errors } = useForm();
   const navigate = useNavigate();
+  const { data: profile } = useUserProfile();
+  const [nickname, setNickname] = useState('');
 
   const [isOverlap, setIsOverlap] = useState(false);
-
-  const onSubmit = async (data) => {
-    try {
-      const response = await api.put('/mypage/profile', { ...data, updateFor: 'kakao' });
-      console.log('response >>', response.data);
-      navigate('/');
-    } catch (err) {
-      console.log('Error >>', err.response.data);
-    }
-  };
 
   const nicknameOverlapCheck = async (e) => {
     const nickname = getValues('nickname');
@@ -31,7 +25,6 @@ const SignupKakao = () => {
         nickname: nickname,
       });
       console.log('response >>', response);
-
       if (response.data.data.enable) {
         alert('사용가능한 닉네임입니다.');
         setIsOverlap(true);
@@ -45,29 +38,49 @@ const SignupKakao = () => {
     e.preventDefault();
   };
 
+  const onSubmit = async (data) => {
+    console.log({ nickname: nickname, updateFor: 'mypage' })
+    // try {
+    //   const response = await api.put('/mypage/profile', { nickname: nickname, updateFor: 'mypage' });
+    //   console.log('response >>', response.data);
+    //   alert('프로필 수정이 완료되었습니다.');
+    //   navigate(-1);
+    // } catch (err) {
+    //   console.log('Error >>', err.response.data);
+    // }
+  };
+
   return (
     <>
-      <PageTitle title="카카오 - 추가 정보 입력" />
+      <PageTitle title="프로필 수정" />
+      <HeaderMid text="프로필 수정" />
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <Top>
-          <Title>추가 정보 입력</Title>
-        </Top>
         <Body>
-          <IconWrap>
-            <CongraturaionIcon>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/congratulations.png`}
-                alt="로고"
-              />
-            </CongraturaionIcon>
-            <IconTitle>회원가입이 완료되었습니다.</IconTitle>
-            <IconDesc>
-              원활한 서비스 사용을 위해
-              <br />
-              추가 정보를 입력해주세요.
-            </IconDesc>
-          </IconWrap>
-          <InputWrap style={{ marginTop: '60px' }}>
+          <InputWrap>
+            <Label>
+              이메일<Asterisk>*</Asterisk>
+            </Label>
+            <Input
+              style={{ background: '#f2f2f2' }}
+              placeholder="이메일를 입력해주세요."
+              value={profile.email}
+              disabled="disabled"
+            />
+          </InputWrap>
+
+          <InputWrap>
+            <Label>
+              이름<Asterisk>*</Asterisk>
+            </Label>
+            <Input
+              style={{ background: '#f2f2f2' }}
+              placeholder="이름를 입력해주세요."
+              value={profile.name}
+              disabled="disabled"
+            />
+          </InputWrap>
+
+          <InputWrap>
             <Label>
               닉네임<Asterisk>*</Asterisk>
             </Label>
@@ -75,6 +88,8 @@ const SignupKakao = () => {
               style={{ width: 'calc(100% - 88px)' }}
               placeholder="닉네임를 입력해주세요."
               name="nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
               ref={register({
                 required: true,
                 validate: () => isOverlap === true,
@@ -105,28 +120,27 @@ const SignupKakao = () => {
               <RadioInput
                 type="radio"
                 id="male"
-                name="gender"
                 value="male"
-                ref={register({ required: true })}
+                disabled="disabled"
+                checked={profile.gender === 'male' ? true : false}
               />
-              <RadioLabel htmlFor="male">남성</RadioLabel>
+              <RadioLabel htmlFor="male" style={{ cursor: 'auto' }}>
+                남성
+              </RadioLabel>
               <RadioInput
                 type="radio"
                 id="female"
-                name="gender"
                 value="female"
-                ref={register({ required: true })}
+                disabled="disabled"
+                checked={profile.gender === 'female' ? true : false}
               />
-              <RadioLabel htmlFor="female">여성</RadioLabel>
-              <ErrorMsg>
-                {errors.gender &&
-                  errors.gender.type === 'required' &&
-                  '성별을 선택해주세요.'}
-              </ErrorMsg>
+              <RadioLabel htmlFor="female" style={{ cursor: 'auto' }}>
+                여성
+              </RadioLabel>
             </div>
           </InputWrap>
           <ButtonWrap>
-            <Button>입력완료</Button>
+            <Button>수정 완료</Button>
           </ButtonWrap>
         </Body>
       </Container>
@@ -134,7 +148,7 @@ const SignupKakao = () => {
   );
 };
 
-export default SignupKakao;
+export default EditProfile;
 
 const Container = styled.form`
   height: 100vh;
@@ -143,49 +157,7 @@ const Container = styled.form`
   background: #ffffff;
 `;
 
-const Top = styled.div`
-  width: 100%;
-  height: 50px;
-  padding: 15px 0;
-  background: #ffffff;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
 const Body = styled.div``;
-
-const Title = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-  text-align: center;
-`;
-
-const IconWrap = styled.div`
-  margin-top: 210px;
-`;
-
-const CongraturaionIcon = styled.div`
-  text-align: center;
-`;
-
-const IconTitle = styled.div`
-  margin-top: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 21px;
-  text-align: center;
-  color: #191919;
-`;
-
-const IconDesc = styled.div`
-  margin-top: 18px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  text-align: center;
-  color: #191919;
-`;
 
 const InputWrap = styled.div`
   margin-top: 20px;
