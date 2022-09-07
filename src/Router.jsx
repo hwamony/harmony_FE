@@ -5,6 +5,7 @@ const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/login'));
 const Kakao = React.lazy(() => import('./pages/login/kakao'));
 const Signup = React.lazy(() => import('./pages/signup'));
+const SignupKakao = React.lazy(() => import('./pages/signup/kakao'));
 const SignupComplete = React.lazy(() => import('./pages/signup/complete'));
 const Schedule = React.lazy(() => import('./pages/calendar/Schedule'));
 const Gallery = React.lazy(() => import('./pages/gallery'));
@@ -32,6 +33,7 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/signup/kakao" element={<SignupKakao />} />
       <Route path="/signup/complete" element={<SignupComplete />} />
       <Route path="/login" element={<Login />} />
       <Route path="/login/oauth2/kakao" element={<Kakao />} />
