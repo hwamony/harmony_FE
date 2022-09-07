@@ -53,8 +53,23 @@ const Setting = () => {
           <IconNext />
         </button>
 
+        <button type="button" onClick={() => navigate('/mypage/editprofile')}>
+          <h3>프로필 수정</h3>
+          <IconNext />
+        </button>
+
+        <button type="button" onClick={() => navigate('/mypage/editpassword')}>
+          <h3>비밀번호 변경</h3>
+          <IconNext />
+        </button>
+
         <button onClick={onLogout}>
           <h3>로그아웃</h3>
+          <IconNext />
+        </button>
+
+        <button type="button" onClick={() => navigate('')}>
+          <h3>회원탈퇴</h3>
           <IconNext />
         </button>
 

@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Container, LogoWrap, WelcomeDesc, InputWrap, Inputdesc, InputTitle, Icon } from './style';
+import {
+  Container,
+  LogoWrap,
+  WelcomeDesc,
+  InputWrap,
+  Inputdesc,
+  InputTitle,
+  Icon,
+} from './style';
 import { CodeLabel } from '../../styles/Label';
 import { CodeInput } from '../../styles/Input';
 import { Button } from '../../styles/Button';
@@ -70,9 +78,7 @@ const Familycode = () => {
             <InputTitle>코드입력</InputTitle>
           </CodeLabel>
         </InputWrap>
-        <Button style={{ marginTop: '50px' }}>
-          다음으로
-        </Button>
+        <Button style={{ marginTop: '50px' }}>다음으로</Button>
       </Container>
     </>
   );

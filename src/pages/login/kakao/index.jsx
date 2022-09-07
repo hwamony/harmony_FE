@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { socialApi } from '../../../api/AxiosManager';
 import PuffLoader from 'react-spinners/PuffLoader';
 import styled from 'styled-components';
-import { useValidUserData } from '../../../hooks/useData';
 
 const Kakao = () => {
   // 카카오로부터 받은 인가코드를 변수에 저장
@@ -12,7 +11,6 @@ const Kakao = () => {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
-  const { data: getValidInfo } = useValidUserData()
 
   const getKakaoToken = async () => {
     // 받은 인가코드를 우리 서버로 전달하는 코드
@@ -24,13 +22,11 @@ const Kakao = () => {
       localStorage.setItem('TOKEN', res.headers.authorization);
 
       // 쿼리키 리프레시
-      // queryClient.invalidateQueries(['familyInfo']);
-      // queryClient.invalidateQueries(['validUserInfo']);
-
-      console.log(getValidInfo)
+      queryClient.invalidateQueries(['familyInfo']);
+      queryClient.invalidateQueries(['validUserInfo']);
 
       // 리다이렉트
-      // navigate('/');
+      navigate('/');
     } catch (err) {
       console.log('실패>>', err);
     }

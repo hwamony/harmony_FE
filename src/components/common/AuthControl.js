@@ -13,7 +13,7 @@ const AuthControl = () => {
     console.log('hasToken:', hasToken);
     if (hasToken) {
       actions.onLoggedIn();
-    } else if(pathname === '/login/oauth2/kakao') {
+    } else if (pathname === '/login/oauth2/kakao') {
       actions.onLoggedOut();
     } else {
       actions.onLoggedOut();
@@ -23,7 +23,7 @@ const AuthControl = () => {
 
   useEffect(() => {
     if (hasToken) {
-      const paths = ['/login', '/signup', '/signupcomplete'];
+      const paths = ['/login', '/signup', '/signupcomplete', '/login/oauth2/kakao', '/signup/kakao'];
       for (let path of paths) {
         if (_.includes(pathname, path)) {
           navigate('/');
@@ -40,14 +40,16 @@ const AuthControl = () => {
   const getInfo = async () => {
     try {
       const response = await api.get('/user/info');
-      const { hasRole, isFamily } = response.data.data;
+      const { hasRole, isFamily, hasAllInfo } = response.data.data;
 
-      if (!isFamily) {
+      if (!hasAllInfo) {
+        navigate('/signup/kakao');
+      } else if (!isFamily) {
         navigate('/familycode');
       } else if (!hasRole) {
         navigate('/role');
       } else if (isFamily && hasRole) {
-        const paths = ['/familycode', '/role'];
+        const paths = ['/familycode', '/role', '/signup/kakao'];
         for (let path of paths) {
           if (_.includes(pathname, path)) {
             navigate('/');
