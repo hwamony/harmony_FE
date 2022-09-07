@@ -41,14 +41,6 @@ const Login = () => {
     }
   };
 
-  const socialGoogle = async () => {
-    alert('소셜로그인 - 구글');
-
-    // 추후 엔드포인트 연결
-    const res = api.get('');
-    console.log(res);
-  };
-
   return (
     <>
       <PageTitle title="로그인" />

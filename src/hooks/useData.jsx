@@ -82,3 +82,20 @@ export const useAlbumsData = (scheduleId) =>
   useQuery(['albums', scheduleId], () => getAlbums(scheduleId), {
     refetchOnWindowFocus: false,
   });
+
+const getUserProfile = async () => {
+  try {
+    const res = await api.get(`/mypage`);
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const useUserProfile = () =>
+  useQuery(['userprofile'], getUserProfile, {
+    enabled: !!hasToken,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    cacheTime: 0,
+  });

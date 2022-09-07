@@ -25,11 +25,14 @@ const Home = () => {
   );
 
   const { data: getValidInfo } = useValidUserData();
-  const isValidUser = getValidInfo?.isFamily && getValidInfo?.hasRole;
+  const isValidUser =
+    getValidInfo?.isFamily && getValidInfo?.hasRole && getValidInfo?.hasAllInfo;
 
   useEffect(() => {
     if (getValidInfo && !isValidUser) {
-      if (!getValidInfo?.isFamily) {
+      if (!getValidInfo?.hasAllInfo) {
+        navigate('/signup/kakao');
+      } else if (!getValidInfo?.isFamily) {
         navigate('/familycode');
       } else if (!getValidInfo?.hasRole) {
         navigate('/role');

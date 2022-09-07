@@ -20,6 +20,8 @@ const Community = React.lazy(() => import('./pages/community'));
 const Post = React.lazy(() => import('./pages/community/posts'));
 const PostDetail = React.lazy(() => import('./pages/community/detail'));
 const Setting = React.lazy(() => import('./pages/setting'));
+const EditPassword = React.lazy(() => import('./pages/setting/editpassword'));
+const EditProfile = React.lazy(() => import('./pages/setting/editprofile'));
 const Familycode = React.lazy(() => import('./pages/familycode'));
 const Role = React.lazy(() => import('./pages/role'));
 const Notice = React.lazy(() => import('./pages/notice'));
@@ -53,6 +55,8 @@ const Router = () => {
       <Route path="/community/posts/:postId" element={<PostDetail />} />
       <Route path="/community/posts/:postId/edit" element={<Post />} />
       <Route path="/settings" element={<Setting />} />
+      <Route path="/mypage/editpassword" element={<EditPassword />} />
+      <Route path="/mypage/editprofile" element={<EditProfile />} />
       <Route path="/familycode" element={<Familycode />} />
       <Route path="/role" element={<Role />} />
       <Route path="/notice" element={<Notice />} />
