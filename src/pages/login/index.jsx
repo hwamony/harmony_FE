@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../components/common/PageTitle';
 
 import { KAKAO_AUTH_URL } from '../../utils/OAuth';
-import { Button, OutlineButton } from '../../styles/Button';
+import { Button } from '../../styles/Button';
 import { Input } from '../../styles/Input';
-import {
-  Container,
-  LogoWrap,
-  InputWrap,
-  BtnWrap,
-  SocialLoginWrap,
-  SocialLogin,
-  SocialLoginBtn,
-  LoginDesc,
-  SignupLink,
-  ErrorMsg,
-} from './style';
+import { Container, LogoWrap, InputWrap, BtnWrap, SocialLoginBtn, LoginDesc, SignupLink, ErrorMsg } from './style';
 import api from '../../api/AxiosManager';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const queryClient = useQueryClient();
   const [errMsg, setErrMsg] = useState('');
   const { register, handleSubmit, errors } = useForm();
+
+  useEffect(() => {
+    if (pathname !== '/') navigate('/');
+  }, [pathname]);
 
   const onSubmit = async (data) => {
     // 로그인 API 통신
