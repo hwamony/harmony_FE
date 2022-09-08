@@ -1,19 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { Input, RadioInput } from '../../../styles/Input';
-import { Button, InlineButton } from '../../../styles/Button';
-import { Label, RadioLabel } from '../../../styles/Label';
+import { useQueryClient } from '@tanstack/react-query';
 import api from '../../../api/AxiosManager';
+import styled from 'styled-components';
+
 import PageTitle from '../../../components/common/PageTitle';
 import HeaderMid from '../../../components/common/HeaderMid';
 import { useUserProfile } from '../../../hooks/useData';
+import { Input, RadioInput } from '../../../styles/Input';
+import { Button, InlineButton } from '../../../styles/Button';
+import { Label, RadioLabel } from '../../../styles/Label';
 
 const EditProfile = () => {
-  const { register, handleSubmit, getValues, errors } = useForm();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: profile } = useUserProfile();
+  const { register, handleSubmit, getValues, errors } = useForm();
   const [nickname, setNickname] = useState('');
 
   const [isOverlap, setIsOverlap] = useState(false);
@@ -26,7 +29,7 @@ const EditProfile = () => {
       });
       console.log('response >>', response);
       if (response.data.data.enable) {
-        alert('사용가능한 닉네임입니다.');
+        alert('사용 가능한 닉네임입니다.');
         setIsOverlap(true);
       } else {
         alert('이미 존재하는 닉네임입니다.');
@@ -39,12 +42,16 @@ const EditProfile = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log({ nickname: nickname, updateFor: 'mypage' })
+    console.log({ nickname: nickname, updateFor: 'mypage' });
     // try {
-    //   const response = await api.put('/mypage/profile', { nickname: nickname, updateFor: 'mypage' });
+    //   const response = await api.put('/mypage/profile', {
+    //     nickname: nickname,
+    //     updateFor: 'mypage',
+    //   });
     //   console.log('response >>', response.data);
     //   alert('프로필 수정이 완료되었습니다.');
     //   navigate(-1);
+    //   return queryClient.invalidateQueries(['familyInfo']);
     // } catch (err) {
     //   console.log('Error >>', err.response.data);
     // }
@@ -58,11 +65,11 @@ const EditProfile = () => {
         <Body>
           <InputWrap>
             <Label>
-              이메일<Asterisk>*</Asterisk>
+              이메일
             </Label>
             <Input
               style={{ background: '#f2f2f2' }}
-              placeholder="이메일를 입력해주세요."
+              placeholder="이메일을 입력해주세요."
               value={profile.email}
               disabled="disabled"
             />
@@ -70,11 +77,11 @@ const EditProfile = () => {
 
           <InputWrap>
             <Label>
-              이름<Asterisk>*</Asterisk>
+              이름
             </Label>
             <Input
               style={{ background: '#f2f2f2' }}
-              placeholder="이름를 입력해주세요."
+              placeholder="이름을 입력해주세요."
               value={profile.name}
               disabled="disabled"
             />
@@ -86,7 +93,7 @@ const EditProfile = () => {
             </Label>
             <Input
               style={{ width: 'calc(100% - 88px)' }}
-              placeholder="닉네임를 입력해주세요."
+              placeholder="닉네임을 입력해주세요."
               name="nickname"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}

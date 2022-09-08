@@ -10,28 +10,12 @@ const AuthControl = () => {
   const { hasToken, isLoggedIn, actions } = useAuth();
 
   useEffect(() => {
-    console.log('hasToken:', hasToken);
-    if (hasToken) {
-      actions.onLoggedIn();
-    } else if (pathname === '/login/oauth2/kakao') {
-      actions.onLoggedOut();
-    } else {
-      actions.onLoggedOut();
-      navigate('/login');
-    }
-  }, [hasToken]);
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
-    if (hasToken) {
-      const paths = ['/login', '/signup', '/signupcomplete', '/login/oauth2/kakao', '/signup/kakao'];
-      for (let path of paths) {
-        if (_.includes(pathname, path)) {
-          navigate('/');
-        }
-      }
-    }
-    window.scrollTo(0, 0);
-  }, [hasToken, pathname]);
+    if (hasToken) actions.onLoggedIn();
+  }, [hasToken]);
 
   useEffect(() => {
     isLoggedIn && getInfo();
@@ -58,7 +42,7 @@ const AuthControl = () => {
       }
     } catch (err) {
       localStorage.removeItem('TOKEN');
-      window.location.href('/');
+      navigate('/');
     }
   };
 

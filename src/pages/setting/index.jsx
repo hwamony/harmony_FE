@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import PageTitle from '../../components/common/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
-
-import Widget from '../../components/family/Widget';
-import { useFamilyCode } from '../../hooks/useData';
-import useCopyClipBoard from '../../hooks/useCopyClipBoard';
 import { Snackbar } from '@mui/material';
+
+import { useFamilyCode } from '../../hooks/useData';
+import useAuth from '../../hooks/useAuth';
+import useCopyClipBoard from '../../hooks/useCopyClipBoard';
+import Widget from '../../components/family/Widget';
 import { IconNext } from '../../assets/icons';
 
 const Setting = () => {
   const navigate = useNavigate();
   const { data } = useFamilyCode();
+  const { actions } = useAuth();
   const [isCopied, onCopy] = useCopyClipBoard();
   const [isOpened, setIsOpened] = useState(false);
 
@@ -21,15 +22,10 @@ const Setting = () => {
     setIsOpened(true);
   };
 
-  const onLogout = async () => {
-    try {
-      const res = await axios.post('http://43.200.174.197/logout');
-      console.log(res);
-      localStorage.removeItem('TOKEN');
-      window.location.href = '/login';
-    } catch (err) {
-      console.log(err.response);
-    }
+  const onLogout = () => {
+    actions.onLoggedOut();
+    window.location.href = '/';
+    return localStorage.removeItem('TOKEN');
   };
 
   return (
@@ -37,7 +33,7 @@ const Setting = () => {
       <PageTitle title="설정" />
       <Widget />
       <SettingsContainer>
-        <h3>초대코드</h3>
+        <h3>초대 코드</h3>
         <div className="box-code">
           <p onClick={onCopyClick}>{data?.familyCode}</p>
           {isCopied && (
@@ -48,14 +44,17 @@ const Setting = () => {
           )}
         </div>
 
-        <button type="button" onClick={() => navigate('/family/rankings')}>
-          <h3>가족랭킹</h3>
+        <button type="button" onClick={() => navigate('/family/info')}>
+          <h3>가족 구성원</h3>
           <IconNext />
         </button>
 
         <button type="button" onClick={() => navigate('/mypage/editprofile')}>
           <h3>프로필 수정</h3>
-          <IconNext />
+          <div className="wrapper-email">
+            <p>{data?.email}</p>
+            <IconNext />
+          </div>
         </button>
 
         <button type="button" onClick={() => navigate('/mypage/editpassword')}>
@@ -68,10 +67,7 @@ const Setting = () => {
           <IconNext />
         </button>
 
-        <button type="button" onClick={() => navigate('')}>
-          <h3>회원탈퇴</h3>
-          <IconNext />
-        </button>
+        <h3 onClick={() => navigate('')} className="btn-out">회원탈퇴</h3>
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -132,6 +128,23 @@ const SettingsContainer = styled.section`
     margin-bottom: 5px;
     padding: 24px 0;
     border-bottom: 1px solid #dadada;
+    div.wrapper-email {
+      display: flex;
+      p {
+        margin-right: 12px;
+        color: #ababab;
+      }
+    }
+  }
+
+  h3.btn-out {
+    display: block;
+    text-align: right;
+    margin-top: 20px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
   }
 
   .MuiSnackbar-root {

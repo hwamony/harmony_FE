@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// TODO: 배포 시에만 baseURL 수정하도록.
-// 운영용 (54.180.26.250) 개발용 (43.200.174.197)
+// TODO: 9일 이후 baseURL에서 /api 제외한 후 socialApi는 삭제
+// FIXME: 배포 시 dev에서 prod로 수정
 const api = axios.create({
-  baseURL: 'http://43.200.174.197/api',
+  baseURL: 'https://dev.hwa-mok.com/api',
   withCredentials: true,
   headers: {
     'content-type': 'application/json;charset=UTF-8',
@@ -12,7 +12,7 @@ const api = axios.create({
 });
 
 const formApi = axios.create({
-  baseURL: 'http://43.200.174.197/api',
+  baseURL: 'https://dev.hwa-mok.com/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -20,7 +20,7 @@ const formApi = axios.create({
 });
 
 export const socialApi = axios.create({
-  baseURL: 'http://43.200.174.197',
+  baseURL: 'https://dev.hwa-mok.com',
   withCredentials: true,
   headers: {
     'content-type': 'application/json;charset=UTF-8',
@@ -43,7 +43,6 @@ formApi.interceptors.request.use((config) => {
 export default api;
 
 export const formdataApi = formApi;
-
 
 export const apis = {
   getFamily: () => api.get('/family'),

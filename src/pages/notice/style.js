@@ -21,7 +21,6 @@ export const Title = styled.h1`
 `;
 
 export const Body = styled.div`
-  width: 100vw;
   height: 100vh;
   padding: 10px 20px;
   margin: -20px;
@@ -65,7 +64,8 @@ export const DescMsg = styled.div`
 
 export const TimeWrap = styled.span`
   position: absolute;
-  right: 0;
+  top: 4px;
+  right: 20px;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;

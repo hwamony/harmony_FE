@@ -8,18 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import { Input, Checkinput, RadioInput } from '../../styles/Input';
 import { Button, InlineButton, BackButton } from '../../styles/Button';
 import { Label, RadioLabel } from '../../styles/Label';
-import {
-  Container,
-  Top,
-  Title,
-  InputWrap,
-  Asterisk,
-  PolicyWrap,
-  PolicyCheck,
-  PolicyIcon,
-  ButtonWrap,
-  ErrorMsg,
-} from './style';
+import { Container, Top, Title, InputWrap, Asterisk, PolicyWrap, PolicyCheck, PolicyIcon, ButtonWrap, ErrorMsg } from './style';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -54,7 +43,11 @@ const Signup = () => {
       setIsOverlap((prev) => {
         return { ...prev, email: true };
       });
-      { response.data.data.enable ? alert('사용가능한 이메일입니다.') : alert('이미 존재하는 이메일입니다.')}
+      {
+        response.data.data.enable
+          ? alert('사용가능한 이메일입니다.')
+          : alert('이미 존재하는 이메일입니다.');
+      }
     } catch (err) {
       console.log('Error >>', err.response.data);
       alert(err.response.data.message);
@@ -72,7 +65,11 @@ const Signup = () => {
       setIsOverlap((prev) => {
         return { ...prev, nickname: true };
       });
-      { response.data.data.enable ? alert('사용가능한 닉네임입니다.') : alert('이미 존재하는 닉네임입니다.')}
+      {
+        response.data.data.enable
+          ? alert('사용가능한 닉네임입니다.')
+          : alert('이미 존재하는 닉네임입니다.');
+      }
     } catch (err) {
       console.log('Error >>', err.response.data);
       alert(err.response.data.message);
@@ -90,7 +87,7 @@ const Signup = () => {
               <BackButton
                 src={`${process.env.PUBLIC_URL}/images/back.png`}
                 alt="뒤로가기"
-                onClick={() => navigate('/login')}
+                onClick={() => navigate(-1)}
               />
               <Title>회원가입</Title>
             </Top>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, send } from '../../hooks/useSocket';
+import { connect } from '../../hooks/useSocket';
 
 const WebsocketProvider = () => {
   connect();

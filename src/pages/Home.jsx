@@ -41,25 +41,24 @@ const Home = () => {
   }, []);
 
   const getMonthSchedule = async () => {
-    try {
-      const res = await api.get(
-        `/schedules?year=${selectedDate.format(
-          'YYYY',
-        )}&month=${selectedDate.format('M')}`,
-      );
-      return res.data.data;
-    } catch (err) {
-      console.log(err.response);
-    }
+    const res = await api.get(
+      `/schedules?year=${selectedDate.format(
+        'YYYY',
+      )}&month=${selectedDate.format('M')}`,
+    );
+    return res.data.data;
   };
 
   const { data: monthSchedule, refetch } = useQuery(
     ['schedule'],
     getMonthSchedule,
     {
-      enabled: !!getValidInfo && isValidUser,
+      enabled: !!hasToken && !!getValidInfo && isValidUser,
       onSuccess: () => {
         dispatch(setDay(null));
+      },
+      onError: (err) => {
+        console.log(err);
       },
       refetchOnWindowFocus: false,
     },
