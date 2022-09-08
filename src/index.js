@@ -1,11 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import Loading from './components/common/Loading';
-import {
-  QueryClient,
-  QueryClientProvider,
-  QueryCache,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import AuthProvider from './context/AuthProvider';

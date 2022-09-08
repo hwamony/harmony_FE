@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
@@ -12,7 +11,6 @@ import api from '../../../api/AxiosManager';
 
 const SignupKakao = () => {
   const { register, handleSubmit, getValues, errors } = useForm();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [isOverlap, setIsOverlap] = useState(false);
