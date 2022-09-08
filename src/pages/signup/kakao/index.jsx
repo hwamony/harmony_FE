@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
+
 import PageTitle from '../../../components/common/PageTitle';
 import { Input, RadioInput } from '../../../styles/Input';
 import { Button, InlineButton } from '../../../styles/Button';
@@ -9,18 +10,24 @@ import { Label, RadioLabel } from '../../../styles/Label';
 import api from '../../../api/AxiosManager';
 
 const SignupKakao = () => {
-  const { register, handleSubmit, watch, getValues, errors } = useForm();
-  const navigate = useNavigate();
+  const { register, handleSubmit, getValues, errors } = useForm();
+  const queryClient = useQueryClient();
 
   const [isOverlap, setIsOverlap] = useState(false);
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.put('/mypage/profile', { ...data, updateFor: 'kakao' });
+      const response = await api.put('/mypage/profile', {
+        ...data,
+        updateFor: 'kakao',
+      });
       console.log('response >>', response.data);
-      navigate('/');
+      alert('환영합니다! 이어서 가족 정보를 입력해주세요.');
+      window.location.href = '/';
+      return queryClient.invalidateQueries(['familyInfo']);
     } catch (err) {
       console.log('Error >>', err.response.data);
+      alert('문제가 발생했습니다.');
     }
   };
 

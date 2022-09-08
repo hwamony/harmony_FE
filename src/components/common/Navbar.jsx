@@ -3,25 +3,20 @@ import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
 import useAuth from '../../hooks/useAuth';
+import AuthControl from './AuthControl';
 import ScoreModal from '../family/ScoreModal';
-import {
-  IconHome,
-  IconGallery,
-  IconVoice,
-  IconCommunity,
-  IconSettings,
-} from '../../assets/icons';
+import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '../../assets/icons';
 
 const Navbar = () => {
   const { pathname } = useLocation();
   const { scoreUp } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/login', '/signup', '/signupcomplete', '/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts'];
+  const paths = ['/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts'];
 
   useEffect(() => {
     if (scoreUp) setModalVisible(true);
-  }, [scoreUp])
+  }, [scoreUp]);
 
   useEffect(() => {
     for (let path of paths) {
@@ -36,6 +31,7 @@ const Navbar = () => {
 
   return (
     <>
+      <AuthControl />
       {isShowing && (
         <Navigation>
           <Lists>
@@ -74,10 +70,7 @@ const Navbar = () => {
       )}
 
       {modalVisible === true && (
-        <ScoreModal
-          isVisible={modalVisible}
-          setIsVisible={setModalVisible}
-        />
+        <ScoreModal isVisible={modalVisible} setIsVisible={setModalVisible} />
       )}
     </>
   );

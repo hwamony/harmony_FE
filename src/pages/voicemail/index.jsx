@@ -3,28 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+
 import PageTitle from '../../components/common/PageTitle';
 import Header from '../../components/common/Header';
 import BtnAdd from '../../components/common/BtnAdd';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import MoreHoriz from '../../components/voicemail/MoreHoriz';
-import { IconMoreHoriz } from '../../assets/icons';
 import WebsocketProvider from '../../components/common/WebsocketProvider'
-import {
-  Container,
-  Body,
-  EmptyWrap,
-  IconWrap,
-  EmptyDesc,
-  MailWrap,
-  MailTitle,
-  MailDesc,
-  DropdownWrap,
-  AudioWrap,
-  UserWrap,
-  From,
-  To,
-} from './style';
+import { IconMoreHoriz } from '../../assets/icons';
+import { Container, Body, EmptyWrap, IconWrap, EmptyDesc, MailWrap, MailTitle, MailDesc, DropdownWrap, AudioWrap, UserWrap, From, To } from './style';
 
 const Voicemail = () => {
   // Referance
@@ -36,9 +23,6 @@ const Voicemail = () => {
 
   const { data: voicemailList } = useQuery(['mails'], getVoicemails, {
     refetchOnWindowFocus: false,
-    onSuccess: (data) => {
-      console.log(data);
-    },
     onError: (error) => {
       console.log(error);
     },

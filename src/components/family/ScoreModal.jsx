@@ -16,9 +16,14 @@ const ScoreModal = ({ isVisible, setIsVisible }) => {
     setIsVisible(false);
   };
 
+  const onGetScore = () => {
+    ModalClose();
+    return queryClient.invalidateQueries(['familyInfo']);
+  };
+
   const onDimmerClick = (e) => {
     if (e.currentTarget !== e.target) return;
-    ModalClose();
+    onGetScore();
   };
 
   return (
@@ -32,14 +37,7 @@ const ScoreModal = ({ isVisible, setIsVisible }) => {
           <strong>{scoreUp}방울 획득!</strong>
           <p>축하합니다!</p>
           <BtnWrap>
-            <ModalBtn
-              onClick={() => {
-                ModalClose();
-                return queryClient.invalidateQueries(['familyInfo']);
-              }}
-            >
-              확인
-            </ModalBtn>
+            <ModalBtn onClick={onGetScore}>확인</ModalBtn>
           </BtnWrap>
         </ModalInner>
       </Overlay>

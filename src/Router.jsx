@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/common/Navbar';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/login'));
@@ -31,40 +32,54 @@ const FamilyRanking = React.lazy(() => import('./pages/family/ranking'));
 const NotFound = React.lazy(() => import('./pages/notfound'));
 
 const Router = () => {
+  const hasToken = !!localStorage.getItem('TOKEN');
+  
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/signup/kakao" element={<SignupKakao />} />
-      <Route path="/signup/complete" element={<SignupComplete />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/login/oauth2/kakao" element={<Kakao />} />
-      <Route path="/schedules/*" element={<Schedule />} />
-      <Route path="/galleries" element={<Gallery />} />
-      <Route path="/galleries/:scheduleId" element={<AlbumLayout />}>
-        <Route index element={<Albums />} />
-        <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
-      </Route>
-      <Route path="/galleries/posts" element={<PostAlbum />} />
-      <Route path="/galleries/posts/:galleryId" element={<PostAlbum />} />
-      <Route path="/galleries/posts/:scheduleId/:galleryId/edit" element={<EditAlbum />} />
-      <Route path="/voice-mails" element={<Voicemail />} />
-      <Route path="/voice-recorder" element={<Voicercorder />} />
-      <Route path="/community" element={<Community />} />
-      <Route path="/community/posts" element={<Post />} />
-      <Route path="/community/posts/:postId" element={<PostDetail />} />
-      <Route path="/community/posts/:postId/edit" element={<Post />} />
-      <Route path="/settings" element={<Setting />} />
-      <Route path="/mypage/editpassword" element={<EditPassword />} />
-      <Route path="/mypage/editprofile" element={<EditProfile />} />
-      <Route path="/familycode" element={<Familycode />} />
-      <Route path="/role" element={<Role />} />
-      <Route path="/notice" element={<Notice />} />
-      <Route path="/family" element={<FamilyScore />} />
-      <Route path="/family/info" element={<FamilyInfo />} />
-      <Route path="/family/rankings" element={<FamilyRanking />} />
-      <Route path="/*" element={<NotFound />} />
-    </Routes>
+    <>
+      {hasToken ? (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/schedules/*" element={<Schedule />} />
+            <Route path="/galleries" element={<Gallery />} />
+            <Route path="/galleries/:scheduleId" element={<AlbumLayout />}>
+              <Route index element={<Albums />} />
+              <Route path="/galleries/:scheduleId/:galleryId" element={<Album />} />
+            </Route>
+            <Route path="/galleries/posts" element={<PostAlbum />} />
+            <Route path="/galleries/posts/:galleryId" element={<PostAlbum />} />
+            <Route path="/galleries/posts/:scheduleId/:galleryId/edit" element={<EditAlbum />}
+            />
+            <Route path="/voice-mails" element={<Voicemail />} />
+            <Route path="/voice-recorder" element={<Voicercorder />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/community/posts" element={<Post />} />
+            <Route path="/community/posts/:postId" element={<PostDetail />} />
+            <Route path="/community/posts/:postId/edit" element={<Post />} />
+            <Route path="/settings" element={<Setting />} />
+            <Route path="/mypage/editpassword" element={<EditPassword />} />
+            <Route path="/mypage/editprofile" element={<EditProfile />} />
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/family" element={<FamilyScore />} />
+            <Route path="/family/info" element={<FamilyInfo />} />
+            <Route path="/family/rankings" element={<FamilyRanking />} />
+            <Route path="/signup/kakao" element={<SignupKakao />} />
+            <Route path="/familycode" element={<Familycode />} />
+            <Route path="/role" element={<Role />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login/oauth2/kakao" element={<Kakao />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup/complete" element={<SignupComplete />} />
+          <Route path="/*" element={<Login />} />
+        </Routes>
+      )}
+    </>
   );
 };
 
