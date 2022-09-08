@@ -18,7 +18,7 @@ export const connect = () => {
     (frame) => {
       console.log('connect', frame);
 
-      client.send('/app/voice-mails', {}, 'hi');
+      client.send('/app/voice-mails', {}, 'connection complete!');
 
       client.subscribe('/topic/voice-mails', (data) => {
         console.log(data);
@@ -27,7 +27,3 @@ export const connect = () => {
     (err) => console.log(err),
   );
 };
-
-export const send = () => {
-    client.send('/app/voice-mails', {}, '');
-}

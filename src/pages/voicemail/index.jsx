@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-dayjs.locale('ko');
 import PageTitle from '../../components/common/PageTitle';
 import Header from '../../components/common/Header';
 import BtnAdd from '../../components/common/BtnAdd';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import MoreHoriz from '../../components/voicemail/MoreHoriz';
 import { IconMoreHoriz } from '../../assets/icons';
+import WebsocketProvider from '../../components/common/WebsocketProvider'
 import {
   Container,
   Body,
@@ -28,6 +28,7 @@ import {
 
 const Voicemail = () => {
   // Referance
+  dayjs.locale('ko');
   const getVoicemails = async () => {
     const res = await api.get('/voice-mails');
     return res.data.data.voiceMails;
@@ -45,6 +46,7 @@ const Voicemail = () => {
 
   return (
     <Container>
+      <WebsocketProvider/>
       <PageTitle title="소리샘" />
       <Header title="소리샘" link="/voice-mails" />
 

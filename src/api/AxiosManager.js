@@ -44,7 +44,6 @@ export default api;
 
 export const formdataApi = formApi;
 
-
 export const apis = {
   getFamily: () => api.get('/family'),
   getValidUser: () => api.get('/user/info'),
