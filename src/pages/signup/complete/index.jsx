@@ -19,7 +19,7 @@ const SignupComplete = () => {
             </CongraturaionIcon>
             <Title>회원가입이 완료되었습니다.</Title>
             <Desc>가족들과 행복한 시간을<br/>공유해보세요.</Desc>
-            <Button style={{ marginTop: '44px' }} onClick={() => navigate('/login')}>로그인</Button>
+            <Button style={{ marginTop: '44px' }} onClick={() => navigate('/')}>로그인</Button>
         </Container>
     );
 };

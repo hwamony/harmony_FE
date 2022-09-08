@@ -26,7 +26,7 @@ const Kakao = () => {
       queryClient.invalidateQueries(['validUserInfo']);
 
       // 리다이렉트
-      navigate('/');
+      window.location.href = '/';
     } catch (err) {
       console.log('실패>>', err);
     }
