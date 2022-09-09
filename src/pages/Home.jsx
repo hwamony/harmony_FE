@@ -138,7 +138,7 @@ const Main = styled.main`
   overflow-x: hidden;
   overflow-y: auto;
   height: 100vh;
-  padding: 0 20px 65px;
+  padding: 0 20px 120px;
 `;
 
 const ListWrapper = styled.ul`
