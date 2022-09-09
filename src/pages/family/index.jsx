@@ -7,10 +7,19 @@ import HeaderMid from '../../components/common/HeaderMid';
 import PageTitle from '../../components/common/PageTitle';
 import { IconNextMember } from '../../assets/icons';
 import { Button } from '../../styles/Button';
+import ReactGA from 'react-ga';
 
 const FamilyScore = () => {
   const navigate = useNavigate();
   const { data: familyInfo } = useFamilyData();
+
+  const createGAEvent = (action) => {
+    ReactGA.event({
+      category: 'Family',
+      action: `화목지수에서 ${action}`,
+      label: 'family',
+    });
+  };
 
   return (
     <>
@@ -23,15 +32,25 @@ const FamilyScore = () => {
           <img src={hwamokGrades[familyInfo.level].image} alt="" />
           <strong>{hwamokGrades[familyInfo.level].name}</strong>
           <p>
-            <span>월간 {familyInfo.monthlyScore}방울</span> | 누적 {familyInfo.score}방울
+            <span>월간 {familyInfo.monthlyScore}방울</span> | 누적{' '}
+            {familyInfo.score}방울
           </p>
 
-          <Button onClick={() => navigate('/family/rankings')}>
+          <Button
+            onClick={() => {
+              createGAEvent('가족랭킹 이동');
+              navigate('/family/rankings');
+            }}
+          >
             가족랭킹 확인하기 &gt;
           </Button>
         </GradeInfo>
 
-        <Link to="/family/info" className="link-info">
+        <Link
+          to="/family/info"
+          className="link-info"
+          onClick={() => createGAEvent('가족구성원 이동')}
+        >
           가족구성원 확인하기
           <IconNextMember />
         </Link>
