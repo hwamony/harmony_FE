@@ -5,14 +5,23 @@ import { useFamilyData } from '../../hooks/useData';
 import { IconAlert, IconDetail } from '../../assets/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
+import ReactGA from 'react-ga';
 
 const Widget = () => {
   const navigate = useNavigate();
   const { data: familyInfo } = useFamilyData();
-  
+
+  const createGAEvent = (menu) => {
+    ReactGA.event({
+      category: 'Button',
+      action: `위젯에서 ${menu} 이동`,
+      label: 'widget',
+    });
+  };
+
   return (
     <FamilyWidget>
-      <Link to="/family">
+      <Link to="/family" onClick={() => createGAEvent('화목지수')}>
         <LeftWrapper>
           <Circle>
             <img
@@ -36,7 +45,12 @@ const Widget = () => {
         </LeftWrapper>
       </Link>
 
-      <AlertBtn onClick={() => navigate('/notice')}>
+      <AlertBtn
+        onClick={() => {
+          createGAEvent('알림');
+          navigate('/notice');
+        }}
+      >
         <IconAlert />
       </AlertBtn>
     </FamilyWidget>

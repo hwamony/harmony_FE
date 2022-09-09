@@ -8,7 +8,7 @@ export const Body = styled.div`
   width: 100%;
   position: relative;
   height: 100vh;
-  padding: 10px 20px;
+  padding: 10px 20px 120px;
   background: #efefef;
   overflow-y: auto;
 `;

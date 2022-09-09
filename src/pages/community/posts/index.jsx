@@ -11,6 +11,7 @@ import TagBox from '../../../components/community/TagBox';
 import HeaderMid from '../../../components/common/HeaderMid';
 import { IconCamera } from '../../../assets/icons';
 import { Button } from '../../../styles/Button';
+import ReactGA from 'react-ga';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -59,6 +60,14 @@ const Post = () => {
     });
   };
 
+  const createGAEvent = (event) => {
+    ReactGA.event({
+      category: 'Community',
+      action: `커뮤니티에서 ${event}`,
+      label: 'community',
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -89,12 +98,14 @@ const Post = () => {
     try {
       if (post) {
         const res = await formdataApi.put(`/posts/${postId}`, formData);
+        createGAEvent('게시물 수정');
         console.log(res);
         alert('게시물 수정 완료');
         navigate(-1);
         return queryClient.invalidateQueries(['communityPosts', '전체']);
       } else {
         const res = await formdataApi.post(`/posts`, formData);
+        createGAEvent('게시물 작성');
         console.log(res);
         alert('게시물 작성 완료');
         navigate('/community');

@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import AuthControl from './AuthControl';
 import ScoreModal from '../family/ScoreModal';
 import { IconHome, IconGallery, IconVoice, IconCommunity, IconSettings } from '../../assets/icons';
+import ReactGA from 'react-ga';
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -29,6 +30,14 @@ const Navbar = () => {
     }
   }, [pathname]);
 
+  const createGAEvent = (menu) => {
+    ReactGA.event({
+      category: 'Button',
+      action: `내비게이션 바에서 ${menu} 이동`,
+      label: 'navbar',
+    });
+  };
+
   return (
     <>
       <AuthControl />
@@ -36,31 +45,31 @@ const Navbar = () => {
         <Navigation>
           <Lists>
             <li>
-              <Menu to="/">
+              <Menu to="/" onClick={() => createGAEvent('캘린더')}>
                 <IconHome />
                 캘린더
               </Menu>
             </li>
             <li>
-              <Menu to="/galleries">
+              <Menu to="/galleries" onClick={() => createGAEvent('갤러리')}>
                 <IconGallery />
                 갤러리
               </Menu>
             </li>
             <li>
-              <Menu to="/voice-mails">
+              <Menu to="/voice-mails" onClick={() => createGAEvent('소리샘')}>
                 <IconVoice />
                 소리샘
               </Menu>
             </li>
             <li>
-              <Menu to="/community">
+              <Menu to="/community" onClick={() => createGAEvent('커뮤니티')}>
                 <IconCommunity />
                 커뮤니티
               </Menu>
             </li>
             <li>
-              <Menu to="/settings">
+              <Menu to="/settings" onClick={() => createGAEvent('설정')}>
                 <IconSettings />
                 설정
               </Menu>
