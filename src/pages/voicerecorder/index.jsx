@@ -9,6 +9,7 @@ import { BackButton, Button } from '../../styles/Button';
 import { Input } from '../../styles/Input';
 import { Label } from '../../styles/Label';
 import { Container, Header, Title, Body, InputWrap, LabelTitle, RecordWrap } from './style';
+import ReactGA from 'react-ga';
 
 const Recoder = () => {
   const navigate = useNavigate();
@@ -16,6 +17,14 @@ const Recoder = () => {
   const { actions } = useAuth();
   const { register, handleSubmit } = useForm();
   const [blobUrl, setBlobUrl] = useState('');
+
+  const createGAEvent = (event) => {
+    ReactGA.event({
+      category: 'Voicemail',
+      action: `소리샘에서 ${event}`,
+      label: 'voicemail',
+    });
+  };
 
   const onSubmit = async (data) => {
     const audioBlob = await fetch(blobUrl).then((r) => r.blob()); // react-media-recorder 리턴된 blob url을 blob으로 변환
@@ -29,6 +38,7 @@ const Recoder = () => {
 
     try {
       const res = await api.post('/voice-mails', formData);
+      createGAEvent('녹음 등록');
       console.log(res);
       actions.onScoreChanged(20);
       navigate('/voice-mails');

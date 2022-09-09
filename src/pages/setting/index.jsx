@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth';
 import useCopyClipBoard from '../../hooks/useCopyClipBoard';
 import Widget from '../../components/family/Widget';
 import { IconNext } from '../../assets/icons';
+import ReactGA from 'react-ga';
 
 const Setting = () => {
   const navigate = useNavigate();
@@ -28,6 +29,14 @@ const Setting = () => {
     return localStorage.removeItem('TOKEN');
   };
 
+  const createGAEvent = (action) => {
+    ReactGA.event({
+      category: 'Settings',
+      action: `설정에서 ${action}`,
+      label: 'settings',
+    });
+  };
+
   return (
     <>
       <PageTitle title="설정" />
@@ -35,7 +44,14 @@ const Setting = () => {
       <SettingsContainer>
         <h3>초대 코드</h3>
         <div className="box-code">
-          <p onClick={onCopyClick}>{data.familyCode}</p>
+          <p
+            onClick={() => {
+              createGAEvent('초대 코드 복사');
+              onCopyClick();
+            }}
+          >
+            {data.familyCode}
+          </p>
           {isCopied && (
             <img
               src={`${process.env.PUBLIC_URL}/images/congratulations.png`}
@@ -44,21 +60,39 @@ const Setting = () => {
           )}
         </div>
 
-        <button type="button" onClick={() => navigate('/family/info')}>
+        <button
+          type="button"
+          onClick={() => {
+            createGAEvent('가족구성원 이동');
+            navigate('/family/info');
+          }}
+        >
           <h3>가족 구성원</h3>
           <IconNext />
         </button>
 
-        <button type="button" onClick={() => navigate('/mypage/editprofile')}>
-          <h3>프로필 수정</h3>
+        <button
+          type="button"
+          onClick={() => {
+            createGAEvent('프로필관리 이동');
+            navigate('/mypage/editprofile');
+          }}
+        >
+          <h3>프로필 관리</h3>
           <div className="wrapper-email">
             <p>{data.email}</p>
             <IconNext />
           </div>
         </button>
 
-        <button type="button" onClick={() => navigate('/mypage/editpassword')}>
-          <h3>비밀번호 변경</h3>
+        <button
+          type="button"
+          onClick={() => {
+            createGAEvent('계정관리 이동');
+            navigate('/mypage/editpassword');
+          }}
+        >
+          <h3>계정 관리</h3>
           <IconNext />
         </button>
 
@@ -67,7 +101,9 @@ const Setting = () => {
           <IconNext />
         </button>
 
-        <h3 onClick={() => navigate('')} className="btn-out">회원탈퇴</h3>
+        <h3 onClick={() => navigate('')} className="btn-out">
+          회원탈퇴
+        </h3>
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

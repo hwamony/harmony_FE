@@ -4,12 +4,22 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreVert from './MoreVert';
 import Modal from '../common/Modal';
+import ReactGA from 'react-ga';
 
 const ScheduleList = ({ schedule, selectedDate }) => {
   const [isVisible, setIsVisible] = useState(false);
 
+  const createGAEvent = (action) => {
+    ReactGA.event({
+      category: 'Calendar',
+      action: `캘린더에서 ${action}`,
+      label: 'calendar',
+    });
+  };
+
   const handleModalOpen = () => {
     setIsVisible(true);
+    createGAEvent('일정 상세 모달 확인');
   };
 
   return (
