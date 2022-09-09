@@ -50,7 +50,6 @@ const Schedule = () => {
         });
       }
 
-      console.log(scheduleData);
       titleInput.current.value = scheduleData.title;
       contentInput.current.value = scheduleData.content;
       setStartDate(dayjs(scheduleData.startDate));
@@ -98,7 +97,6 @@ const Schedule = () => {
       if (!scheduleData) {
         const res = await api.post('/schedules', data);
         createGAEvent('일정 등록');
-        console.log(res);
         alert(res.data.msg);
       } else {
         const res = await api.put(
@@ -106,7 +104,6 @@ const Schedule = () => {
           data,
         );
         createGAEvent('일정 수정');
-        console.log(res);
         alert(res.data.msg);
       }
       navigate('/');

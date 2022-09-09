@@ -26,10 +26,16 @@ const ScheduleDetail = ({ schedule, closeModal }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['schedule']);
-        if (schedule.done) return queryClient.invalidateQueries(['familyInfo']);
+        if (schedule.done) {
+          return queryClient.invalidateQueries(['familyInfo']);
+        } else if (!schedule.done && schedule.members.length >= 2) {
+          actions.onScoreChanged(10);
+          return closeModal();
+        }
       },
       onError: (err) => {
         console.log(err);
+        alert(err.response.data.message);
       },
     },
   );
@@ -69,10 +75,6 @@ const ScheduleDetail = ({ schedule, closeModal }) => {
           toggleDone();
           if (!schedule.done) {
             createGAEvent('일정 완료 버튼 클릭');
-            if (schedule.members.length >= 2) {
-              actions.onScoreChanged(10);
-              return closeModal();
-            }
           }
         }}
         className={cn(schedule.done && 'done')}
