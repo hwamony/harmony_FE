@@ -64,6 +64,18 @@ const Modal = (props) => {
     }
   };
 
+  const WithdrawalHandler = async (data) => {
+    console.log(data);
+    try {
+      const res = await api.delete('/withdrawal', data);
+      console.log(data);
+      alert('화목을 이용해주셔서 감사합니다.')
+      navigate('/login')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const onDimmerClick = (event) => {
     if (event.currentTarget !== event.target) return;
     ModalClose();
@@ -104,6 +116,7 @@ const Modal = (props) => {
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
+            type='button'
             onClick={ModalClose}
           >
             취소
@@ -157,6 +170,7 @@ const Modal = (props) => {
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
+            type='button'
             onClick={ModalClose}
           >
             취소
@@ -194,6 +208,40 @@ const Modal = (props) => {
     );
   };
 
+  const Withdrawal = () => {
+    return (
+      <ContentsWrap onSubmit={handleSubmit(WithdrawalHandler)}>
+      <Desc style={{ fontWeight: '700', color: '#5b5b5b' }}>비밀번호 재확인</Desc>
+      <p style={{ marginTop: '4px', fontSize: '14px', color: '#8e8e8e', textAlign: 'center' }}>회원탈퇴 시 더이상 화목을 이용할 수 없습니다.</p>
+      <InputWrap style={{  marginTop: '4px' }}>
+        <Input
+          name="password"
+          style={{ border: '1px solid #DADADA', }}
+          placeholder="비밀번호를 입력해주세요."
+          ref={register({ required: true })}
+        />
+        <ErrorMsg id="errorMsg">
+          {errors.password && errors.password.type === 'required'
+            ? '비밀번호을 입력해주세요.'
+            : errormessage}
+        </ErrorMsg>
+      </InputWrap>
+      <BtnWrap>
+        <ModalBtn
+          style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
+          type='button'
+          onClick={ModalClose}
+        >
+          취소
+        </ModalBtn>
+        <ModalBtn style={{ fontWeight: '600', color: '#3EC192' }}>
+          확인
+        </ModalBtn>
+      </BtnWrap>
+    </ContentsWrap>
+    )
+  }
+
   return (
     <ModalWrap visible={isVisible}>
       <Overlay onClick={type !== 'join' ? onDimmerClick : onDimmerCopy}>
@@ -206,6 +254,7 @@ const Modal = (props) => {
             {type === 'create' && <Create></Create>}
             {type === 'copy' && <Copy></Copy>}
             {type === 'join' && <Join></Join>}
+            {type === 'withdrawal' && <Withdrawal></Withdrawal>}
           </ModalInner>
         )}
       </Overlay>
