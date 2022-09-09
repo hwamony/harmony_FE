@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useReactMediaRecorder } from 'react-media-recorder';
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import ReactGA from 'react-ga';
 
 const VoiceRecorder = (props) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -18,12 +18,21 @@ const VoiceRecorder = (props) => {
     setBlobUrl(mediaBlobUrl);
   }, [mediaBlobUrl]);
 
+  const createGAEvent = (event) => {
+    ReactGA.event({
+      category: 'Voicemail',
+      action: `소리샘에서 ${event}`,
+      label: 'voicemail',
+    });
+  };
+
   // Function
   const togleStartStop = () => {
     const prevValue = isRecording;
     if (!prevValue) {
       startRecording();
       setIsRecording(!prevValue);
+      createGAEvent('녹음 시도');
     } else {
       stopRecording();
       setIsRecording(!prevValue);

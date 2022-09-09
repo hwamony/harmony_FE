@@ -10,6 +10,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './styles/GlobalStyle';
 import App from './App';
+import ReactGA from 'react-ga';
+
+const TRACKING_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID;
+ReactGA.initialize(TRACKING_ID);
 
 const queryClient = new QueryClient({
   defaultOptions: {
