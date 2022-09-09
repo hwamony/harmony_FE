@@ -64,10 +64,10 @@ const getRankings = async () => {
 };
 
 export const useRankings = () =>
-  useQuery(['familyCode'], getRankings, {
+  useQuery(['familyRankings'], getRankings, {
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
+    staleTime: 1000 * 60 * 5,
     onSuccess: (data) => {
       console.log(data);
     },
