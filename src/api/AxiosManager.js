@@ -37,4 +37,5 @@ export const apis = {
   getFamily: () => api.get('/family'),
   getValidUser: () => api.get('/user/info'),
   getCode: () => api.get('/family/code'),
+  getNickname: () => api.get('/user/nickname'),
 };

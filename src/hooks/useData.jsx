@@ -99,3 +99,36 @@ export const useUserProfile = () =>
     staleTime: Infinity,
     cacheTime: 0,
   });
+
+const getUserNickname = async () => {
+  try {
+    const res = await apis.getNickname();
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const useUserNickname = () =>
+  useQuery(['usernickname'], getUserNickname, {
+    enabled: !!hasToken,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
+
+const getUserNotifications = async () => {
+  try {
+    const res = await api.get(`/notifications`);
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const useUserNotifications = () =>
+  useQuery(['usernotifications'], getUserNotifications, {
+    enabled: !!hasToken,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    cacheTime: 0,
+  });

@@ -9,7 +9,7 @@ import Header from '../../components/common/Header';
 import BtnAdd from '../../components/common/BtnAdd';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import MoreHoriz from '../../components/voicemail/MoreHoriz';
-import WebsocketProvider from '../../components/common/WebsocketProvider'
+import { connectWs } from '../../components/common/WebsocketProvider'
 import { IconMoreHoriz } from '../../assets/icons';
 import { Container, Body, EmptyWrap, IconWrap, EmptyDesc, MailWrap, MailTitle, MailDesc, DropdownWrap, AudioWrap, UserWrap, From, To } from './style';
 
@@ -30,7 +30,6 @@ const Voicemail = () => {
 
   return (
     <Container>
-      <WebsocketProvider/>
       <PageTitle title="소리샘" />
       <Header title="소리샘" link="/voice-mails" />
 
