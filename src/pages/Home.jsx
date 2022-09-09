@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
@@ -19,10 +19,15 @@ import ScheduleList from '../components/calendar/ScheduleList';
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { hasToken } = useAuth();
   const { selectedDate, monthIdx, selectedDay } = useSelector(
     (state) => state.calendar,
   );
+
+  useEffect(() => {
+    if (pathname !== '/') navigate('/');
+  }, [pathname]);
 
   const { data: getValidInfo } = useValidUserData();
   const isValidUser =

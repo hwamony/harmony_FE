@@ -18,7 +18,7 @@ const Setting = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   const onCopyClick = () => {
-    onCopy(data?.familyCode);
+    onCopy(data.familyCode);
     setIsOpened(true);
   };
 
@@ -35,7 +35,7 @@ const Setting = () => {
       <SettingsContainer>
         <h3>초대 코드</h3>
         <div className="box-code">
-          <p onClick={onCopyClick}>{data?.familyCode}</p>
+          <p onClick={onCopyClick}>{data.familyCode}</p>
           {isCopied && (
             <img
               src={`${process.env.PUBLIC_URL}/images/congratulations.png`}
@@ -52,7 +52,7 @@ const Setting = () => {
         <button type="button" onClick={() => navigate('/mypage/editprofile')}>
           <h3>프로필 수정</h3>
           <div className="wrapper-email">
-            <p>{data?.email}</p>
+            <p>{data.email}</p>
             <IconNext />
           </div>
         </button>
