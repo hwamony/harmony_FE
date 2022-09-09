@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { socialApi } from '../../../api/AxiosManager';
+import api from '../../../api/AxiosManager';
 import PuffLoader from 'react-spinners/PuffLoader';
 import styled from 'styled-components';
 
@@ -15,7 +15,7 @@ const Kakao = () => {
   const getKakaoToken = async () => {
     // 받은 인가코드를 우리 서버로 전달하는 코드
     try {
-      const res = await socialApi.get(`/login/oauth2/kakao?code=${code}`);
+      const res = await api.get(`/login/oauth2/kakao?code=${code}`);
       console.log('성공>>', res);
 
       // 서버와 api 통신을 통해 카카오에서 발급한 토큰을 로컬스토리지에 저장
