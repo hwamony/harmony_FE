@@ -9,21 +9,14 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  IconButton,
-  Snackbar,
-} from '@mui/material';
+import { TextField, FormControl, InputLabel, Select, MenuItem, IconButton, Snackbar } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
 import { Button } from '../../styles/Button';
 import { MdAddPhotoAlternate } from 'react-icons/md';
+import ReactGA from 'react-ga';
 
 const PostAlbum = () => {
   const navigate = useNavigate();
@@ -75,6 +68,14 @@ const PostAlbum = () => {
     });
   };
 
+  const createGAEvent = (event) => {
+    ReactGA.event({
+      category: 'Gallery',
+      action: `갤러리에서 ${event}`,
+      label: 'gallery',
+    });
+  };
+
   const createAlbum = async (e) => {
     e.preventDefault();
 
@@ -105,6 +106,7 @@ const PostAlbum = () => {
           `/galleries/${galleryId}/images`,
           formData,
         );
+        createGAEvent('사진 추가');
         console.log(res);
         alert('사진이 추가되었습니다!');
         navigate(-1);
@@ -113,6 +115,7 @@ const PostAlbum = () => {
           `/schedules/${data.schedules[scheduleNum].id}/galleries`,
           formData,
         );
+        createGAEvent('앨범 생성');
         console.log(res);
         alert('앨범이 생성되었습니다!');
         actions.onScoreChanged(20);

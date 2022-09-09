@@ -17,6 +17,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { IconHistory, IconMembers, IconSelect } from '../../assets/icons';
 import { Button } from '../../styles/Button';
 import { categories } from '../../utils/data';
+import ReactGA from 'react-ga';
 
 const Schedule = () => {
   const navigate = useNavigate();
@@ -49,7 +50,6 @@ const Schedule = () => {
         });
       }
 
-      console.log(scheduleData);
       titleInput.current.value = scheduleData.title;
       contentInput.current.value = scheduleData.content;
       setStartDate(dayjs(scheduleData.startDate));
@@ -67,6 +67,14 @@ const Schedule = () => {
       target: { value },
     } = event;
     setSelectedMember(typeof value === 'string' ? value.split(',') : value);
+  };
+
+  const createGAEvent = (event) => {
+    ReactGA.event({
+      category: 'Calendar',
+      action: `캘린더에서 ${event}`,
+      label: 'calendar',
+    });
   };
 
   const onSubmitSchedule = async (e) => {
@@ -88,14 +96,14 @@ const Schedule = () => {
     try {
       if (!scheduleData) {
         const res = await api.post('/schedules', data);
-        console.log(res);
+        createGAEvent('일정 등록');
         alert(res.data.msg);
       } else {
         const res = await api.put(
           `/schedules/${scheduleData.scheduleId}`,
           data,
         );
-        console.log(res);
+        createGAEvent('일정 수정');
         alert(res.data.msg);
       }
       navigate('/');

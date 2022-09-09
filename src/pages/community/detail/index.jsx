@@ -23,7 +23,6 @@ const PostDetail = () => {
     () => getPost(postId),
     {
       refetchOnWindowFocus: false,
-      onSuccess: (data) => console.log(data),
     },
   );
 

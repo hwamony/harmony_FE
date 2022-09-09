@@ -7,20 +7,35 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/AxiosManager';
 import useAuth from '../../hooks/useAuth';
 import { IconCheck } from '../../assets/icons';
+import ReactGA from 'react-ga';
 
 const ScheduleDetail = ({ schedule, closeModal }) => {
   const queryClient = useQueryClient();
   const { actions } = useAuth();
+
+  const createGAEvent = (action) => {
+    ReactGA.event({
+      category: 'Calendar',
+      action: `캘린더에서 ${action}`,
+      label: 'calendar',
+    });
+  };
 
   const { mutate: toggleDone } = useMutation(
     () => api.put(`/schedules/${schedule.scheduleId}/done`),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['schedule']);
-        if (schedule.done) return queryClient.invalidateQueries(['familyInfo']);
+        if (schedule.done) {
+          return queryClient.invalidateQueries(['familyInfo']);
+        } else if (!schedule.done && schedule.members.length >= 2) {
+          actions.onScoreChanged(10);
+          return closeModal();
+        }
       },
       onError: (err) => {
         console.log(err);
+        alert(err.response.data.message);
       },
     },
   );
@@ -58,9 +73,8 @@ const ScheduleDetail = ({ schedule, closeModal }) => {
         type="button"
         onClick={() => {
           toggleDone();
-          if (schedule.members.length >= 2 && !schedule.done) {
-            actions.onScoreChanged(10);
-            return closeModal();
+          if (!schedule.done) {
+            createGAEvent('일정 완료 버튼 클릭');
           }
         }}
         className={cn(schedule.done && 'done')}
