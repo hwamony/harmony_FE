@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import api from '../../../api/AxiosManager';
-import PuffLoader from 'react-spinners/PuffLoader';
 import styled from 'styled-components';
+import Loading from '../../../components/common/Loading';
 
 const Kakao = () => {
   // 카카오로부터 받은 인가코드를 변수에 저장
@@ -16,8 +16,6 @@ const Kakao = () => {
     // 받은 인가코드를 우리 서버로 전달하는 코드
     try {
       const res = await api.get(`/login/oauth2/kakao?code=${code}`);
-      console.log('성공>>', res);
-
       // 서버와 api 통신을 통해 카카오에서 발급한 토큰을 로컬스토리지에 저장
       localStorage.setItem('TOKEN', res.headers.authorization);
 
@@ -29,6 +27,8 @@ const Kakao = () => {
       window.location.href = '/';
     } catch (err) {
       console.log('실패>>', err);
+      alert('문제가 발생했습니다. 다른 방법으로 로그인해주세요.');
+      navigate('/');
     }
   };
 
@@ -38,7 +38,7 @@ const Kakao = () => {
 
   return (
     <Container>
-      <PuffLoader />
+      <Loading />
     </Container>
   );
 };
