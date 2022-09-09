@@ -67,6 +67,7 @@ const Router = () => {
             <Route path="/signup/kakao" element={<SignupKakao />} />
             <Route path="/familycode" element={<Familycode />} />
             <Route path="/role" element={<Role />} />
+            <Route path="/index.html" element={<Home />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </>
