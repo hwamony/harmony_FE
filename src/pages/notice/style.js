@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100vh;
-  padding: 20px;
+  padding: 20px 20px 85px;
 `;
 
 export const Header = styled.div`
@@ -21,15 +20,18 @@ export const Title = styled.h1`
 `;
 
 export const Body = styled.div`
-  height: 100vh;
-  padding: 10px 20px;
+  padding: 15px 20px 20px;
   margin: -20px;
+  .wrapper-btn {
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 
 export const NoticeWrap = styled.div``;
 
 export const NoticeItem = styled.div`
-  margin: 15px 0;
+  margin: 15px 0 30px;
   display: flex;
   align-items: center;
   position: relative;
