@@ -2,31 +2,26 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import api from '../../../api/AxiosManager';
+import ReactGA from 'react-ga';
+
+import { useValidUserData } from '../../../hooks/useData';
+import PageTitle from '../../../components/common/PageTitle';
+import HeaderMid from '../../../components/common/HeaderMid';
+import Modal from '../../../components/common/Modal';
+import { IconNext, IconClose } from '../../../assets/icons';
 import { Input, Checkinput } from '../../../styles/Input';
 import { Button } from '../../../styles/Button';
 import { Label } from '../../../styles/Label';
-import api from '../../../api/AxiosManager';
-import PageTitle from '../../../components/common/PageTitle';
-import HeaderMid from '../../../components/common/HeaderMid';
-import { useValidUserData } from '../../../hooks/useData';
-import ReactGA from 'react-ga';
-import { IconNext, IconClose } from '../../../assets/icons';
-import Modal from '../../../components/common/Modal';
-
-// 추후 임포트 삭제
-import InProgress from '../../../components/common/InProgress';
 
 const EditPassword = () => {
-  // State
-  const [isShow, setIsShow] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Reference
-  const { register, handleSubmit, watch, errors } = useForm();
   const navigate = useNavigate();
   const password = useRef();
   password.current = watch('password');
   const { kakaoUser } = useValidUserData().data;
+  const { register, handleSubmit, watch, errors } = useForm();
+  const [isShow, setIsShow] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const createGAEvent = (action) => {
     ReactGA.event({
@@ -40,7 +35,7 @@ const EditPassword = () => {
     try {
       const response = await api.put('/mypage/password', data);
       console.log('response >>', response.data);
-      createGAEvent('비밀번호 변경')
+      createGAEvent('비밀번호 변경');
       alert('비밀번호 변경이 완료되었습니다.');
       navigate(-1);
     } catch (err) {
@@ -51,7 +46,7 @@ const EditPassword = () => {
   const onSubmitFeedback = async (data) => {
     try {
       const response = await api.post('/withdrawal', data);
-      createGAEvent('회원탈퇴 피드백 제출')
+      createGAEvent('회원탈퇴 피드백 제출');
       setIsVisible(true);
       console.log('response >>', response.data);
     } catch (err) {
@@ -63,11 +58,10 @@ const EditPassword = () => {
     <>
       {isVisible && (
         <>
-          {/* FIXME: 회원탈퇴 GA 추가 */}
           <Modal
             isVisible={isVisible}
             setIsVisible={setIsVisible}
-            type='withdrawal'
+            type="withdrawal"
           ></Modal>
         </>
       )}
@@ -96,7 +90,7 @@ const EditPassword = () => {
                     <ErrorMsg>
                       {errors.existingPassword &&
                         errors.existingPassword.type === 'required' &&
-                        '현재 비밀번호을 입력해주세요.'}
+                        '현재 비밀번호를 입력해주세요.'}
                       {errors.existingPassword &&
                         errors.existingPassword.type === 'pattern' &&
                         '현재 비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용하여 입력해주세요.'}
@@ -118,7 +112,7 @@ const EditPassword = () => {
                     <ErrorMsg>
                       {errors.password &&
                         errors.password.type === 'required' &&
-                        '새 비밀번호을 입력해주세요.'}
+                        '새 비밀번호를 입력해주세요.'}
                       {errors.password &&
                         errors.password.type === 'pattern' &&
                         '새 비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용하여 입력해주세요.'}
@@ -138,7 +132,7 @@ const EditPassword = () => {
                         '비밀번호를 다시 한번 입력해주세요.'}
                       {errors.passwordConfirm &&
                         errors.passwordConfirm.type === 'validate' &&
-                        '비밀번호가 동일하지 않습니다.'}
+                        '비밀번호가 일치하지 않습니다.'}
                     </ErrorMsg>
                   </InputWrap>
                   <Button style={{ marginTop: '30px' }}>변경하기</Button>
@@ -176,23 +170,20 @@ const EditPassword = () => {
             <Body>
               <DescWrap>
                 <DescContent>
-                  김화목님,
-                  <br />
                   잠깐만요!
                   <DescStrong marginTop="40px">탈퇴하시면,</DescStrong>
                   <DescUl>
                     <DestLi style={{ marginTop: '12px' }}>
-                      탈퇴 후에는 계정을 다시 살릴 수 없습니다.
+                      본 계정으로 다시는 로그인할 수 없습니다.
                     </DestLi>
                     <DestLi>
-                      이미 작성하신 캘린더 일정이나 갤러리 등 일부 정보는 계속
+                      캘린더 일정이나 갤러리 등 가족과 공유하는 일부 정보는 계속
                       남아있을 수 있습니다.
                     </DestLi>
                     <DestLi>
                       커뮤니티에서 작성하신 글과 댓글은 삭제되어 복구할 수
                       없습니다.
                     </DestLi>
-                    <DestLi>본 계정으로 다시는 로그인할 수 없습니다.</DestLi>
                   </DescUl>
                   <DescStrong marginTop="28px">
                     탈퇴하시는 이유가 무엇인가요?
@@ -200,12 +191,12 @@ const EditPassword = () => {
                 </DescContent>
               </DescWrap>
               <TxtArea
-                placeholder="탈퇴 사유를 자세히 적어주세요."
+                placeholder="탈퇴 사유를 적어주세요."
                 id="feedback"
                 name="feedback"
                 ref={register({
                   required: true,
-                  pattern: /^(?=.{15,}$).*/,
+                  pattern: /^(?=.{10,}$).*/,
                 })}
               ></TxtArea>
               <ErrorMsg>
@@ -214,7 +205,7 @@ const EditPassword = () => {
                   '탈퇴 사유를 입력해주세요.'}
                 {errors.feedback &&
                   errors.feedback.type === 'pattern' &&
-                  '15자 이상 입력해주세요.'}
+                  '10자 이상 입력해주세요.'}
               </ErrorMsg>
               <PolicyWrap>
                 <PolicyCheck>

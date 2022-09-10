@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input } from '../../styles/Input';
 import { useForm } from 'react-hook-form';
-import api from '../../api/AxiosManager';
 import { useNavigate } from 'react-router-dom';
+
 import ScheduleDetail from '../calendar/ScheduleDetail';
+import api from '../../api/AxiosManager';
+import { Input } from '../../styles/Input';
 
 const Modal = (props) => {
   const [modalData, setModalData] = useState({
@@ -24,7 +25,6 @@ const Modal = (props) => {
   const createHandler = async (data) => {
     try {
       const response = await api.post('/families', data);
-      console.log(response);
       setModalData({
         ...modalData,
         type: 'copy',
@@ -65,16 +65,15 @@ const Modal = (props) => {
   };
 
   const WithdrawalHandler = async (data) => {
-    console.log(data);
     try {
-      const res = await api.delete('/withdrawal', data);
-      console.log(data);
-      alert('화목을 이용해주셔서 감사합니다.')
-      navigate('/login')
+      await api.delete('/withdrawal', data);
+      alert('그동안 화목을 이용해주셔서 감사합니다.');
+      window.location.href = '/';
+      return localStorage.removeItem('TOKEN');
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const onDimmerClick = (event) => {
     if (event.currentTarget !== event.target) return;
@@ -116,7 +115,7 @@ const Modal = (props) => {
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
-            type='button'
+            type="button"
             onClick={ModalClose}
           >
             취소
@@ -170,7 +169,7 @@ const Modal = (props) => {
         <BtnWrap>
           <ModalBtn
             style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
-            type='button'
+            type="button"
             onClick={ModalClose}
           >
             취소
@@ -211,36 +210,48 @@ const Modal = (props) => {
   const Withdrawal = () => {
     return (
       <ContentsWrap onSubmit={handleSubmit(WithdrawalHandler)}>
-      <Desc style={{ fontWeight: '700', color: '#5b5b5b' }}>비밀번호 재확인</Desc>
-      <p style={{ marginTop: '4px', fontSize: '14px', color: '#8e8e8e', textAlign: 'center' }}>회원탈퇴 시 더이상 화목을 이용할 수 없습니다.</p>
-      <InputWrap style={{  marginTop: '4px' }}>
-        <Input
-          name="password"
-          style={{ border: '1px solid #DADADA', }}
-          placeholder="비밀번호를 입력해주세요."
-          ref={register({ required: true })}
-        />
-        <ErrorMsg id="errorMsg">
-          {errors.password && errors.password.type === 'required'
-            ? '비밀번호을 입력해주세요.'
-            : errormessage}
-        </ErrorMsg>
-      </InputWrap>
-      <BtnWrap>
-        <ModalBtn
-          style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
-          type='button'
-          onClick={ModalClose}
+        <Desc style={{ fontWeight: '700', color: '#5b5b5b' }}>
+          비밀번호 확인
+        </Desc>
+        <p
+          style={{
+            marginTop: '4px',
+            fontSize: '14px',
+            color: '#8e8e8e',
+            textAlign: 'center',
+          }}
         >
-          취소
-        </ModalBtn>
-        <ModalBtn style={{ fontWeight: '600', color: '#3EC192' }}>
-          확인
-        </ModalBtn>
-      </BtnWrap>
-    </ContentsWrap>
-    )
-  }
+          회원 탈퇴 시 더이상 화목을 이용할 수 없습니다.
+        </p>
+        <InputWrap style={{ marginTop: '4px' }}>
+          <Input
+            name="password"
+            type="password"
+            style={{ border: '1px solid #DADADA' }}
+            placeholder="비밀번호를 입력해주세요."
+            ref={register({ required: true })}
+          />
+          <ErrorMsg id="errorMsg">
+            {errors.password && errors.password.type === 'required'
+              ? '비밀번호를 입력해주세요.'
+              : errormessage}
+          </ErrorMsg>
+        </InputWrap>
+        <BtnWrap>
+          <ModalBtn
+            style={{ fontWeight: '400', borderRight: '1px solid #DADADA' }}
+            type="button"
+            onClick={ModalClose}
+          >
+            취소
+          </ModalBtn>
+          <ModalBtn style={{ fontWeight: '600', color: '#3EC192' }}>
+            확인
+          </ModalBtn>
+        </BtnWrap>
+      </ContentsWrap>
+    );
+  };
 
   return (
     <ModalWrap visible={isVisible}>
