@@ -137,7 +137,6 @@ const Main = styled.main`
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 100vh;
   padding: 0 20px 120px;
 `;
 

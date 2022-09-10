@@ -80,7 +80,7 @@ const SignupKakao = () => {
             </Label>
             <Input
               style={{ width: 'calc(100% - 88px)' }}
-              placeholder="닉네임를 입력해주세요."
+              placeholder="닉네임을 입력해주세요."
               name="nickname"
               ref={register({
                 required: true,
@@ -100,7 +100,7 @@ const SignupKakao = () => {
                 '닉네임을 입력해주세요.'}
               {errors.nickname &&
                 errors.nickname.type === 'validate' &&
-                '중복확인해주세요.'}
+                '중복 확인해주세요.'}
             </ErrorMsg>
           </InputWrap>
 

@@ -1,59 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import PageTitle from '../../components/common/PageTitle';
-import HeaderMid from '../../components/common/HeaderMid';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import {
-  Container,
-  Body,
-  NoticeWrap,
-  NoticeItem,
-  IconWrap,
-  DescWrap,
-  DescTitle,
-  DescMsg,
-  TimeWrap,
-} from './style';
 import { useNavigate } from 'react-router-dom';
-import { FiBell } from 'react-icons/fi';
 
-// TODO: 웹소켓 연결
 import SockJs from 'sockjs-client';
 import StompJs from 'stompjs';
-import { useUserNickname, useUserNotifications } from '../../hooks/useData';
 import api from '../../api/AxiosManager';
+import { useUserNickname, useUserNotifications } from '../../hooks/useData';
+
+import PageTitle from '../../components/common/PageTitle';
+import HeaderMid from '../../components/common/HeaderMid';
+import { FiBell } from 'react-icons/fi';
+import { Container, Body, NoticeWrap, NoticeItem, IconWrap, DescWrap, DescTitle, DescMsg, TimeWrap } from './style';
 
 const Notice = () => {
-  // State
-  const [notice, setNotice] = useState([]);
-
-  // Reference
-  const navigate = useNavigate();
   dayjs.locale('ko');
-
+  const navigate = useNavigate();
+  const [notice, setNotice] = useState([]);
   const { nickname } = useUserNickname().data;
   const { notifications } = useUserNotifications().data;
 
-  // TODO: 웹소켓 연결
   const connectWs = () => {
-    // websocket 연결
-
-
-    // FIXME: https로 수정
     const SERVER_STOMP_URL = 'https://dev.hwa-mok.com/websocket';
-
     const sock = new SockJs(SERVER_STOMP_URL);
     const client = StompJs.over(sock);
 
     client.connect(
       {},
-      (data) => {
+      () => {
         console.log('connect!');
 
         client.subscribe(`/topic/user/${nickname}`, (message) => {
           const quote = JSON.parse(message.body);
-          console.log(notifications)
-          setNotice(prev => [quote, ...prev])
+          console.log(notifications);
+          setNotice((prev) => [quote, ...prev]);
 
           console.log(quote);
         });
@@ -65,15 +45,13 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    setNotice([...notifications])
+    setNotice([...notifications]);
     connectWs();
   }, []);
 
   const deleteNotifications = async () => {
     try {
-      const res = await api.delete('/notifications');
-
-      // FIXME: 페이지 리프레시
+      await api.delete('/notifications');
       navigate(0);
     } catch (err) {
       console.log(err);
@@ -86,6 +64,9 @@ const Notice = () => {
       <HeaderMid text="알림" />
       <Container>
         <Body>
+          <div className="wrapper-btn">
+            <button onClick={deleteNotifications}>삭제</button>
+          </div>
           <NoticeWrap>
             {notice.map((item) => {
               const { id, domain, action, createdAt } = item;
@@ -117,12 +98,13 @@ const Notice = () => {
                         action === 'create' &&
                         '새로운 음성메세지가 추가되었습니다.'}
                     </DescMsg>
-                    <TimeWrap>{dayjs(createdAt).format('M월 D일 HH:MM')}</TimeWrap>
+                    <TimeWrap>
+                      {dayjs(createdAt).format('M월 D일 HH:MM')}
+                    </TimeWrap>
                   </DescWrap>
                 </NoticeItem>
               );
             })}
-            <button onClick={deleteNotifications}>삭제</button>
           </NoticeWrap>
         </Body>
       </Container>
