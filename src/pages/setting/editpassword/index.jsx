@@ -16,10 +16,10 @@ import { Label } from '../../../styles/Label';
 
 const EditPassword = () => {
   const navigate = useNavigate();
-  const password = useRef();
-  password.current = watch('password');
   const { kakaoUser } = useValidUserData().data;
   const { register, handleSubmit, watch, errors } = useForm();
+  const password = useRef();
+  password.current = watch('password');
   const [isShow, setIsShow] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
