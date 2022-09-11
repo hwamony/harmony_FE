@@ -82,6 +82,12 @@ const Schedule = () => {
     if (!category) {
       alert('카테고리를 선택해주세요');
       return;
+    } else if (!startDate) {
+      alert('시작일을 선택해주세요');
+      return;
+    } else if (!endDate) {
+      alert('종료일을 선택해주세요');
+      return;
     }
 
     const data = {
@@ -177,6 +183,7 @@ const Schedule = () => {
                       onError={console.log}
                       inputFormat="YYYY년 M월 D일 ddd요일"
                       renderInput={(params) => <TextField {...params} />}
+                      required
                     />
                     {startDate && (
                       <MobileDatePicker
@@ -187,6 +194,7 @@ const Schedule = () => {
                         onError={console.log}
                         inputFormat="YYYY년 M월 D일 ddd요일"
                         renderInput={(params) => <TextField {...params} />}
+                        required
                       />
                     )}
                   </>
