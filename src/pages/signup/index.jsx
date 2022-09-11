@@ -25,8 +25,7 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.post('/signup', data);
-      console.log('response >>', response.data);
+      await api.post('/signup', data);
       navigate('/signup/complete');
     } catch (err) {
       console.log('Error >>', err.response.data);
@@ -39,7 +38,6 @@ const Signup = () => {
       const response = await api.post('/email-check', {
         email: email,
       });
-      console.log('response >>', response.data);
       setIsOverlap((prev) => {
         return { ...prev, email: true };
       });
@@ -61,7 +59,6 @@ const Signup = () => {
       const response = await api.post('/nickname-check', {
         nickname: nickname,
       });
-      console.log('response >>', response);
       setIsOverlap((prev) => {
         return { ...prev, nickname: true };
       });

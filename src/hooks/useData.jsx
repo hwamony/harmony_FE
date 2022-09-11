@@ -68,9 +68,6 @@ export const useRankings = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5,
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
 const getAlbums = async (scheduleId) => {

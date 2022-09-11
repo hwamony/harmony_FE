@@ -27,7 +27,6 @@ const EditProfile = () => {
       const response = await api.post('/nickname-check', {
         nickname: nickname,
       });
-      console.log('response >>', response);
       if (response.data.data.enable) {
         alert('사용 가능한 닉네임입니다.');
         setIsOverlap(true);
@@ -47,7 +46,6 @@ const EditProfile = () => {
         nickname: nickname,
         updateFor: 'mypage',
       });
-      console.log('response >>', response.data);
       alert('프로필 수정이 완료되었습니다.');
       navigate(-1);
       return queryClient.invalidateQueries(['userprofile']);
