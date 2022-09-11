@@ -33,7 +33,7 @@ const Kakao = () => {
   };
 
   useEffect(() => {
-    getKakaoToken();
+    // getKakaoToken();
   }, []);
 
   return (

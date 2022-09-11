@@ -9,7 +9,6 @@ import Header from '../../components/common/Header';
 import BtnAdd from '../../components/common/BtnAdd';
 import AudioPlayer from '../../components/voicemail/AudioPlayer';
 import MoreHoriz from '../../components/voicemail/MoreHoriz';
-import { connectWs } from '../../components/common/WebsocketProvider'
 import { IconMoreHoriz } from '../../assets/icons';
 import { Container, Body, EmptyWrap, IconWrap, EmptyDesc, MailWrap, MailTitle, MailDesc, DropdownWrap, AudioWrap, UserWrap, From, To } from './style';
 

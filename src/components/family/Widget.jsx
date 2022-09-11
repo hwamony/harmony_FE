@@ -24,7 +24,7 @@ const Widget = () => {
   const connectWs = () => {
     // websocket 연결
 
-    const SERVER_STOMP_URL = 'https://dev.hwa-mok.com/websocket';
+    const SERVER_STOMP_URL = `${process.env.REACT_APP_HOST}/websocket`;
 
     const sock = new SockJs(SERVER_STOMP_URL);
     const client = StompJs.over(sock);

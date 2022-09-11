@@ -21,7 +21,7 @@ const Notice = () => {
   const { notifications } = useUserNotifications().data;
 
   const connectWs = () => {
-    const SERVER_STOMP_URL = 'https://dev.hwa-mok.com/websocket';
+    const SERVER_STOMP_URL = `${process.env.REACT_APP_HOST}/websocket`;
     const sock = new SockJs(SERVER_STOMP_URL);
     const client = StompJs.over(sock);
 
