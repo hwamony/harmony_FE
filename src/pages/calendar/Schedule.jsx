@@ -205,11 +205,14 @@ const Schedule = () => {
                   multiple
                   required
                 >
-                  {familyInfo?.members.map((member) => (
-                    <MenuItem key={member.userId} value={member.userId}>
-                      {member.role}({member.name})
-                    </MenuItem>
-                  ))}
+                  {familyInfo?.members.map(
+                    (member) =>
+                      member.role !== '미설정' && (
+                        <MenuItem key={member.userId} value={member.userId}>
+                          {member.role}({member.name})
+                        </MenuItem>
+                      ),
+                  )}
                 </Select>
               </MemberWrapper>
             </>
