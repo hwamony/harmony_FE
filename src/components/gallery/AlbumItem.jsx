@@ -35,10 +35,8 @@ const AlbumItem = ({ album, isLoading, title }) => {
     const data = {
       content: commentInput.current.value,
     };
-    console.log(data);
     try {
       const res = await api.post(`/galleries/${galleryId}/comments`, data);
-      console.log(res);
       return res;
     } catch (err) {
       console.log(err);

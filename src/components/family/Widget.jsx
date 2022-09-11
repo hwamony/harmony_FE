@@ -24,7 +24,7 @@ const Widget = () => {
   const connectWs = () => {
     // websocket 연결
 
-    const SERVER_STOMP_URL = 'https://dev.hwa-mok.com/websocket';
+    const SERVER_STOMP_URL = `${process.env.REACT_APP_HOST}/websocket`;
 
     const sock = new SockJs(SERVER_STOMP_URL);
     const client = StompJs.over(sock);
@@ -66,6 +66,13 @@ const Widget = () => {
               src={hwamokGrades[familyInfo.level].icon}
               alt={hwamokGrades[familyInfo.level].name}
             />
+            {familyInfo.flower && (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/grades/flower.png`}
+                alt=""
+                className="hasFlower"
+              />
+            )}
           </Circle>
           <div>
             <strong>
@@ -144,8 +151,20 @@ const LeftWrapper = styled.div`
 `;
 
 const Circle = styled.div`
+  position: relative;
   margin-right: 11px;
   font-size: 0.5em;
+  img {
+    width: 49px;
+    height: 49px;
+    &.hasFlower {
+      position: absolute;
+      top: 0;
+      left: -5px;
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const AlertBtn = styled.div`

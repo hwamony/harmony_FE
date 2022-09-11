@@ -21,7 +21,6 @@ const SignupKakao = () => {
         ...data,
         updateFor: 'kakao',
       });
-      console.log('response >>', response.data);
       alert('환영합니다! 이어서 가족 정보를 입력해주세요.');
       window.location.href = '/';
       return queryClient.invalidateQueries(['familyInfo']);
@@ -37,7 +36,6 @@ const SignupKakao = () => {
       const response = await api.post('/nickname-check', {
         nickname: nickname,
       });
-      console.log('response >>', response);
 
       if (response.data.data.enable) {
         alert('사용가능한 닉네임입니다.');

@@ -107,7 +107,6 @@ const PostAlbum = () => {
           formData,
         );
         createGAEvent('사진 추가');
-        console.log(res);
         alert('사진이 추가되었습니다!');
         navigate(-1);
       } else {
@@ -116,7 +115,6 @@ const PostAlbum = () => {
           formData,
         );
         createGAEvent('앨범 생성');
-        console.log(res);
         alert('앨범이 생성되었습니다!');
         actions.onScoreChanged(20);
         navigate('/galleries');
