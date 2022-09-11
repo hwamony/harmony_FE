@@ -9,14 +9,9 @@ import BtnAdd from '../../components/common/BtnAdd';
 import ShortCard from '../../components/community/ShortCard';
 import Loading from '../../components/common/Loading';
 import { communityRoles } from '../../utils/data';
-import {
-  Main,
-  CommunityNav,
-  Category,
-  ContentWrap,
-  CategoryItem,
-  CommunityContent,
-} from './style';
+import { IconMoreHoriz } from '../../assets/icons';
+import { Main, CommunityNav, Category, ContentWrap, CategoryItem, CommunityContent } from './style';
+import { EmptyDesc, EmptyWrap, IconWrap } from '../voicemail/style';
 
 const Community = () => {
   const [category, setCategory] = useState('전체');
@@ -82,14 +77,24 @@ const Community = () => {
 
         <ContentWrap>
           <CommunityContent>
-            {postList &&
+            {postList.length > 0 ? (
               postList.pages.map((page, index) => (
                 <React.Fragment key={index}>
                   {page.data.map((post) => (
                     <ShortCard key={post.postId} post={post} />
                   ))}
                 </React.Fragment>
-              ))}
+              ))
+            ) : (
+              <EmptyWrap>
+                <IconWrap>
+                  <IconMoreHoriz />
+                </IconWrap>
+                <EmptyDesc>
+                  <p>아직 등록된 게시글이 없습니다.</p>
+                </EmptyDesc>
+              </EmptyWrap>
+            )}
           </CommunityContent>
         </ContentWrap>
 

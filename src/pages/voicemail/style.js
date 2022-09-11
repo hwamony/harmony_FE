@@ -14,7 +14,7 @@ export const Body = styled.div`
 `;
 
 export const EmptyWrap = styled.div`
-  margin-top: 242px;
+  padding-top: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;
