@@ -389,6 +389,9 @@ const CategoryWrapper = styled.div`
   flex-direction: column;
   padding: 25px 20px 10px 20px;
   border-bottom: 1px solid #ebebeb;
+  label {
+    user-select: none;
+  }
   div.category-top {
     display: flex;
     justify-content: space-between;
