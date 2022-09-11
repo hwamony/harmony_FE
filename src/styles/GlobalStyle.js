@@ -10,7 +10,7 @@ export const theme = createTheme(
       TRIP: { main: '#45BFFF', sub: '#EDF8FF' },
       COOK: { main: '#FFBC54', sub: '#FFF5E5' },
       CLEAN: { main: '#3EC192', sub: '#EDFAF6' },
-      ETC: { main: '#727DF0', sub: '#F5F4FE' },
+      ETC: { main: '#727DF0', sub: '#EDEBFC' },
       PERSONAL: { main: '#7D7D7D', sub: '#F2F2F2' },
     },
   },

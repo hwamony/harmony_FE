@@ -45,11 +45,15 @@ const CommentItem = ({ comment, postId }) => {
             (onEdit ? (
               <div>
                 <button
-                  onClick={() =>
+                  onClick={() => {
+                    if (commentRef.current.value.length < 2) {
+                      alert('수정할 댓글을 2자 이상 입력해주세요')
+                      return;
+                    }
                     editComComment({
                       content: commentRef.current.value,
-                    })
-                  }
+                    });
+                  }}
                   className="btn-comment-edit"
                 >
                   수정

@@ -41,7 +41,7 @@ const FamilyScore = () => {
           </Icon>
           <strong>{hwamokGrades[familyInfo.level].name}</strong>
           <p>
-            <span>월간 {familyInfo.monthlyScore}방울</span> | 누적{' '}
+            <span>주간 {familyInfo.weeklyScore}방울</span> | 누적{' '}
             {familyInfo.score}방울
           </p>
 

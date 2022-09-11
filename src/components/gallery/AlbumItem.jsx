@@ -110,22 +110,22 @@ const AlbumItem = ({ album, isLoading, title }) => {
                   <CommentItem key={c.id} comment={c} scheduleId={scheduleId} />
                 ))}
               </ul>
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addCommentM(album.id);
+                  actions.onScoreChanged(5);
+                  return queryClient.invalidateQueries(['familyInfo']);
+                }}
+              >
                 <input
                   type="text"
                   placeholder="댓글을 입력하세요."
                   ref={commentInput}
+                  minLength="2"
+                  required
                 />
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addCommentM(album.id);
-                    actions.onScoreChanged(5);
-                    return queryClient.invalidateQueries(['familyInfo']);
-                  }}
-                >
-                  등록
-                </button>
+                <button>등록</button>
               </form>
             </AccordionDetails>
           </Accordion>

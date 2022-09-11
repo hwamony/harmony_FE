@@ -82,6 +82,12 @@ const Schedule = () => {
     if (!category) {
       alert('카테고리를 선택해주세요');
       return;
+    } else if (!startDate) {
+      alert('시작일을 선택해주세요');
+      return;
+    } else if (!endDate) {
+      alert('종료일을 선택해주세요');
+      return;
     }
 
     const data = {
@@ -177,6 +183,7 @@ const Schedule = () => {
                       onError={console.log}
                       inputFormat="YYYY년 M월 D일 ddd요일"
                       renderInput={(params) => <TextField {...params} />}
+                      required
                     />
                     {startDate && (
                       <MobileDatePicker
@@ -187,6 +194,7 @@ const Schedule = () => {
                         onError={console.log}
                         inputFormat="YYYY년 M월 D일 ddd요일"
                         renderInput={(params) => <TextField {...params} />}
+                        required
                       />
                     )}
                   </>
@@ -205,11 +213,14 @@ const Schedule = () => {
                   multiple
                   required
                 >
-                  {familyInfo?.members.map((member) => (
-                    <MenuItem key={member.userId} value={member.userId}>
-                      {member.role}({member.name})
-                    </MenuItem>
-                  ))}
+                  {familyInfo?.members.map(
+                    (member) =>
+                      member.role !== '미설정' && (
+                        <MenuItem key={member.userId} value={member.userId}>
+                          {member.role}({member.name})
+                        </MenuItem>
+                      ),
+                  )}
                 </Select>
               </MemberWrapper>
             </>
@@ -386,6 +397,9 @@ const CategoryWrapper = styled.div`
   flex-direction: column;
   padding: 25px 20px 10px 20px;
   border-bottom: 1px solid #ebebeb;
+  label {
+    user-select: none;
+  }
   div.category-top {
     display: flex;
     justify-content: space-between;
