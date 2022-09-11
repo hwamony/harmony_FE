@@ -77,24 +77,24 @@ const Community = () => {
 
         <ContentWrap>
           <CommunityContent>
-            {postList.length > 0 ? (
-              postList.pages.map((page, index) => (
-                <React.Fragment key={index}>
-                  {page.data.map((post) => (
+            {postList.pages.map((page, index) => (
+              <React.Fragment key={index}>
+                {page.data.length > 0 ? (
+                  page.data.map((post) => (
                     <ShortCard key={post.postId} post={post} />
-                  ))}
-                </React.Fragment>
-              ))
-            ) : (
-              <EmptyWrap>
-                <IconWrap>
-                  <IconMoreHoriz />
-                </IconWrap>
-                <EmptyDesc>
-                  <p>아직 등록된 게시글이 없습니다.</p>
-                </EmptyDesc>
-              </EmptyWrap>
-            )}
+                  ))
+                ) : (
+                  <EmptyWrap>
+                    <IconWrap>
+                      <IconMoreHoriz />
+                    </IconWrap>
+                    <EmptyDesc>
+                      <p>아직 등록된 게시글이 없습니다.</p>
+                    </EmptyDesc>
+                  </EmptyWrap>
+                )}
+              </React.Fragment>
+            ))}
           </CommunityContent>
         </ContentWrap>
 
