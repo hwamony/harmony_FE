@@ -114,6 +114,7 @@ export const useUserNickname = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
+    cacheTime: 0,
   });
 
 const getUserNotifications = async () => {
@@ -129,6 +130,4 @@ export const useUserNotifications = () =>
   useQuery(['usernotifications'], getUserNotifications, {
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
-    staleTime: Infinity,
-    cacheTime: 0,
   });

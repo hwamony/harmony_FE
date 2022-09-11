@@ -101,9 +101,21 @@ const Setting = () => {
           <IconNext />
         </button>
 
-        <h3 onClick={() => navigate('')} className="btn-out">
-          회원탈퇴
-        </h3>
+        <button
+          onClick={() => {
+            window.open(
+              `https://docs.google.com/forms/d/e/1FAIpQLSfPI_JSMJebSR9fVX73MxKUdUc2ZrGWKKmZB0EF7bokab7Q1w/viewform`,
+              '_blank',
+              'noopener,noreferrer',
+            );
+          }}
+        >
+          <h3>설문조사</h3>
+          <div>
+            <span className="tag-event">EVENT!</span>
+            <IconNext />
+          </div>
+        </button>
 
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -171,16 +183,14 @@ const SettingsContainer = styled.section`
         color: #ababab;
       }
     }
-  }
-
-  h3.btn-out {
-    display: block;
-    text-align: right;
-    margin-top: 20px;
-    color: #555;
-    font-size: 13px;
-    font-weight: 400;
-    cursor: pointer;
+    span.tag-event {
+      background: #ff3b3b;
+      color: #fff;
+      padding: 2px 3px;
+      margin-right: 12px;
+      font-size: 13px;
+      border-radius: 3px;
+    }
   }
 
   .MuiSnackbar-root {

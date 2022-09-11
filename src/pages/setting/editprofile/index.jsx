@@ -5,12 +5,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import api from '../../../api/AxiosManager';
 import styled from 'styled-components';
 
+import { useUserProfile } from '../../../hooks/useData';
 import PageTitle from '../../../components/common/PageTitle';
 import HeaderMid from '../../../components/common/HeaderMid';
-import { useUserProfile } from '../../../hooks/useData';
-import { Input, RadioInput } from '../../../styles/Input';
 import { Button, InlineButton } from '../../../styles/Button';
-import { Label, RadioLabel } from '../../../styles/Label';
+import { Input } from '../../../styles/Input';
+import { Label } from '../../../styles/Label';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -41,32 +41,29 @@ const EditProfile = () => {
     e.preventDefault();
   };
 
-  const onSubmit = async (data) => {
-    console.log({ nickname: nickname, updateFor: 'mypage' });
-    // try {
-    //   const response = await api.put('/mypage/profile', {
-    //     nickname: nickname,
-    //     updateFor: 'mypage',
-    //   });
-    //   console.log('response >>', response.data);
-    //   alert('프로필 수정이 완료되었습니다.');
-    //   navigate(-1);
-    //   return queryClient.invalidateQueries(['familyInfo']);
-    // } catch (err) {
-    //   console.log('Error >>', err.response.data);
-    // }
+  const onSubmit = async () => {
+    try {
+      const response = await api.put('/mypage/profile', {
+        nickname: nickname,
+        updateFor: 'mypage',
+      });
+      console.log('response >>', response.data);
+      alert('프로필 수정이 완료되었습니다.');
+      navigate(-1);
+      return queryClient.invalidateQueries(['userprofile']);
+    } catch (err) {
+      console.log('Error >>', err.response.data);
+    }
   };
 
   return (
     <>
-      <PageTitle title="프로필 수정" />
-      <HeaderMid text="프로필 수정" />
+      <PageTitle title="프로필 관리" />
+      <HeaderMid text="프로필 관리" />
       <Container onSubmit={handleSubmit(onSubmit)}>
         <Body>
           <InputWrap>
-            <Label>
-              이메일
-            </Label>
+            <Label>이메일</Label>
             <Input
               style={{ background: '#f2f2f2' }}
               placeholder="이메일을 입력해주세요."
@@ -76,9 +73,7 @@ const EditProfile = () => {
           </InputWrap>
 
           <InputWrap>
-            <Label>
-              이름
-            </Label>
+            <Label>이름</Label>
             <Input
               style={{ background: '#f2f2f2' }}
               placeholder="이름을 입력해주세요."
@@ -93,7 +88,7 @@ const EditProfile = () => {
             </Label>
             <Input
               style={{ width: 'calc(100% - 88px)' }}
-              placeholder="닉네임을 입력해주세요."
+              placeholder={`기존 닉네임(${profile.nickname})과 다른 닉네임을 입력해주세요.`}
               name="nickname"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
@@ -115,37 +110,10 @@ const EditProfile = () => {
                 '닉네임을 입력해주세요.'}
               {errors.nickname &&
                 errors.nickname.type === 'validate' &&
-                '중복확인해주세요.'}
+                '중복 확인해주세요.'}
             </ErrorMsg>
           </InputWrap>
 
-          <InputWrap>
-            <Label>
-              성별<Asterisk>*</Asterisk>
-            </Label>
-            <div>
-              <RadioInput
-                type="radio"
-                id="male"
-                value="male"
-                disabled="disabled"
-                checked={profile.gender === 'male' ? true : false}
-              />
-              <RadioLabel htmlFor="male" style={{ cursor: 'auto' }}>
-                남성
-              </RadioLabel>
-              <RadioInput
-                type="radio"
-                id="female"
-                value="female"
-                disabled="disabled"
-                checked={profile.gender === 'female' ? true : false}
-              />
-              <RadioLabel htmlFor="female" style={{ cursor: 'auto' }}>
-                여성
-              </RadioLabel>
-            </div>
-          </InputWrap>
           <ButtonWrap>
             <Button>수정 완료</Button>
           </ButtonWrap>

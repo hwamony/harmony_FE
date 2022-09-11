@@ -45,7 +45,7 @@ const Signup = () => {
       });
       {
         response.data.data.enable
-          ? alert('사용가능한 이메일입니다.')
+          ? alert('사용 가능한 이메일입니다.')
           : alert('이미 존재하는 이메일입니다.');
       }
     } catch (err) {
@@ -67,7 +67,7 @@ const Signup = () => {
       });
       {
         response.data.data.enable
-          ? alert('사용가능한 닉네임입니다.')
+          ? alert('사용 가능한 닉네임입니다.')
           : alert('이미 존재하는 닉네임입니다.');
       }
     } catch (err) {
@@ -97,7 +97,7 @@ const Signup = () => {
               </Label>
               <Input
                 style={{ width: 'calc(100% - 88px)' }}
-                placeholder="이메일를 입력해주세요."
+                placeholder="이메일을 입력해주세요."
                 name="email"
                 ref={register({
                   required: true,
@@ -117,7 +117,7 @@ const Signup = () => {
                   '올바른 형식이 아닙니다.'}
                 {errors.email &&
                   errors.email.type === 'validate' &&
-                  '중복확인해주세요.'}
+                  '중복 확인해주세요.'}
               </ErrorMsg>
             </InputWrap>
 
@@ -138,7 +138,7 @@ const Signup = () => {
               <ErrorMsg>
                 {errors.password &&
                   errors.password.type === 'required' &&
-                  '비밀번호을 입력해주세요.'}
+                  '비밀번호를 입력해주세요.'}
                 {errors.password &&
                   errors.password.type === 'pattern' &&
                   '비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용하여 입력해주세요.'}
@@ -150,7 +150,7 @@ const Signup = () => {
                 비밀번호 확인<Asterisk>*</Asterisk>
               </Label>
               <Input
-                placeholder="비밀번호를 한번 더 입력해주세요."
+                placeholder="비밀번호를 한 번 더 입력해주세요."
                 name="passwordConfirm"
                 type="password"
                 ref={register({
@@ -173,7 +173,7 @@ const Signup = () => {
                 이름<Asterisk>*</Asterisk>
               </Label>
               <Input
-                placeholder="이름를 입력해주세요."
+                placeholder="이름을 입력해주세요."
                 name="name"
                 ref={register({ required: true })}
                 autoComplete="off"
@@ -191,7 +191,7 @@ const Signup = () => {
               </Label>
               <Input
                 style={{ width: 'calc(100% - 88px)' }}
-                placeholder="닉네임를 입력해주세요."
+                placeholder="닉네임을 입력해주세요."
                 name="nickname"
                 ref={register({
                   required: true,
@@ -211,7 +211,7 @@ const Signup = () => {
                   '닉네임을 입력해주세요.'}
                 {errors.nickname &&
                   errors.nickname.type === 'validate' &&
-                  '중복확인해주세요.'}
+                  '중복 확인해주세요.'}
               </ErrorMsg>
             </InputWrap>
 
