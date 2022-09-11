@@ -80,7 +80,7 @@ const Widget = () => {
               <IconDetail />
             </strong>
             <p>
-              {familyInfo.monthlyScore}방울{' '}
+              {familyInfo.weeklyScore}방울{' '}
               <span>| {familyInfo.score}방울</span>
               <span className="level">
                 {hwamokGrades[familyInfo.level].name}

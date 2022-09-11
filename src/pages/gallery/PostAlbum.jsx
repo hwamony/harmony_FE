@@ -79,6 +79,11 @@ const PostAlbum = () => {
   const createAlbum = async (e) => {
     e.preventDefault();
 
+    if (!files.length || !previewUrls.length) {
+      alert('사진을 추가해주세요');
+      return;
+    }
+
     let formData = new FormData();
     formData.append('date', selectedDate);
     formData.append('title', albumTitle);
@@ -102,7 +107,7 @@ const PostAlbum = () => {
 
     try {
       if (galleryId) {
-        const res = await formdataApi.post(
+        await formdataApi.post(
           `/galleries/${galleryId}/images`,
           formData,
         );
@@ -110,7 +115,7 @@ const PostAlbum = () => {
         alert('사진이 추가되었습니다!');
         navigate(-1);
       } else {
-        const res = await formdataApi.post(
+        await formdataApi.post(
           `/schedules/${data.schedules[scheduleNum].id}/galleries`,
           formData,
         );
@@ -250,6 +255,7 @@ const PostAlbum = () => {
           <IconButton color="primary" aria-label="사진 선택" component="label">
             <input
               hidden
+              name="upload-image"
               accept="image/*"
               type="file"
               multiple

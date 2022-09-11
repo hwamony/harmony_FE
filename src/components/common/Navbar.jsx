@@ -13,7 +13,7 @@ const Navbar = () => {
   const { scoreUp } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [isShowing, setIsShowing] = useState(true);
-  const paths = ['/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts'];
+  const paths = ['/familycode', '/role', '/schedules', '/galleries/posts', '/community/posts', 'signup/kakao'];
 
   useEffect(() => {
     if (scoreUp) setModalVisible(true);

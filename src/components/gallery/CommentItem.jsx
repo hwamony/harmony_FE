@@ -41,21 +41,21 @@ const CommentItem = ({ scheduleId, comment }) => {
   return (
     <Item>
       {onEdit ? (
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            editCommentM(comment.id);
+          }}
+        >
           <input
             type="text"
             placeholder="댓글을 입력하세요."
             defaultValue={comment.content}
             ref={commentInput}
+            minLength="2"
+            required
           />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              editCommentM(comment.id);
-            }}
-          >
-            수정
-          </button>
+          <button>수정</button>
         </form>
       ) : (
         <>
