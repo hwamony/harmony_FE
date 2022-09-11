@@ -34,7 +34,6 @@ const EditPassword = () => {
   const onSubmitChange = async (data) => {
     try {
       await api.put('/mypage/password', data);
-      // console.log('response >>', response.data);
       createGAEvent('비밀번호 변경');
       alert('비밀번호 변경이 완료되었습니다.');
       navigate(-1);
@@ -49,7 +48,6 @@ const EditPassword = () => {
       const response = await api.post('/withdrawal', data);
       createGAEvent('회원탈퇴 피드백 제출');
       setIsVisible(true);
-      console.log('response >>', response.data);
     } catch (err) {
       console.log('Error >>', err.response.data);
     }
