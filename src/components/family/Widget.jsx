@@ -66,6 +66,13 @@ const Widget = () => {
               src={hwamokGrades[familyInfo.level].icon}
               alt={hwamokGrades[familyInfo.level].name}
             />
+            {familyInfo.flower && (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/grades/flower.png`}
+                alt=""
+                className="hasFlower"
+              />
+            )}
           </Circle>
           <div>
             <strong>
@@ -73,7 +80,7 @@ const Widget = () => {
               <IconDetail />
             </strong>
             <p>
-              {familyInfo.monthlyScore}방울{' '}
+              {familyInfo.weeklyScore}방울{' '}
               <span>| {familyInfo.score}방울</span>
               <span className="level">
                 {hwamokGrades[familyInfo.level].name}
@@ -144,8 +151,20 @@ const LeftWrapper = styled.div`
 `;
 
 const Circle = styled.div`
+  position: relative;
   margin-right: 11px;
   font-size: 0.5em;
+  img {
+    width: 49px;
+    height: 49px;
+    &.hasFlower {
+      position: absolute;
+      top: 0;
+      left: -5px;
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const AlertBtn = styled.div`

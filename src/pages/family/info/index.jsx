@@ -12,12 +12,15 @@ const FamilyInfo = () => {
       <PageTitle title="가족구성원" />
       <HeaderMid text="가족구성원" />
       <MemberList>
-        {familyInfo.members.map((member) => (
-          <li key={member.userId}>
-            <div>{member.role}</div>
-            <p>{member.name}</p>
-          </li>
-        ))}
+        {familyInfo.members.map(
+          (member) =>
+            member.role !== '미설정' && (
+              <li key={member.userId}>
+                <div>{member.role}</div>
+                <p>{member.name}</p>
+              </li>
+            ),
+        )}
       </MemberList>
     </>
   );

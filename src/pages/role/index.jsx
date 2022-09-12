@@ -13,10 +13,8 @@ const Role = () => {
   const { register, handleSubmit } = useForm();
 
   const onsubmit = async (data) => {
-    console.log(data);
     try {
-      const response = await api.put('/user/role', data);
-      console.log(response);
+      await api.put('/user/role', data);
       queryClient.invalidateQueries(['familyInfo']);
       queryClient.invalidateQueries(['validUserInfo']);
       window.location.href = '/';

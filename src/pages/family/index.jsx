@@ -29,10 +29,19 @@ const FamilyScore = () => {
       <Content>
         <GradeInfo>
           <h2>{familyInfo.familyName}</h2>
-          <img src={hwamokGrades[familyInfo.level].image} alt="" />
+          <Icon>
+            <img src={hwamokGrades[familyInfo.level].image} alt="" />
+            {familyInfo.flower && (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/grades/flower.png`}
+                alt=""
+                className="hasFlower"
+              />
+            )}
+          </Icon>
           <strong>{hwamokGrades[familyInfo.level].name}</strong>
           <p>
-            <span>월간 {familyInfo.monthlyScore}방울</span> | 누적{' '}
+            <span>주간 {familyInfo.weeklyScore}방울</span> | 누적{' '}
             {familyInfo.score}방울
           </p>
 
@@ -122,6 +131,17 @@ const GradeInfo = styled.div`
   }
   button {
     margin: 30px 0 38px;
+  }
+`;
+
+const Icon = styled.div`
+  position: relative;
+  img.hasFlower {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 55px;
+    height: 55px;
   }
 `;
 

@@ -39,7 +39,6 @@ const MoreVert = ({ schedule }) => {
   });
 
   const onClickEdit = () => {
-    console.log(schedule.scheduleId);
     navigate('/schedules/edit', { state: schedule });
     handleClose();
   };

@@ -37,9 +37,8 @@ const Recoder = () => {
     formData.append('sound', file);
 
     try {
-      const res = await api.post('/voice-mails', formData);
+      await api.post('/voice-mails', formData);
       createGAEvent('녹음 등록');
-      console.log(res);
       actions.onScoreChanged(20);
       navigate('/voice-mails');
       return queryClient.invalidateQueries(['familyInfo']);
