@@ -44,25 +44,31 @@ const EditPassword = () => {
   };
 
   const onSubmitFeedback = async (data) => {
+    console.log(data);
+
     try {
       const response = await api.post('/withdrawal', data);
       createGAEvent('회원탈퇴 피드백 제출');
       console.log('response >>', response.data);
 
       if (kakaoUser) {
-        try {
-          await api.delete('/withdrawal', { password: kakaoUser });
-          alert('그동안 화목을 이용해주셔서 감사합니다.');
-          window.location.href = '/';
-          return localStorage.removeItem('TOKEN');
-        } catch (err) {
-          console.log(err);
-        }
+        onSubmitDelete();
       } else {
         setIsVisible(true);
       }
     } catch (err) {
       console.log('Error >>', err.response.data);
+    }
+  };
+
+  const onSubmitDelete = async () => {
+    try {
+      await api.delete('/withdrawal', { data: { password: 'kakaoUser' } });
+      alert('그동안 화목을 이용해주셔서 감사합니다.');
+      window.location.href = '/';
+      return localStorage.removeItem('TOKEN');
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -86,7 +92,7 @@ const EditPassword = () => {
               {kakaoUser ? (
                 <></>
               ) : (
-                <InputWrapper>
+                <>
                   <InputWrap>
                     <Label>비밀번호 변경</Label>
                     <Input
@@ -147,8 +153,10 @@ const EditPassword = () => {
                     </ErrorMsg>
                   </InputWrap>
                   <Button style={{ marginTop: '30px' }}>변경하기</Button>
-                </InputWrapper>
+                  <Division />
+                </>
               )}
+
               <ButtonWrap>
                 <Btn
                   type="button"
@@ -261,9 +269,11 @@ const Body = styled.div`
   padding: 0 20px;
 `;
 
-const InputWrapper = styled.div`
-  border-bottom: 8px solid #efefef;
-  margin-bottom: 37px;
+const Division = styled.div`
+  height: 8px;
+  margin: 0 -20px;
+  margin-top: 37px;
+  background: #efefef;
 `;
 
 const InputWrap = styled.div`

@@ -42,7 +42,7 @@ const EditProfile = () => {
 
   const onSubmit = async () => {
     try {
-      const response = await api.put('/mypage/profile', {
+      await api.put('/mypage/profile', {
         nickname: nickname,
         updateFor: 'mypage',
       });
