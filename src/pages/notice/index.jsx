@@ -11,7 +11,17 @@ import { useUserNickname, useUserNotifications } from '../../hooks/useData';
 import PageTitle from '../../components/common/PageTitle';
 import HeaderMid from '../../components/common/HeaderMid';
 import { FiBell } from 'react-icons/fi';
-import { Container, Body, NoticeWrap, NoticeItem, IconWrap, DescWrap, DescTitle, DescMsg, TimeWrap } from './style';
+import {
+  Container,
+  Body,
+  NoticeWrap,
+  NoticeItem,
+  IconWrap,
+  DescWrap,
+  DescTitle,
+  DescMsg,
+  TimeWrap,
+} from './style';
 
 const Notice = () => {
   dayjs.locale('ko');
@@ -65,7 +75,7 @@ const Notice = () => {
       <Container>
         <Body>
           <div className="wrapper-btn">
-            <button onClick={deleteNotifications}>삭제</button>
+            <button onClick={deleteNotifications}>모두삭제</button>
           </div>
           <NoticeWrap>
             {notice.map((item) => {
@@ -88,18 +98,21 @@ const Notice = () => {
                       {domain === 'gallery' &&
                         action === 'create' &&
                         '새로운 갤러리가 추가되었습니다.'}
-                      {domain === 'community' &&
-                        action === 'comment' &&
+                      {domain === 'comment' &&
+                        action === 'create' &&
                         '새로운 댓글이 달렸습니다.'}
-                      {domain === 'community' &&
-                        action === 'like' &&
+                      {domain === 'like' &&
+                        action === 'create' &&
                         '누군가 좋아요를 눌렀습니다.'}
                       {domain === 'voiceMail' &&
                         action === 'create' &&
                         '새로운 음성메세지가 추가되었습니다.'}
+                      {domain === 'level' &&
+                        action === 'up' &&
+                        '우리 가족의 화목등급이 상승했습니다.'}
                     </DescMsg>
                     <TimeWrap>
-                      {dayjs(createdAt).format('M월 D일 HH:MM')}
+                      {dayjs(createdAt).format('M월 D일 HH:mm')}
                     </TimeWrap>
                   </DescWrap>
                 </NoticeItem>

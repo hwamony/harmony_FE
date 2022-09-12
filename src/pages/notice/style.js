@@ -25,6 +25,11 @@ export const Body = styled.div`
   .wrapper-btn {
     display: flex;
     justify-content: flex-end;
+    margin-right: -6px;
+
+    button {
+      color: red;
+    }
   }
 `;
 
@@ -67,7 +72,7 @@ export const DescMsg = styled.div`
 export const TimeWrap = styled.span`
   position: absolute;
   top: 4px;
-  right: 20px;
+  right: 0;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;

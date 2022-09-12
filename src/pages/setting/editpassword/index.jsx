@@ -44,12 +44,31 @@ const EditPassword = () => {
   };
 
   const onSubmitFeedback = async (data) => {
+    console.log(data);
+
     try {
       const response = await api.post('/withdrawal', data);
       createGAEvent('회원탈퇴 피드백 제출');
-      setIsVisible(true);
+      console.log('response >>', response.data);
+
+      if (kakaoUser) {
+        onSubmitDelete();
+      } else {
+        setIsVisible(true);
+      }
     } catch (err) {
       console.log('Error >>', err.response.data);
+    }
+  };
+
+  const onSubmitDelete = async () => {
+    try {
+      await api.delete('/withdrawal', { data: { password: 'kakaoUser' } });
+      alert('그동안 화목을 이용해주셔서 감사합니다.');
+      window.location.href = '/';
+      return localStorage.removeItem('TOKEN');
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -95,7 +114,6 @@ const EditPassword = () => {
                         '현재 비밀번호는 8~20자 사이의 영문, 숫자, 특수문자를 사용하여 입력해주세요.'}
                     </ErrorMsg>
                   </InputWrap>
-
                   <InputWrap>
                     <Label>새 비밀번호</Label>
                     <Input
@@ -135,8 +153,10 @@ const EditPassword = () => {
                     </ErrorMsg>
                   </InputWrap>
                   <Button style={{ marginTop: '30px' }}>변경하기</Button>
+                  <Division />
                 </>
               )}
+
               <ButtonWrap>
                 <Btn
                   type="button"
@@ -249,6 +269,13 @@ const Body = styled.div`
   padding: 0 20px;
 `;
 
+const Division = styled.div`
+  height: 8px;
+  margin: 0 -20px;
+  margin-top: 37px;
+  background: #efefef;
+`;
+
 const InputWrap = styled.div`
   margin-top: 20px;
   position: relative;
@@ -264,10 +291,8 @@ const ErrorMsg = styled.p`
 `;
 
 const ButtonWrap = styled.div`
-  border-top: 8px solid #efefef;
   padding: 0 20px;
   margin: 0 -20px;
-  margin-top: 37px;
 `;
 
 const BtnTitle = styled.h3`

@@ -30,7 +30,7 @@ const Login = () => {
       queryClient.invalidateQueries(['validUserInfo']);
       window.location.href = '/';
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err);
       setErrMsg(err.response.data.message);
     }
   };

@@ -65,8 +65,9 @@ const Modal = (props) => {
   };
 
   const WithdrawalHandler = async (data) => {
+    console.log(data)
     try {
-      await api.delete('/withdrawal', data);
+      await api.delete('/withdrawal', { data: data });
       alert('그동안 화목을 이용해주셔서 감사합니다.');
       window.location.href = '/';
       return localStorage.removeItem('TOKEN');

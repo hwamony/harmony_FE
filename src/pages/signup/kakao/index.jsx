@@ -17,7 +17,7 @@ const SignupKakao = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await api.put('/mypage/profile', {
+      await api.put('/mypage/profile', {
         ...data,
         updateFor: 'kakao',
       });
