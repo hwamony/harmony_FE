@@ -31,7 +31,7 @@ const Widget = () => {
 
     client.connect(
       {},
-      (data) => {
+      () => {
         console.log('connect!');
 
         client.subscribe(`/topic/user/${nickname}`, (message) => {
