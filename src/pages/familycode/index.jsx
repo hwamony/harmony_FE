@@ -48,13 +48,13 @@ const Familycode = () => {
               required: true,
             })}
           />
-          <Icon>
-            <img
-              src={`${process.env.PUBLIC_URL}/images/check_18px.png`}
-              alt="체크"
-            />
-          </Icon>
           <CodeLabel htmlFor="create">
+            <Icon>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/check_18px.png`}
+                alt="체크"
+              />
+            </Icon>
             <Inputdesc>화목을 처음 이용하시나요?</Inputdesc>
             <InputTitle>코드생성</InputTitle>
           </CodeLabel>
@@ -67,13 +67,13 @@ const Familycode = () => {
             value="join"
             ref={register({ required: true })}
           />
-          <Icon>
-            <img
-              src={`${process.env.PUBLIC_URL}/images/check_18px.png`}
-              alt="체크"
-            />
-          </Icon>
           <CodeLabel htmlFor="join">
+            <Icon>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/check_18px.png`}
+                alt="체크"
+              />
+            </Icon>
             <Inputdesc>이미 가족들이 화목을 이용하시나요?</Inputdesc>
             <InputTitle>코드입력</InputTitle>
           </CodeLabel>

@@ -215,7 +215,7 @@ const EditPassword = () => {
                 name="feedback"
                 ref={register({
                   required: true,
-                  pattern: /^(?=.{10,}$).*/,
+                  pattern: /^(?=.{15,}$).*/,
                 })}
               ></TxtArea>
               <ErrorMsg>
@@ -224,7 +224,7 @@ const EditPassword = () => {
                   '탈퇴 사유를 입력해주세요.'}
                 {errors.feedback &&
                   errors.feedback.type === 'pattern' &&
-                  '10자 이상 입력해주세요.'}
+                  '탈퇴사유는 15자 이상 입력해주세요.'}
               </ErrorMsg>
               <PolicyWrap>
                 <PolicyCheck>
