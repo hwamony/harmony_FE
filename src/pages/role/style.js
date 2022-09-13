@@ -39,12 +39,10 @@ export const InputWrap = styled.div`
 
 export const IconWrap = styled.span`
   position: absolute;
-  top: 48px;
-  left: 50%;
+  top: 24px;
   width: 24px;
   height: 24px;
   margin: auto;
-  padding: 2px 4px;
   border-radius: 12px;
   background: #dcdcdc;
   transform: translateX(-50%);

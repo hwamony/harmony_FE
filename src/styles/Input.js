@@ -48,12 +48,13 @@ export const CodeInput = styled.input`
 `;
 
 export const RoleInput = styled.input`
-  visibility: hidden;
+  display: none;
 
-  :checked + span {
-    background: #3ec192;
-  }
   :checked ~ label {
     border: 2px solid #3ec192;
+
+    span {
+      background: #3ec192;
+    }
   }
 `;

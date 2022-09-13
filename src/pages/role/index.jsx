@@ -1,7 +1,15 @@
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { Container, Wrap, Desc, InputWrap, IconWrap, BtnWrap, Box } from './style';
+import {
+  Container,
+  Wrap,
+  Desc,
+  InputWrap,
+  IconWrap,
+  BtnWrap,
+  Box,
+} from './style';
 import { RoleInput } from '../../styles/Input';
 import { RoleLabel } from '../../styles/Label';
 import { Button } from '../../styles/Button';
@@ -9,7 +17,16 @@ import api from '../../api/AxiosManager';
 
 const Role = () => {
   const queryClient = useQueryClient();
-  const family = ['아빠', '엄마', '외동', '첫째', '둘째', 'N째', '막내', '동거인'];
+  const family = [
+    '아빠',
+    '엄마',
+    '외동',
+    '첫째',
+    '둘째',
+    'N째',
+    '막내',
+    '동거인',
+  ];
   const { register, handleSubmit } = useForm();
 
   const onsubmit = async (data) => {
@@ -37,13 +54,15 @@ const Role = () => {
                 value={item}
                 ref={register({ require: true })}
               ></RoleInput>
-              <IconWrap>
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/check_12px.png`}
-                  alt="로고"
-                />
-              </IconWrap>
-              <RoleLabel htmlFor={item}>{item}</RoleLabel>
+              <RoleLabel htmlFor={item}>
+                <IconWrap>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/check_12px.png`}
+                    alt="로고"
+                  />
+                </IconWrap>
+                <p>{item}</p>
+              </RoleLabel>
             </Wrap>
           ))}
           <BtnWrap>
