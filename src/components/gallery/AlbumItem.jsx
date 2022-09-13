@@ -122,7 +122,6 @@ const AlbumItem = ({ album, isLoading, title }) => {
                   type="text"
                   placeholder="댓글을 입력하세요."
                   ref={commentInput}
-                  minLength="2"
                   required
                 />
                 <button>등록</button>

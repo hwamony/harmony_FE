@@ -52,7 +52,6 @@ const CommentItem = ({ scheduleId, comment }) => {
             placeholder="댓글을 입력하세요."
             defaultValue={comment.content}
             ref={commentInput}
-            minLength="2"
             required
           />
           <button>수정</button>
