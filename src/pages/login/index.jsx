@@ -7,7 +7,16 @@ import PageTitle from '../../components/common/PageTitle';
 import { KAKAO_AUTH_URL } from '../../utils/OAuth';
 import { Button } from '../../styles/Button';
 import { Input } from '../../styles/Input';
-import { Container, LogoWrap, InputWrap, BtnWrap, SocialLoginBtn, LoginDesc, SignupLink, ErrorMsg } from './style';
+import {
+  Container,
+  LogoWrap,
+  InputWrap,
+  BtnWrap,
+  SocialLoginBtn,
+  LoginDesc,
+  SignupLink,
+  ErrorMsg,
+} from './style';
 import api from '../../api/AxiosManager';
 
 const Login = () => {
