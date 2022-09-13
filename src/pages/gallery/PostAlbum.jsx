@@ -9,7 +9,15 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
-import { TextField, FormControl, InputLabel, Select, MenuItem, IconButton, Snackbar } from '@mui/material';
+import {
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+  Snackbar,
+} from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import PageTitle from '../../components/common/PageTitle';
@@ -90,27 +98,22 @@ const PostAlbum = () => {
     formData.append('content', albumContent);
 
     // 리사이징 시작
-    const start = Date.now();
     const options = {
       maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
     };
-    await Promise.all(
-      files.map(async (item) => {
-        await imageCompression(item, options).then((res) =>
-          formData.append(`imageFiles`, res),
-        );
-      }),
-    );
-    const end = Date.now();
-    console.log(`${start - end}ms`);
-    // 리사이징 끝
+
+    const imgResizing = files.map(async (item) => {
+      await imageCompression(item, options).then((res) =>
+        formData.append(`imageFiles`, res)
+      );
+    });
+
+    await Promise.all(imgResizing);
 
     try {
       if (galleryId) {
-        await formdataApi.post(
-          `/galleries/${galleryId}/images`,
-          formData,
-        );
+        await formdataApi.post(`/galleries/${galleryId}/images`, formData);
         createGAEvent('사진 추가');
         alert('사진이 추가되었습니다!');
         navigate(-1);
