@@ -36,7 +36,6 @@ const CommentEditor = ({ postId }) => {
             placeholder="댓글을 입력하세요."
             autoComplete="off"
             ref={commentInput}
-            minLength="2"
             required
           />
           <button>등록</button>
