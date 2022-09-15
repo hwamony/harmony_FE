@@ -44,12 +44,9 @@ const EditPassword = () => {
   };
 
   const onSubmitFeedback = async (data) => {
-    console.log(data);
-
     try {
-      const response = await api.post('/withdrawal', data);
+      await api.post('/withdrawal', data);
       createGAEvent('회원탈퇴 피드백 제출');
-      console.log('response >>', response.data);
 
       if (kakaoUser) {
         onSubmitDelete();

@@ -19,7 +19,6 @@ const ShortCard = ({ post }) => {
         <Link to={`/community/posts/${post.postId}`}>
           <CardTitle>
             <Profile>
-              {/* TODO: {post.poster.flower}꽃여부 */}
               <Grade>
                 <img
                   src={hwamokGrades[post.poster.level].icon}
@@ -51,7 +50,6 @@ const ShortCard = ({ post }) => {
             )}
 
             <Counts>
-              {/* TODO: 좋아요 여부(like) 받아와서 색깔 적용 */}
               <small>
                 {post.like ? <IconIsLiked /> : <IconLikeCount />}
                 {post.likeCount}

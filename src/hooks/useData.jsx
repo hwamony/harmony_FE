@@ -33,9 +33,6 @@ export const useValidUserData = () =>
     enabled: !!hasToken,
     refetchOnWindowFocus: false,
     staleTime: Infinity,
-    onSuccess: (data) => {
-      console.log(data);
-    },
   });
 
 const getFamilyCode = async () => {

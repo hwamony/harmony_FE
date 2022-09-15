@@ -161,7 +161,6 @@ const Item = styled.article`
 `;
 
 const ImgContainer = styled.div`
-  /* FIXME: 반응형 수정해야 함 */
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
