@@ -74,6 +74,17 @@ const Setting = () => {
         <button
           type="button"
           onClick={() => {
+            createGAEvent('가족랭킹 이동');
+            navigate('/family/rankings');
+          }}
+        >
+          <h3>가족 랭킹</h3>
+          <IconNext />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
             createGAEvent('프로필관리 이동');
             navigate('/mypage/editprofile');
           }}

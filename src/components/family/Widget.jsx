@@ -7,35 +7,27 @@ import { useNavigate, Link } from 'react-router-dom';
 import { hwamokGrades } from '../../utils/data';
 import ReactGA from 'react-ga';
 
-// TODO: 웹소켓 연결
 import SockJs from 'sockjs-client';
 import StompJs from 'stompjs';
 import { useUserNickname, useUserNotifications } from '../../hooks/useData';
 
 const Widget = () => {
-  // State
-  const [notice, setNotice] = useState(false);
-
   const navigate = useNavigate();
+  const [notice, setNotice] = useState(false);
   const { data: familyInfo } = useFamilyData();
   const { nickname } = useUserNickname().data;
   const { notifications } = useUserNotifications().data;
 
   const connectWs = () => {
-    // websocket 연결
-
     const SERVER_STOMP_URL = `${process.env.REACT_APP_HOST}/websocket`;
-
     const sock = new SockJs(SERVER_STOMP_URL);
     const client = StompJs.over(sock);
 
     client.connect(
       {},
       () => {
-        console.log('connect!');
-
         client.subscribe(`/topic/user/${nickname}`, (message) => {
-          {message.body && setNotice(true)}
+          if (message.body) setNotice(true);
         });
       },
       (err) => {
@@ -46,7 +38,7 @@ const Widget = () => {
 
   useEffect(() => {
     connectWs();
-    {notifications.length > 0 && setNotice(true)}
+    if (notifications.length > 0) setNotice(true);
   }, [notifications]);
 
   const createGAEvent = (menu) => {
@@ -80,8 +72,7 @@ const Widget = () => {
               <IconDetail />
             </strong>
             <p>
-              {familyInfo.weeklyScore}방울{' '}
-              <span>| {familyInfo.score}방울</span>
+              {familyInfo.weeklyScore}방울 <span>| {familyInfo.score}방울</span>
               <span className="level">
                 {hwamokGrades[familyInfo.level].name}
               </span>
