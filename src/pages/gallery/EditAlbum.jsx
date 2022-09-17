@@ -41,8 +41,7 @@ const EditAlbum = () => {
   };
 
   const { mutate: editAlbumM } = useMutation(editAlbum, {
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: () => {
       alert('앨범이 수정되었습니다!');
       navigate(`/galleries/${scheduleId}`);
       return queryClient.invalidateQueries(['albums', scheduleId]);

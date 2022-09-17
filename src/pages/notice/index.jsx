@@ -38,14 +38,9 @@ const Notice = () => {
     client.connect(
       {},
       () => {
-        console.log('connect!');
-
         client.subscribe(`/topic/user/${nickname}`, (message) => {
           const quote = JSON.parse(message.body);
-          console.log(notifications);
           setNotice((prev) => [quote, ...prev]);
-
-          console.log(quote);
         });
       },
       (err) => {

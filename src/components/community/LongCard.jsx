@@ -54,7 +54,6 @@ const LongCard = ({ post, postId }) => {
         </CardTitle>
 
         <Profile>
-          {/* TODO: {post.poster.flower}꽃여부 */}
           <Grade>
             <img
               src={hwamokGrades[`${post.poster.level}`].icon}

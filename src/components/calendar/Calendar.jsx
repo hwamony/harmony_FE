@@ -19,7 +19,6 @@ const Calendar = ({ schedules }) => {
   return (
     <CalendarContainer>
       <header>
-        {/* FIXME: 버튼 아이콘 수정 */}
         <button
           onClick={() => {
             dispatch(setMonthIdx(monthIdx - 1));

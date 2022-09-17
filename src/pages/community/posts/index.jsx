@@ -99,14 +99,12 @@ const Post = () => {
       if (post) {
         const res = await formdataApi.put(`/posts/${postId}`, formData);
         createGAEvent('게시물 수정');
-        console.log(res);
         alert('게시물 수정 완료');
         navigate(-1);
         return queryClient.invalidateQueries(['communityPosts', '전체']);
       } else {
         const res = await formdataApi.post(`/posts`, formData);
         createGAEvent('게시물 작성');
-        console.log(res);
         alert('게시물 작성 완료');
         navigate('/community');
         return queryClient.invalidateQueries(['communityPosts', '전체']);
