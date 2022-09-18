@@ -25,6 +25,36 @@
 
 ![https://user-images.githubusercontent.com/84499458/190880928-c7626661-f5de-4b3d-89db-d3ad418a7590.png](https://user-images.githubusercontent.com/84499458/190880928-c7626661-f5de-4b3d-89db-d3ad418a7590.png)
 
+## 기술 스택
+### FrontEnd
+<div style="display: flex">
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
+<img src="https://img.shields.io/badge/Redux Toolkit-593D88?style=for-the-badge&logo=redux&logoColor=white">
+<img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=React Query&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
+<img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
+<img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white">
+<img src="https://img.shields.io/badge/React Hook Form-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
+<img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white">
+<span>SockJS, Stomp</span>
+</div>
+
+### DevOps.
+<div style="display: flex">
+<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=F7BA3E">
+<img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">
+<img src="https://img.shields.io/badge/Amazon CloudFront-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
+<span>Route 53, ACM</span>
+</div>
+
+### Etc.
+<div style="display: flex">
+<img src="https://img.shields.io/badge/Google Analytics-E37400?style=for-the-badge&logo=Google Analytics&logoColor=white">
+<img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white">
+<img src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E">
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+</div>
+
 ## 팀원 소개
 
 - FE: [윤수영](https://github.com/ddooyn)(L), [김다흰](https://github.com/doa12), [이동현](https://github.com/slozche)
