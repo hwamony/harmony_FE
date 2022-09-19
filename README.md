@@ -55,6 +55,8 @@
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
 </div>
 
+### [라이브러리 상세(Notion link)](https://ddooyn.notion.site/10e4c333c42546c68d7628c0526995b1)
+
 ## 팀원 소개
 
 - FE: [윤수영](https://github.com/ddooyn)(L), [김다흰](https://github.com/doa12), [이동현](https://github.com/slozche)
